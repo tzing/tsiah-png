@@ -1,16 +1,31 @@
 # 呷飯 Tsia̍h-Pn̄g
 
-Group buying tool to collect the orders from your friends.
-
-**NOTICE** this project is **not** design for production.
-
-
-## About
+A group buying tool for collecting orders (especially the meal/drink orders) from your friends.
 
 *Tsia̍h-Pn̄g* is the word for *eat food* in [Taiwanese Hokkien].
-I first created this project because I always collect orders from colleagues.
+I first created this project because I always collect breakfast orders from colleagues.
 
 [Taiwanese Hokkien]: https://en.wikipedia.org/wiki/Taiwanese_Hokkien
+
+
+## Usage
+
+Basically, you can run and use it *if you are on local network*.
+
+- About user
+
+    It use django built-in `User` models for the *users* in the dropdown.
+    Use django admin to create users and make changes.
+
+- About menu
+
+    `Shop` and `Category` could only be created by admin.
+    `Product` could be created by anyone, because I am lazy and I don't want to copy the entire menu form shops.
+
+- About django admin
+
+    Directly go to *http://HOSTNAME/admin/* by url.
+    There is no place to link to the admin panel from the site
 
 
 ## Prerequisites
@@ -41,32 +56,40 @@ I first created this project because I always collect orders from colleagues.
     pip install django Pillow
     ```
 
-2. Built database
+2. Set secret key
+
+    ```bash
+    export SECRET_KEY="SOMETHING_RANDOM_ENOUGH"
+    ```
+
+    *WARNING* Keep this value secret. See [django docs](https://docs.djangoproject.com/en/2.1/ref/settings/#std:setting-SECRET_KEY) for more info.
+
+3. Built database
 
     ```bash
     python manage.py makemigrations tsiahpng
     python manage.py migrate
     ```
 
-3. (Optional) Build i18n (for Traditional Chinese)
+4. (Optional) Build i18n (for Traditional Chinese)
 
     ```bash
     django-admin compilemessages --use-fuzzy
     ```
 
-4. Create users
+5. Create users
 
     ```bash
     python manage.py createsuperuser
     ```
 
-5. Run!
+6. Run!
 
     ```bash
     python manage.py runserver 0.0.0.0:8000
     ```
 
-6. If you want to use this site with your friends, follow the instruction from django document:
+7. If you want to use this site on the Internet, follow the instruction from django document:
 
     https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
