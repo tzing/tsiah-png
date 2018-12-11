@@ -1,0 +1,22 @@
+{% extends 'basic.html' %}
+{% load i18n %}
+
+{% block content %}
+<div class="ui vertical segment">
+    <form class="ui form" method="POST">
+        <p>{% trans 'Are you sure you want to close this order?' %}</p>
+
+        {% csrf_token %}
+        <input type="hidden" name="close" value="1">
+
+        <button type="submit" class="ui primary submit button">{% trans 'Yes' %}</button>
+        <a class="ui button" id="no-button">{% trans 'No' %}</a>
+    </form>
+</div>
+
+<script>
+    $('#no-button').click(function () {
+        history.back();
+    })
+</script>
+{% endblock %}

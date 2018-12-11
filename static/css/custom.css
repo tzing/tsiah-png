@@ -1,0 +1,59 @@
+/* site layout */
+
+.ui.head.segment {
+    margin-top: 39px;
+    padding: 5em 0;
+}
+
+.ui.main.segment {
+    padding-bottom: 3em;
+}
+
+.ui.foot.segment {
+    padding: 3em 0 5em 0;
+}
+
+.ui.container .segment {
+    border-bottom: 0;
+    padding-bottom: 3em;
+}
+
+/* color */
+
+.price {
+    color: #00b5ad;
+}
+
+/* customized layout for list view */
+
+.ui.fixed.second.menu {
+    background-color: rgba(255, 255, 255, .7);
+}
+
+.date.card {
+    max-height: 150px;
+}
+
+.date.card:after {
+    padding-bottom: 100%;
+}
+
+.date.card .content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+}
+
+.date.card .content p {
+    color: rgba(118, 118, 118, .7);
+}
+
+/* customized layout for cart */
+
+.product.dropdown a.ui.label small,
+.product.dropdown a.ui.label div.label {
+    display: none;
+}

@@ -1,0 +1,350 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-12-11 16:25+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: cga_food/settings.py:117
+msgid "Traditional Chinese"
+msgstr "繁體中文"
+
+#: cga_food/settings.py:118
+msgid "English"
+msgstr "英文"
+
+#: templates/basic.html:5 templates/homepage.html:5 templates/navbar.html:4
+msgid "Tsia̍h-Pn̄g"
+msgstr "呷飯"
+
+#: templates/homepage.html:29
+msgid "Welcome!"
+msgstr "呷飽未？"
+
+#: templates/homepage.html:30
+msgid "I'm hungry"
+msgstr "人生短短幾個秋，不吃早餐不罷休"
+
+#: templates/homepage.html:43
+#, fuzzy, python-format
+#| msgid "Ordering %(shop)s"
+msgid "Ordering %(shop)s on %(date)s"
+msgstr "在%(date)s購買%(shop)s"
+
+#: templates/homepage.html:59
+msgid "No available orders"
+msgstr "沒有開放的訂單"
+
+#: templates/homepage.html:65
+msgid "All Available Orders"
+msgstr "所有開放訂單"
+
+#: templates/menu/add_form.html:7
+msgid "Item added!"
+msgstr "新增了一個項目"
+
+#: templates/menu/add_form.html:17
+msgid "Shop name"
+msgstr "商店名稱"
+
+#: templates/menu/add_form.html:23
+msgid "Category"
+msgstr "分類"
+
+#: templates/menu/add_form.html:32
+msgid "No category"
+msgstr "不分類"
+
+#: templates/menu/add_form.html:38
+msgid "Product name"
+msgstr "商品名稱"
+
+#: templates/menu/add_form.html:43 templates/order/order_form.html:63
+msgid "Price"
+msgstr "價格"
+
+#: templates/menu/add_form.html:47 templates/order/create.html:52
+#: templates/order/order_form.html:74
+msgid "Submit"
+msgstr "送出"
+
+#: templates/menu/add_form.html:48 templates/order/create.html:53
+#: templates/order/order_form.html:75
+msgid "Reset"
+msgstr "重設"
+
+#: templates/menu/add_form.html:72
+msgid "Please select a category"
+msgstr "請選擇分類"
+
+#: templates/menu/add_form.html:79
+#, fuzzy
+#| msgid "Name could not be empty"
+msgid "Item name could not be empty"
+msgstr "名稱不能空白"
+
+#: templates/menu/detail.html:33 templates/menu/list.html:46
+msgid "Add product"
+msgstr "新增商品"
+
+#: templates/menu/list.html:33
+msgid "Large menu picture"
+msgstr "菜單大圖"
+
+#: templates/menu/list.html:40
+msgid "Menu details"
+msgstr "詳細資訊"
+
+#: templates/menu/list.html:56
+msgid "No shop data"
+msgstr "沒有店家資料"
+
+#: templates/navbar.html:6
+msgid "Menu"
+msgstr "菜單"
+
+#: templates/navbar.html:7
+msgid "History"
+msgstr "歷史紀錄"
+
+#: templates/order/create.html:18
+msgid "Readable name"
+msgstr "自訂名稱"
+
+#: templates/order/create.html:20
+#, python-format
+msgid "Ordering something... (Created on %(current_time)s)"
+msgstr "買點什麼...（建立於%(current_time)s）"
+
+#: templates/order/create.html:24
+#, fuzzy
+#| msgid "Shop name"
+msgid "Shop"
+msgstr "商店名稱"
+
+#: templates/order/create.html:28
+#, fuzzy
+#| msgid "Select category"
+msgid "Select shop"
+msgstr "選擇分類"
+
+#: templates/order/create.html:38
+msgid "Date"
+msgstr "日期"
+
+#: templates/order/create.html:48
+msgid "Additional Note"
+msgstr "附加說明"
+
+#: templates/order/create.html:85
+msgid "Please specific a shop"
+msgstr "請指定店家"
+
+#: templates/order/create.html:92
+msgid "Date could not be empty"
+msgstr "日期不能空白"
+
+#: templates/order/detail.html:24 templates/order/list.html:25
+#, fuzzy, python-format
+#| msgid "Ordering something... (Created on %(current_time)s)"
+msgid "Created on %(create_time)s"
+msgstr "建立於%(create_time)s"
+
+#: templates/order/detail.html:28
+#, python-format
+msgid "Ordering %(shop)s"
+msgstr "買個%(shop)s"
+
+#: templates/order/detail.html:32
+#, fuzzy, python-format
+#| msgid "Ordering something... (Created on %(current_time)s)"
+msgid "Order on %(date)s"
+msgstr "預計於%(date)s購買"
+
+#: templates/order/detail.html:48
+msgid "Order Summary"
+msgstr "訂單整理"
+
+#: templates/order/detail.html:53 templates/order/detail.html:91
+#: templates/order/order_form.html:61
+msgid "Item"
+msgstr "項目"
+
+#: templates/order/detail.html:54 templates/order/order_form.html:62
+msgid "Quantity"
+msgstr "數量"
+
+#: templates/order/detail.html:65 templates/order/detail.html:104
+#: templates/order/order_form.html:69
+msgid "No tickets"
+msgstr "還沒下單"
+
+#: templates/order/detail.html:72
+msgid "Total:"
+msgstr "總計："
+
+#: templates/order/detail.html:85
+#, fuzzy
+#| msgid "Order Summary"
+msgid "Personal Summary"
+msgstr "個人訂單整理"
+
+#: templates/order/detail.html:90
+#, fuzzy
+#| msgid "who"
+msgid "Who"
+msgstr "誰"
+
+#: templates/order/detail.html:92
+msgid "Subtotal"
+msgstr "小計"
+
+#: templates/order/detail.html:112
+msgid "Administration"
+msgstr "管理"
+
+#: templates/order/detail.html:117
+#, fuzzy
+#| msgid "No order"
+msgid "Close order"
+msgstr "關閉訂單"
+
+#: templates/order/list.html:7
+msgid "New order"
+msgstr "新增訂單"
+
+#: templates/order/list.html:46
+msgid "No order"
+msgstr "沒有訂單"
+
+#: templates/order/list.html:48
+msgid "Create one?"
+msgstr "新增一個？"
+
+#: templates/order/order_form.html:7
+#, fuzzy
+#| msgid "Order List"
+msgid "Order it!"
+msgstr "下單囉"
+
+#: templates/order/order_form.html:13
+msgid "Who am I"
+msgstr "我是"
+
+#: templates/order/order_form.html:18
+msgid "who"
+msgstr "誰"
+
+#: templates/order/order_form.html:35
+msgid "Wanna..."
+msgstr "買個"
+
+#: templates/order/order_form.html:40
+#, fuzzy
+#| msgid "Select category"
+msgid "select item"
+msgstr "選擇項目"
+
+#: templates/order/order_form.html:46 tsiahpng/views.py:65
+msgid "Unsorted"
+msgstr "未分類"
+
+#: templates/order/order_form.html:64
+msgid "Note"
+msgstr "備註"
+
+#: templates/order/order_form.html:100 tsiahpng/views.py:275
+#, fuzzy
+#| msgid "Please specific a shop"
+msgid "Please specific a user"
+msgstr "請選擇使用者"
+
+#: templates/order/order_form.html:107 tsiahpng/views.py:314
+msgid "At least one item should be selected"
+msgstr "至少需要選購一個項目"
+
+#: templates/order/order_form.html:162
+msgid "Add something to "
+msgstr "加些什麼到"
+
+#: tsiahpng/models.py:99
+#, python-format
+msgid "Order from %(shop)s (created on %(time)s)"
+msgstr "訂購%(shop)s (建立於%(time)s)"
+
+#: tsiahpng/models.py:109
+msgid "Today"
+msgstr "今天"
+
+#: tsiahpng/models.py:111
+msgid "Yesterday"
+msgstr "昨天"
+
+#: tsiahpng/models.py:113
+msgid "Tomorrow"
+msgstr "明天"
+
+#: tsiahpng/views.py:41
+#, python-format
+msgid "%(num_cat)d categories. %(num_product)d documented products."
+msgstr "%(num_cat)d個分類、%(num_product)d個已建檔項目"
+
+#: tsiahpng/views.py:48
+msgid "Menu List"
+msgstr "菜單清單"
+
+#: tsiahpng/views.py:69
+#, fuzzy, python-format
+#| msgid "%(num_cat)d categories. %(num_product)d documented products."
+msgid ""
+"There are %(num_cat)d categories and %(num_product)d products documented:"
+msgstr "%(num_cat)d個分類、%(num_product)d個已建檔項目"
+
+#: tsiahpng/views.py:88
+#, python-format
+msgid "Add product to %(shop)s"
+msgstr "新增商品到%(shop)s"
+
+#: tsiahpng/views.py:106
+msgid "Name could not be empty"
+msgstr "名稱不能空白"
+
+#: tsiahpng/views.py:111
+msgid "Price should be positive number"
+msgstr "價格應為正數"
+
+#: tsiahpng/views.py:123
+#, python-format
+msgid "Successfully add %(obj)s"
+msgstr "成功新增了%(obj)s"
+
+#: tsiahpng/views.py:153
+msgid "Order List"
+msgstr "訂單總覽"
+
+#: tsiahpng/views.py:187
+msgid "Create Order"
+msgstr "新增訂單"
+
+#: tsiahpng/views.py:230
+#, python-format
+msgid "Normal x%(qty)d"
+msgstr "正常 x%(qty)d"
+
+#: tsiahpng/views.py:319
+#, python-format
+msgid "%(user)s ordered %(items)s; $%(price)s in total."
+msgstr "%(user)s買了%(items)s；共計%(price)s元。"

@@ -1,0 +1,98 @@
+{% extends 'basic.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block __css__ %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/calendar.min.css' %}">
+{% endblock %}
+
+{% block __js__ %}
+<script type="text/javascript" src="{% static 'js/calendar.min.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<form method="POST" class="ui form">
+    {% csrf_token %}
+
+    <div class="field">
+        <label>{% trans 'Readable name' %}</label>
+        {% now 'Y/n/j G:i' as current_time %}
+        <input type="text" name="name" placeholder="{% blocktrans %}Ordering something... (Created on {{ current_time }}){% endblocktrans %}">
+    </div><!-- ./readable -->
+
+    <div class="required field">
+        <label>{% trans 'Shop' %}</label>
+        <div class="ui selection dropdown" id="select-shop">
+            <input type="hidden" name="shop" value="{{ last_shop }}">
+            <i class="dropdown icon"></i>
+            <div class="default text">{% trans 'Select shop' %}</div>
+            <div class="menu">
+                {% for shop in shops %}
+                <div class="item" data-value="{{ shop.id }}">{{ shop }}</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div><!-- ./shop -->
+
+    <div class="required field">
+        <label>{% trans 'Date' %}</label>
+        <div class="ui calendar" id="select-date">
+            <div class="ui input left icon">
+                <i class="calendar alternate outline icon"></i>
+                <input type="text" name="date" value="{{ default_date | date:'Y/n/j' }}">
+            </div>
+        </div>
+    </div><!-- ./calendar -->
+
+    <div class="field">
+        <label>{% trans 'Additional Note' %}</label>
+        <textarea name="note"></textarea>
+    </div><!-- ./note -->
+
+    <div class="ui primary submit button">{% trans 'Submit' %}</div>
+    <div class="ui reset button">{% trans 'Reset' %}</div>
+
+    <div class="ui error message"></div>
+
+</form>
+
+<script type="text/javascript">
+$('#select-shop').dropdown();
+
+$('#select-date').calendar({
+    type: 'date',
+    today: true,
+    formatter: {
+        date: function (date) {
+            var str = '';
+            str += date.getFullYear();
+            str += '/';
+            str += date.getMonth() + 1;
+            str += '/';
+            str += date.getDate();
+            return str;
+        }
+    }
+});
+
+$('form.form').form({
+    'on': 'blur',
+    fields: {
+        shop: {
+            identifier: 'shop',
+            rules: [{
+                type: 'empty',
+                prompt: '{% trans "Please specific a shop" %}'
+            }]
+        },
+        date: {
+            identifier: 'date',
+            rules: [{
+                type: 'empty',
+                prompt: '{% trans "Date could not be empty" %}'
+            }]
+        }
+    }
+});
+</script>
+{% endblock %}

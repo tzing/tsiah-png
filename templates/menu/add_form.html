@@ -1,0 +1,84 @@
+{% load i18n %}
+
+{% if success_message %}
+<div class="ui success message">
+    <i class="close icon"></i>
+    <div class="header">
+        {% trans 'Item added!' %}
+    </div>
+    <p>{{ success_message }}</p>
+</div>
+{% endif %}
+
+<form method="POST" class="ui form">
+    {% csrf_token %}
+
+    <div class="field">
+        <label>{% trans 'Shop name' %}</label>
+        <input type="hidden" name="shop" value="{{ shop.id }}">
+        <p>{{ shop }}</p>
+    </div><!-- ./shop -->
+
+    <div class="field">
+        <label>{% trans 'Category' %}</label>
+        <div class="ui selection dropdown" id="select-category">
+            <input type="hidden" name="category" value="{{ last_category }}">
+            <i class="dropdown icon"></i>
+            <div class="default text"></div>
+            <div class="menu">
+                {% for category in categories %}
+                <div class="item" data-value="{{ category.id }}">{{ category }}</div>
+                {% endfor %}
+                <div class="item" data-value="-1">{% trans 'No category' %}</div>
+            </div>
+        </div>
+    </div><!-- ./category -->
+
+    <div class="field">
+        <label>{% trans 'Product name' %}</label>
+        <input type="text" name="name">
+    </div><!-- ./name -->
+
+    <div class="field">
+        <label>{% trans 'Price' %}</label>
+        <input type="number" name="price" value="30" min="0" step="5">
+    </div><!-- ./price -->
+
+    <div class="ui primary submit button">{% trans 'Submit' %}</div>
+    <div class="ui reset button">{% trans 'Reset' %}</div>
+
+    <div class="ui error message">
+        {% if error_message %}
+        <ul class="list">
+            {% for msg in error_message %}
+            <li>{{ msg }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+
+</form>
+
+<script type="text/javascript">
+$('#select-category').dropdown();
+
+$('form.form').form({
+    'on': 'blur',
+    fields: {
+        category: {
+            identifier: 'category',
+            rules: [{
+                type: 'empty',
+                prompt: '{% trans "Please select a category" %}'
+            }]
+        },
+        name: {
+            identifier: 'name',
+            rules: [{
+                type: 'regExp[/\\S/]',
+                prompt: '{% trans "Item name could not be empty" %}'
+            }]
+        }
+    }
+});
+</script>

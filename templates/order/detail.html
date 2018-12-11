@@ -1,0 +1,121 @@
+{% extends 'basic.html' %}
+{% load i18n %}
+{% load humanize %}
+
+{% block content %}
+{% if order.note %}
+
+{% if success_message %}
+<div class="ui vertical segment">
+    <div class="ui success message">
+        {{ success_message }}
+    </div>
+</div>
+{% endif %}
+
+<div class="ui vertical segment">
+    {{ order.note | linebreaks }}
+</div>
+{% endif %}
+
+<div class="ui vertical segment">
+    <ul class="ui list">
+        {% with order.create_time as create_time %}
+        <li>{% blocktrans %}Created on {{ create_time }}{% endblocktrans %}</li>
+        {% endwith %}
+
+        {% with order.shop as shop %}
+        <li>{% blocktrans %}Ordering {{ shop }}{% endblocktrans %}</li>
+        {% endwith %}
+
+        {% with order.order_date as date %}
+        <li>{% blocktrans %}Order on {{ date }}{% endblocktrans %}</li>
+        {% endwith %}
+    </ul>
+</div>
+
+<div class="ui vertical segment">
+    {% include 'order/shop_info_card.html' %}
+</div><!-- ./shop info -->
+
+{% if order.can_order %}
+<div class="ui vertical segment">
+    {% include 'order/order_form.html' %}
+</div>
+{% endif %}
+
+<div class="ui vertical segment">
+    <h2 class="ui header">{% trans 'Order Summary' %}</h2>
+
+    <table class="ui table">
+        <thead>
+            <tr>
+                <th class="four wide">{% trans 'Item' %}</th>
+                <th class="twelve wide">{% trans 'Quantity' %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item, desc in grouped_tickets %}
+            <tr>
+                <td>{{ item }}</td>
+                <td>{{ desc }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td class="center aligned" colspan="2">{% trans 'No tickets' %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th class="right aligned" colspan="2">
+                    <strong>{% trans 'Total:' %}</strong>
+                    {% if total_price %}
+                    ${{ total_price | intcomma }}
+                    {% else %}
+                    --
+                    {% endif %}
+                </th>
+            </tr>
+        </tfoot>
+    </table>
+</div><!-- ./order summary -->
+
+<div class="ui vertical segment">
+    <h2 class="ui header">{% trans 'Personal Summary' %}</h2>
+
+    <table class="ui table">
+        <thead>
+            <tr>
+                <th class="three wide">{% trans 'Who' %}</th>
+                <th class="ten wide">{% trans 'Item' %}</th>
+                <th class="three wide">{% trans 'Subtotal' %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for person, items, subtotal in person_tickets %}
+            <tr>
+                <td>{{ person }}</td>
+                <td>{{ items }}</td>
+                <td>${{ subtotal | intcomma }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td class="center aligned" colspan="3">{% trans 'No tickets' %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div><!-- ./personal summary -->
+
+{% if order.can_order %}
+<div class="ui vertical segment">
+    <h2 class="ui header">{% trans 'Administration' %}</h2>
+
+    <a class="ui labeled red icon button" href="{% url 'order_close' order.id %}">
+        <i class="lock icon"></i>
+        {% trans 'Close order' %}
+    </a>
+</div><!-- ./administration -->
+{% endif %}
+{% endblock %}

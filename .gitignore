@@ -52,6 +52,7 @@ coverage.xml
 # Translations
 *.mo
 *.pot
+jsi18n/
 
 # Django stuff:
 *.log
@@ -117,3 +118,6 @@ dmypy.json
 
 # Editor
 .vscode
+
+# Media
+media/

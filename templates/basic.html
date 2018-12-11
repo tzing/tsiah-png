@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block __meta__ %}
+<title>{% if title %}{{ title }}{% else %}Untitled Page{% endif %} | {% trans 'Tsia̍h-Pn̄g' %}</title>
+{% endblock %}
+
+{% block body %}
+{% include 'navbar.html' %}
+<div class="ui vertical head segment">
+    <div class="ui container">
+        <h1 class="ui header">{% if title %}{{ title }}{% else %}Untitled Page{% endif %}</h1>
+    </div>
+</div>
+
+<div class="ui vertical main segment">
+    <div class="ui text container">
+        {% block content %}Hello world!{% endblock %}
+    </div>
+</div>
+
+<div class="ui vertical foot segment">
+    {% include 'footer.html' %}
+</div>
+{% endblock %}

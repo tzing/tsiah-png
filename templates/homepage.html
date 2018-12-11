@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block __meta__ %}
+<title>{% trans 'Tsia̍h-Pn̄g' %}</title>
+{% endblock %}
+
+{% block __css__ %}
+<style>
+    .ui.head.segment {
+        padding: 8em 0 11em 0;
+    }
+
+    .ui.head.segment h1 {
+        font-size: 5em;
+        color: #ffffff;
+    }
+
+    .ui.head.segment p {
+        color: rgba(255, 255, 255, .7);
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+{% include 'navbar.html' %}
+<div class="ui vertical teal inverted head segment center aligned">
+    <div class="ui container">
+        <h1 class="ui header">{% trans 'Welcome!' %}</h1>
+        <p>{% trans "I'm hungry" %}</p>
+    </div>
+</div>
+
+<div class="ui vertical segment">
+    <div class="ui text container">
+        {% if order %}
+        <div class="ui vertical segment">
+            <h2 class="ui header">
+                <i class="clipboard list icon"></i>
+                <div class="content">
+                    <a href="{% url 'order_detail' order.id %}">{{ order }}</a>
+                    {% with date=order.short_date shop=order.shop %}
+                    <div class="sub header">{% blocktrans %}Ordering {{ shop }} on {{ date }}{% endblocktrans %}</div>
+                    {% endwith %}
+                </div>
+            </h2>
+        </div>
+
+        <div class="ui vertical segment">
+            {% include 'order/shop_info_card.html' %}
+        </div>
+
+        <div class="ui vertical segment">
+            {% include 'order/order_form.html' %}
+        </div>
+
+        {% else %}
+        <div class="ui vertical segment">
+            <p>{% trans 'No available orders' %}</p>
+        </div>
+        {% endif %}
+
+        {% if all_orders %}
+        <div class="ui vertical segment">
+            <h2 class="ui header">{% trans 'All Available Orders' %}</h2>
+
+            <div class="ui secondary fluid vertical menu">
+                {% for order_ in all_orders %}
+                <a class="item" href="{% url 'order_detail' order_.id %}">
+                    {{ order_ }}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+
+
+<div class="ui vertical foot segment">
+    {% include 'footer.html' %}
+</div>
+{% endblock %}

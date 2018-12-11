@@ -1,0 +1,54 @@
+{% extends 'basic.html' %}
+{% load i18n %}
+
+{% block content %}
+<a class="ui green labeled icon button" href="{% url 'order_create' %}">
+    <i class="plus icon"></i>
+    {% trans 'New order' %}
+</a>
+
+<div class="ui items">
+    {% for order in orders %}
+    <div class="item">
+        <div class="image">
+            <div class="ui date card {% if order.can_order %}green{% else %}grey{% endif %}">
+                <div class="content">
+                    <h2>{{ order.short_date }}</h2>
+                    <p>{{ order.shop }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="header"><a href="{% url 'order_detail' order.id %}">{{ order }}</a></div>
+
+            {% with order.create_time as create_time %}
+            <div class="meta">{% blocktrans %}Created on {{ create_time }}{% endblocktrans %}</div>
+            {% endwith %}
+
+            {% if order.note %}
+            <div class="description">
+                {{ order.note }}
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+    {% empty %}
+    <div class="item">
+        <div class="image">
+            <div class="ui grey date card">
+                <div class="content center aligned">
+                    <i class="big question icon" style="color: #767676;"></i>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="header">{% trans 'No order' %}</div>
+            <div class="description">
+                <p>{% trans 'Create one?' %}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

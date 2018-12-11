@@ -1,0 +1,61 @@
+{% extends 'basic.html' %}
+{% load i18n %}
+
+{% block content %}
+<div class="ui items">
+    {% for shop, desc in shops %}
+    <div class="item">
+
+        {% if shop.image %}
+        <div class="image">
+            <img src="{{ shop.image.url }}">
+        </div>
+        {% endif %}
+
+        <div class="content">
+            <a class="header" href="{% url 'menu_detail' shop.id %}">{{ shop }}</a>
+
+            <div class="meta">
+                <span>{{ desc }}</span>
+            </div>
+
+            {% if shop.note %}
+            <div class="description">
+                <p>{{ shop.note }}</p>
+            </div>
+            {% endif %}
+
+            <div class="extra">
+
+                {% if shop.image %}
+                <div class="ui blue label">
+                    <a href="{{ shop.image.url }}" target="_blank">
+                        <i class="image icon"></i> {% trans 'Large menu picture' %}
+                    </a>
+                </div>
+                {% endif %}
+
+                <div class="ui label">
+                    <a href="{% url 'menu_detail' shop.id %}">
+                        <i class="linkify icon"></i> {% trans 'Menu details' %}
+                    </a>
+                </div>
+
+                <div class="ui green label">
+                    <a href="{% url 'menu_add' shop.id %}">
+                        <i class="plus icon"></i> {% trans 'Add product' %}
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="item">
+        <div class="content">
+            <div class="header">{% trans 'No shop data' %}</div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
