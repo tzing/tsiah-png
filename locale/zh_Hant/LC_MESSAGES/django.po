@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-13 20:53+0800\n"
+"POT-Creation-Date: 2018-12-13 23:40+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -226,15 +226,29 @@ msgstr "誰"
 msgid "Subtotal"
 msgstr "小計"
 
-#: templates/order/detail.html:109
+#: templates/order/detail.html:108
 msgid "Administration"
 msgstr "管理"
 
 #: templates/order/detail.html:113
+msgid "Build Summary String"
+msgstr "建立彙整訊息"
+
+#: templates/order/detail.html:120
 #, fuzzy
 #| msgid "No order"
 msgid "Close order"
 msgstr "關閉訂單"
+
+#: templates/order/detail.html:128
+msgid "Summary String"
+msgstr "彙整訊息"
+
+#: templates/order/detail.html:134
+#, fuzzy
+#| msgid "Select category"
+msgid "Select Template"
+msgstr "選擇模板"
 
 #: templates/order/list.html:7
 msgid "New order"
@@ -280,13 +294,13 @@ msgstr "未分類"
 msgid "Note"
 msgstr "備註"
 
-#: templates/order/order_form.html:100 tsiahpng/views.py:267
+#: templates/order/order_form.html:100 tsiahpng/views.py:271
 #, fuzzy
 #| msgid "Please specific a shop"
 msgid "Please specific a user"
 msgstr "請選擇使用者"
 
-#: templates/order/order_form.html:107 tsiahpng/views.py:306
+#: templates/order/order_form.html:107 tsiahpng/views.py:310
 msgid "At least one item should be selected"
 msgstr "至少需要選購一個項目"
 
@@ -294,21 +308,21 @@ msgstr "至少需要選購一個項目"
 msgid "Add something to "
 msgstr "加些什麼到"
 
-#: tsiahpng/models.py:107
+#: tsiahpng/models.py:111
 #, fuzzy
 #| msgid "Order from %(shop)s (created on %(time)s)"
 msgid "Order from {shop} (created on {time:%Y/%m/%d %H:%M})"
 msgstr "訂購{shop}（建立於{time:%Y/%m/%d %H:%M}）"
 
-#: tsiahpng/models.py:117
+#: tsiahpng/models.py:121
 msgid "Today"
 msgstr "今天"
 
-#: tsiahpng/models.py:119
+#: tsiahpng/models.py:123
 msgid "Yesterday"
 msgstr "昨天"
 
-#: tsiahpng/models.py:121
+#: tsiahpng/models.py:125
 msgid "Tomorrow"
 msgstr "明天"
 
@@ -362,13 +376,13 @@ msgstr "新增訂單"
 msgid "Normal ×{qty:,}"
 msgstr "正常 x{qty:,}"
 
-#: tsiahpng/views.py:311
+#: tsiahpng/views.py:315
 #, fuzzy
 #| msgid "%(user)s ordered %(items)s; $%(price)s in total."
 msgid "{user} ordered {items}; ${price:,} in total."
 msgstr "{user}買了{items}；共計{price:,}元。"
 
-#: tsiahpng/views.py:327
+#: tsiahpng/views.py:331
 #, fuzzy, python-brace-format
 #| msgid "No order"
 msgid "Close {order}"
