@@ -15,4 +15,10 @@ urlpatterns = [
     path('order/new/', views.order_create, name='order_create'),
     path('order/<int:order_id>', views.order_detail, name='order_detail'),
     path('order/<int:order_id>-close', views.order_close, name='order_close'),
+
+    # api
+    path(
+        'api/summary/<int:order_id>',
+        views.order_summary,
+        name='api_summary_string'),
 ]

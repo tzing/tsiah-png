@@ -5,6 +5,8 @@ import django.contrib.auth.models
 
 from . import utils
 
+#TODO customized user
+
 
 class Shop(models.Model):
     id = models.AutoField(primary_key=True)
@@ -35,6 +37,8 @@ class Shop(models.Model):
 class Category(models.Model):
     """Categories of the products
     """
+    #TODO many-to-many relationship & remove shop
+
     id = models.AutoField(primary_key=True)
     shop = models.ForeignKey(Shop, models.CASCADE, db_index=True)
 
@@ -161,5 +165,109 @@ class Ticket(models.Model):
         name = str(self.item)
         if self.note:
             name += f' ({self.note}) '
-        name += f'x{self.quantity}'
+        name += f'×{self.quantity}'
         return name
+
+    @staticmethod
+    def organize(tickets):
+        """Organized scattered tickets into distinct itmes.
+
+        Parameters
+        ----------
+            tickets : query set
+                query set of models.Ticket object
+
+        Returns
+        -------
+            tickets : list of models.Ticket
+                a set of distinct tickets; NOTE these tickets are created as
+                memory objects and should not save to database, or there might
+                exists duplicated projects.
+        """
+        assert isinstance(tickets, models.query.QuerySet)
+        assert tickets.model is Ticket
+
+        all_products_id = tickets.values_list('item').order_by().distinct()
+        all_products = Product.objects.filter(id__in=all_products_id)
+
+        organized_tickets = []
+        for product in all_products:
+            related = tickets.filter(item=product)
+
+            normals = related.filter(note__isnull=True)
+            if len(normals) > 0:
+                organized_tickets.append(Ticket._aggregate_tickets(normals))
+
+            if len(normals) == len(related):
+                continue
+
+            specials = related.filter(note__isnull=False)
+            notes = specials.values_list(
+                'note', flat=True).order_by().distinct()
+            for note in notes:
+                same_ticket = specials.filter(note=note)
+                organized_tickets.append(
+                    Ticket._aggregate_tickets(same_ticket))
+
+        return organized_tickets
+
+    @staticmethod
+    def _aggregate_tickets(tickets):
+        assert len(tickets) > 0
+        sample = tickets.first()
+        return Ticket(
+            item=sample.item,
+            quantity=tickets.aggregate(val=models.Sum('quantity'))['val'],
+            price=tickets.aggregate(val=models.Sum('price'))['val'],
+            note=sample.note,
+        )
+
+
+class SummaryTemplate(models.Model):
+    """This class provide a template to render a pure-text summary for ordering
+    the meal via instant message app, since many of the shop we are eating provides
+    the order-ahead or delivery service.
+    """
+    id = models.AutoField(primary_key=True)
+
+    alias = models.CharField(max_length=256, blank=True, null=True)
+
+    template = models.TextField()  #TODO need validation
+
+    def __str__(self):
+        if self.alias:
+            return self.alias
+        elif len(self.template) > 20:
+            return self.template[:17] + '...'
+        else:
+            return self.template
+
+    def save(self, *args, **kwargs):
+        if not self.alias:
+            self.alias = None
+        super().save(*args, **kwargs)
+
+    def render(self, order):
+        """Render the string use this template.
+
+        Parameters
+        ----------
+            order : Order
+                the order to render
+
+        Returns
+        -------
+            summary_string : str
+                a summary to the order
+        """
+        assert isinstance(order, Order)
+        from django.template import Template, Context
+
+        template = '{% load ticket_stringify %}' + self.template
+        summary_string = Template(template).render(
+            Context({
+                'order': order,
+                'tickets': Ticket.organize(order.tickets()),
+            }))
+
+        return summary_string

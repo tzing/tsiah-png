@@ -104,3 +104,22 @@ Basically, you can run and use it *if you are on local network*.
     - [ ] prepaid
 - [ ] Deploy guide
 - [ ] Merge category (duplicated name is annoying)
+
+
+## Minor Feature
+
+### Summary String
+
+You can copy the summary string from the order review page, for quickly send
+the order to the shop via instant message app.
+
+It requires the prebuilt `SummaryTemplate` to provides the template on built
+the summary string.
+Rather than starts from nothing, you can use the command to create the minimal
+one and modify it.
+
+```bash
+python manage.py createtemplate <NAME_TO_TEMPLATE>
+```
+
+Use `-h` option to see more info.

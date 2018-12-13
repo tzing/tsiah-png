@@ -104,14 +104,75 @@
     </table>
 </div><!-- ./personal summary -->
 
-{% if order.is_open %}
 <div class="ui vertical segment">
     <h2 class="ui header">{% trans 'Administration' %}</h2>
 
+    {% if summary_templates %}
+    <button class="ui labeled teal icon button" id="build-summary-templates">
+        <i class="clipboard list icon"></i>
+        {% trans 'Build Summary String' %}
+    </button>
+    {% endif %}
+
+    {% if order.is_open %}
     <a class="ui labeled red icon button" href="{% url 'order_close' order.id %}">
         <i class="lock icon"></i>
         {% trans 'Close order' %}
     </a>
+    {% endif %}
+
 </div><!-- ./administration -->
+
+{% if summary_templates %}
+<div class="ui vertical segment" id="summary-templates" style="display: none;">
+    <h2 class="ui header">{% trans 'Summary String' %}</h2>
+
+    <div class="ui form">
+        <div class="field">
+            <div class="ui selection dropdown" id="select-template">
+                <i class="dropdown icon"></i>
+                <div class="default text">{% trans 'Select Template' %}</div>
+                <div class="menu">
+                    {% for template in summary_templates %}
+                    <div class="item" data-value="{{ template.id }}">{{ template }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="field">
+            <textarea id="summary-string"></textarea>
+        </div>
+
+        <div id="summary-templates-loader" class="ui loader"></div>
+
+    </div>
+</div><!-- ./summary templates -->
+
+<script>
+    $('#build-summary-templates').click(function () {
+        $('#summary-templates').slideToggle();
+    });
+
+    $('#select-template').dropdown({
+        onChange: function (id) {
+            // disable form
+            $('#select-template').addClass('disabled');
+            $('#summary-string').attr('disabled', 1);
+
+            $('#summary-templates-loader').addClass('active');
+
+            // submit query
+            $.get('{% url "api_summary_string" order.id %}?template=' + id, function (data) {
+                $('#summary-string').val(data);
+
+                $('#select-template').removeClass('disabled');
+                $('#summary-string').removeAttr('disabled');
+                $('#summary-templates-loader').removeClass('active');
+            });
+        }
+    });
+</script>
 {% endif %}
+
 {% endblock %}

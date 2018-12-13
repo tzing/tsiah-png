@@ -39,3 +39,8 @@ class OrderAdmin(admin.ModelAdmin):
 class TicketAdmin(admin.ModelAdmin):
     list_filter = ['user', 'order']
     list_display = ['id', 'order', 'user', 'item', 'quantity', 'price']
+
+
+@admin.register(models.SummaryTemplate)
+class SummaryTemplateAdmin(admin.ModelAdmin):
+    list_display = ['id', 'alias']

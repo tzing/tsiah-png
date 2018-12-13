@@ -2,6 +2,7 @@ import datetime
 
 from django.conf import settings
 from django.db.models import Sum
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.utils.translation import gettext as _
@@ -247,6 +248,9 @@ def order_detail(request, order_id):
             subtotal,
         ))
 
+    # templates
+    templates = models.SummaryTemplate.objects.all()
+
     return render(
         request, 'order/detail.html', {
             'title': str(order),
@@ -257,6 +261,7 @@ def order_detail(request, order_id):
             'error_message': error_message,
             'grouped_tickets': grouped_tickets,
             'person_tickets': person_tickets,
+            'summary_templates': templates,
         })
 
 
@@ -325,3 +330,15 @@ def order_close(request, order_id):
     return render(request, 'order/close.html', {
         'title': _('Close {order}').format(order=order),
     })
+
+
+def order_summary(request, order_id):
+    order = models.Order.objects.get(id=order_id)
+
+    template_id = request.GET.get('template')
+    if template_id is None:
+        template = models.SummaryTemplate.objects.first()
+    else:
+        template = models.SummaryTemplate.objects.get(id=template_id)
+
+    return HttpResponse(template.render(order))
