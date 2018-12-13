@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import datetime
 
 from django.utils.translation import gettext_lazy
 
@@ -142,4 +143,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Config: Tsiah-Png
 
-TSIAHPNG_DAY_END = 22
+TSIAHPNG_DAYEND = datetime.time(20, 00)

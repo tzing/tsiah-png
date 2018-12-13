@@ -11,9 +11,9 @@
     {% for order in orders %}
     <div class="item">
         <div class="image">
-            <div class="ui date card {% if order.can_order %}green{% else %}grey{% endif %}">
+            <div class="ui date card {% if order.is_open %}green{% else %}grey{% endif %}">
                 <div class="content">
-                    <h2>{{ order.short_date }}</h2>
+                    <h2>{{ order.order_date_short }}</h2>
                     <p>{{ order.shop }}</p>
                 </div>
             </div>

@@ -12,13 +12,13 @@ from . import utils
 
 
 def homepage(request):
-    orders = models.Order.objects.filter(can_order=True)
+    orders = models.Order.objects.filter(is_open=True)
     users = []
     products = []
 
     # nearest order
-    now = timezone.localtime().date()
-    nearest_order = orders.filter(order_date__gte=now).order_by(
+    today = timezone.localtime().date()
+    nearest_order = orders.filter(order_date__gte=today).order_by(
         'order_date', 'create_time').first()
 
     if nearest_order:
@@ -41,11 +41,11 @@ def menu_list(request):
     for shop in shops:
         shop_dict.append(
             (shop,
-             _('%(num_cat)d categories. %(num_product)d documented products.')
-             % {
-                 'num_cat': len(models.Category.objects.filter(shop=shop)),
-                 'num_product': len(models.Product.objects.filter(shop=shop)),
-             }))
+             _('{num_cat:,} categories. {num_product:,} documented products.').
+             format(
+                 num_cat=len(models.Category.objects.filter(shop=shop)),
+                 num_product=len(shop.products()),
+             )))  #FIXME
 
     return render(request, 'menu/list.html', {
         'title': _('Menu List'),
@@ -73,7 +73,7 @@ def menu_detail(request, shop_id):
     ) % {
         'num_cat': len(categories),
         'num_product': len(products),
-    }
+    }  #FIXME
 
     return render(
         request, 'menu/detail.html', {
@@ -88,7 +88,7 @@ def menu_add(request, shop_id):
     shop = models.Shop.objects.get(id=shop_id)
 
     # infos on page
-    title = _('Add product to %(shop)s') % {'shop': shop.name}
+    title = _('Add product to {shop}').format(shop=shop.name)
 
     success_message = None
     error_message = []
@@ -96,7 +96,7 @@ def menu_add(request, shop_id):
     # proceed post
     if request.method == 'POST':
         # attributes
-        category_id = utils.try_get(request, 'category', default=-1)
+        category_id = utils.try_parse(request.POST.get('category'), -1)
         if category_id == -1:
             category = None
         else:
@@ -104,12 +104,12 @@ def menu_add(request, shop_id):
 
         could_save = True
 
-        name = request.POST.get('name', None)
+        name = request.POST.get('name')
         if not name:
             error_message.append(_('Name could not be empty'))
             could_save = False
 
-        price = utils.try_get(request, 'price')
+        price = utils.try_parse(request.POST.get('price'))
         if price <= 0:
             error_message.append(_('Price should be positive number'))
             could_save = False
@@ -174,17 +174,8 @@ def order_create(request):
 
         return redirect('order_list')
 
-    # shops
     shops = models.Shop.objects.all()
-
-    # default date
-    day_end = 24
-    if hasattr(settings, 'TSIAHPNG_DAY_END'):
-        day_end = getattr(settings, 'TSIAHPNG_DAY_END')
-
-    default_date = datetime.datetime.now()
-    if default_date.hour >= day_end:
-        default_date += datetime.timedelta(days=1)
+    default_date = utils.order_date_default()
 
     return render(request, 'order/create.html', {
         'title': _('Create Order'),
@@ -223,21 +214,19 @@ def order_detail(request, order_id):
         noted_tickets = related_tickets.filter(note__isnull=False)
         if len(noted_tickets) == 0:
             sum_qty = related_tickets.aggregate(val=Sum('quantity'))['val']
-            grouped_tickets.append((product, f'x{sum_qty}'))
+            grouped_tickets.append((product, f'×{sum_qty}'))
             continue
 
         desc = []
         qty_normal = related_tickets.filter(note__isnull=True).aggregate(
             val=Sum('quantity'))['val']
         if qty_normal:
-            desc.append(_('Normal x%(qty)d') % {'qty': qty_normal})
+            desc.append(_('Normal ×{qty:,}').format(qty=qty_normal))
 
         for ticket in noted_tickets:
-            desc.append(f'{ticket.note} x{ticket.quantity}')
+            desc.append(f'{ticket.note} ×{ticket.quantity}')
 
         grouped_tickets.append((product, ', '.join(desc)))
-
-    total_price = tickets.aggregate(val=Sum('price'))['val']
 
     # organize tickets (for personal summary)
     person_tickets = []
@@ -267,7 +256,6 @@ def order_detail(request, order_id):
             'success_message': success_message,
             'error_message': error_message,
             'grouped_tickets': grouped_tickets,
-            'total_price': total_price,
             'person_tickets': person_tickets,
         })
 
@@ -291,12 +279,12 @@ def order_detail_post(request, order) -> (bool, str):
     sum_price = 0
     tickets = []
     for item in items:
-        qty = utils.try_get(request, f'quantity-{item.id}')
+        qty = utils.try_parse(request.POST.get(f'quantity-{item.id}'))
         if qty <= 0:
             continue
         sum_qty += qty
 
-        price = utils.try_get(request, f'price-{item.id}')
+        price = utils.try_parse(request.POST.get(f'price-{item.id}'))
         if price < 0:
             continue
         sum_price += price
@@ -319,23 +307,21 @@ def order_detail_post(request, order) -> (bool, str):
         username = user.get_full_name()
         if not username:
             username = user.get_username()
-        return True, _('%(user)s ordered %(items)s; $%(price)s in total.') % {
-            'user': username,
-            'items': ', '.join(str(t) for t in tickets),
-            'price': '{:,}'.format(sum_price),
-        }
+        return True, _('{user} ordered {items}; ${price:,} in total.').format(
+            user=username,
+            items=', '.join(str(t) for t in tickets),
+            price=sum_price,
+        )
 
 
 def order_close(request, order_id):
     order = models.Order.objects.get(id=order_id)
 
     if request.method == 'POST' and request.POST.get('close', False):
-        order.can_order = False
+        order.is_open = False
         order.save()
         return redirect('order_detail', order_id=order_id)
 
     return render(request, 'order/close.html', {
-        'title': _('Close %(order)s') % {
-            'order': str(order)
-        },
+        'title': _('Close {order}').format(order=order),
     })

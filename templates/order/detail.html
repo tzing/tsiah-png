@@ -38,7 +38,7 @@
     {% include 'order/shop_info_card.html' %}
 </div><!-- ./shop info -->
 
-{% if order.can_order %}
+{% if order.is_open %}
 <div class="ui vertical segment">
     {% include 'order/order_form.html' %}
 </div>
@@ -70,11 +70,7 @@
             <tr>
                 <th class="right aligned" colspan="2">
                     <strong>{% trans 'Total:' %}</strong>
-                    {% if total_price %}
-                    ${{ total_price | intcomma }}
-                    {% else %}
-                    --
-                    {% endif %}
+                    ${{ order.total_price | intcomma }}
                 </th>
             </tr>
         </tfoot>
@@ -108,7 +104,7 @@
     </table>
 </div><!-- ./personal summary -->
 
-{% if order.can_order %}
+{% if order.is_open %}
 <div class="ui vertical segment">
     <h2 class="ui header">{% trans 'Administration' %}</h2>
 

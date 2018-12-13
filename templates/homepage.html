@@ -39,11 +39,15 @@
                 <i class="clipboard list icon"></i>
                 <div class="content">
                     <a href="{% url 'order_detail' order.id %}">{{ order }}</a>
-                    {% with date=order.short_date shop=order.shop %}
+                    {% with date=order.order_date_short shop=order.shop %}
                     <div class="sub header">{% blocktrans %}Ordering {{ shop }} on {{ date }}{% endblocktrans %}</div>
                     {% endwith %}
                 </div>
             </h2>
+
+            {% if order.note %}
+            <p>{{ order.note }}</p>
+            {% endif %}
         </div>
 
         <div class="ui vertical segment">
@@ -76,7 +80,6 @@
 
     </div>
 </div>
-
 
 <div class="ui vertical foot segment">
     {% include 'footer.html' %}

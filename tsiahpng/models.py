@@ -3,6 +3,8 @@ from django.utils import timezone
 from django.utils.translation import gettext as _
 import django.contrib.auth.models
 
+from . import utils
+
 
 class Shop(models.Model):
     id = models.AutoField(primary_key=True)
@@ -25,6 +27,9 @@ class Shop(models.Model):
         if not self.note:
             self.note = None
         super().save(*args, **kwargs)
+
+    def products(self):
+        return Product.objects.filter(shop=self)
 
 
 class Category(models.Model):
@@ -76,17 +81,20 @@ class Order(models.Model):
     id = models.AutoField(primary_key=True)
     shop = models.ForeignKey(Shop, models.SET_NULL, null=True)
 
-    order_date = models.DateField(default=timezone.now, db_index=True)
+    order_date = models.DateField(
+        default=utils.order_date_default, db_index=True)
     create_time = models.DateTimeField(auto_now_add=True)
-    can_order = models.BooleanField(default=True)
+    is_open = models.BooleanField(default=True)
 
-    alias = models.CharField(max_length=256, blank=True)
+    alias = models.CharField(max_length=256, blank=True, null=True)
     note = models.TextField(null=True, blank=True)
 
     class Meta:
         ordering = ['-order_date', 'create_time']
 
     def save(self, *args, **kwargs):
+        if not self.alias:
+            self.alias = None
         if not self.note:
             self.note = None
         super().save(*args, **kwargs)
@@ -95,14 +103,14 @@ class Order(models.Model):
         if self.alias:
             return self.alias
         else:
-            create_time_tz = timezone.localtime(self.create_time)
-            return _('Order from %(shop)s (created on %(time)s)') % {
-                'shop': self.shop,
-                'time': create_time_tz.strftime('%Y/%m/%d %H:%M'),
-            }
+            return _(
+                'Order from {shop} (created on {time:%Y/%m/%d %H:%M})').format(
+                    shop=self.shop,
+                    time=timezone.localtime(self.create_time),
+                )
 
     @property
-    def short_date(self) -> str:
+    def order_date_short(self) -> str:
         today = timezone.localtime().date()
 
         if self.order_date == today:
@@ -113,6 +121,15 @@ class Order(models.Model):
             return _('Tomorrow')
         else:
             return self.order_date.strftime('%m/%d')
+
+    def tickets(self, **kwargs):
+        return Ticket.objects.filter(order=self, **kwargs)
+
+    def total_price(self):
+        sum_price = self.tickets().aggregate(val=models.Sum('price'))['val']
+        if not sum_price:
+            return 0
+        return sum_price
 
 
 class Ticket(models.Model):
