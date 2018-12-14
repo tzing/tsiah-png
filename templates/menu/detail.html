@@ -18,12 +18,8 @@
 </div>
 {% endif %}
 
-<div class="ui vertical segment">
-    <p>{{ summary_products }}</p>
-</div>
-
 <div class="ui second secondary menu" id="category-menu">
-    {% for category, _ in categories %}
+    {% for category, _ in menu %}
     <a class="item" href="#{{ category }}">{{ category }}</a>
     {% endfor %}
     <div class="right menu">
@@ -34,9 +30,9 @@
             </a>
         </div>
     </div>
-</div>
+</div><!-- ./category menu -->
 
-{% for category, products in categories %}
+{% for category, products in menu %}
 <div class="ui vertical segment">
     <h2 class="ui header" id="{{ category }}">{{ category }}</h2>
 

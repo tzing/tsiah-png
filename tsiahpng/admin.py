@@ -3,15 +3,9 @@ from django.contrib import admin
 from . import models
 
 
-@admin.register(models.Shop)
-class ShopAdmin(admin.ModelAdmin):
+@admin.register(models.Shop, models.Category)
+class BasicAdmin(admin.ModelAdmin):
     ...
-
-
-@admin.register(models.Category)
-class CategoryAdmin(admin.ModelAdmin):
-    list_filter = ['shop']
-    list_display = ['name', 'shop']
 
 
 @admin.register(models.Product)

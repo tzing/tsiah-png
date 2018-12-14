@@ -40,13 +40,16 @@ def menu_list(request):
 
     shop_dict = []
     for shop in shops:
+        num_products = len(shop.products())
+        num_categories = len(
+            shop.products().values_list('category').order_by().distinct())
         shop_dict.append(
             (shop,
              _('{num_cat:,} categories. {num_product:,} documented products.').
              format(
-                 num_cat=len(models.Category.objects.filter(shop=shop)),
-                 num_product=len(shop.products()),
-             )))  #FIXME
+                 num_cat=num_categories,
+                 num_product=num_products,
+             )))
 
     return render(request, 'menu/list.html', {
         'title': _('Menu List'),
@@ -56,33 +59,25 @@ def menu_list(request):
 
 def menu_detail(request, shop_id):
     shop = models.Shop.objects.get(id=shop_id)
-    categories = models.Category.objects.filter(shop=shop)
-    products = models.Product.objects.filter(shop=shop)
+    categories = models.Category.objects.filter(
+        id__in=shop.products().values_list('category').order_by().distinct())
 
     # organize the products
     category_dict = []
     for category in categories:
-        category_dict.append((category, products.filter(category=category)))
+        products = shop.products(category=category)
+        if products:
+            category_dict.append((category, products))
 
-    unsorted_products = products.filter(category__isnull=True)
+    unsorted_products = shop.products(category__isnull=True)
     if unsorted_products:
         category_dict.append((_('Unsorted'), unsorted_products))
 
-    # get summary
-    summary_products = _(
-        'There are %(num_cat)d categories and %(num_product)d products documented:'
-    ) % {
-        'num_cat': len(categories),
-        'num_product': len(products),
-    }  #FIXME
-
-    return render(
-        request, 'menu/detail.html', {
-            'title': shop.name,
-            'shop': shop,
-            'summary_products': summary_products,
-            'categories': category_dict,
-        })
+    return render(request, 'menu/detail.html', {
+        'title': shop.name,
+        'shop': shop,
+        'menu': category_dict,
+    })
 
 
 def menu_add(request, shop_id):
@@ -129,7 +124,7 @@ def menu_add(request, shop_id):
             request.session[f'menu_add/last_category/{shop_id}'] = category_id
 
     # more infos on page
-    categories = models.Category.objects.filter(shop=shop)
+    categories = models.Category.objects.all()
     last_category = request.session.get(f'menu_add/last_category/{shop_id}',
                                         -1)
 

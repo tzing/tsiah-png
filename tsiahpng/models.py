@@ -30,24 +30,15 @@ class Shop(models.Model):
             self.note = None
         super().save(*args, **kwargs)
 
-    def products(self):
-        return Product.objects.filter(shop=self)
+    def products(self, **kwargs):
+        return Product.objects.filter(shop=self, **kwargs)
 
 
 class Category(models.Model):
     """Categories of the products
     """
-    #TODO many-to-many relationship & remove shop
-
     id = models.AutoField(primary_key=True)
-    shop = models.ForeignKey(Shop, models.CASCADE, db_index=True)
-
-    priority = models.IntegerField(default=0, db_index=True)
-
-    name = models.CharField(max_length=256)
-
-    class Meta:
-        ordering = ['-priority']
+    name = models.CharField(max_length=256, unique=True)
 
     def __str__(self):
         return self.name

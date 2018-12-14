@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-13 23:40+0800\n"
+"POT-Creation-Date: 2018-12-14 16:31+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -96,7 +96,7 @@ msgstr "請選擇分類"
 msgid "Item name could not be empty"
 msgstr "名稱不能空白"
 
-#: templates/menu/detail.html:33 templates/menu/list.html:46
+#: templates/menu/detail.html:29 templates/menu/list.html:46
 msgid "Add product"
 msgstr "新增商品"
 
@@ -286,7 +286,7 @@ msgstr "買個"
 msgid "select item"
 msgstr "選擇項目"
 
-#: templates/order/order_form.html:46 tsiahpng/views.py:69
+#: templates/order/order_form.html:46 tsiahpng/views.py:74
 msgid "Unsorted"
 msgstr "未分類"
 
@@ -294,13 +294,13 @@ msgstr "未分類"
 msgid "Note"
 msgstr "備註"
 
-#: templates/order/order_form.html:100 tsiahpng/views.py:271
+#: templates/order/order_form.html:100 tsiahpng/views.py:266
 #, fuzzy
 #| msgid "Please specific a shop"
 msgid "Please specific a user"
 msgstr "請選擇使用者"
 
-#: templates/order/order_form.html:107 tsiahpng/views.py:310
+#: templates/order/order_form.html:107 tsiahpng/views.py:305
 msgid "At least one item should be selected"
 msgstr "至少需要選購一個項目"
 
@@ -308,81 +308,74 @@ msgstr "至少需要選購一個項目"
 msgid "Add something to "
 msgstr "加些什麼到"
 
-#: tsiahpng/models.py:111
+#: tsiahpng/models.py:102
 #, fuzzy
 #| msgid "Order from %(shop)s (created on %(time)s)"
 msgid "Order from {shop} (created on {time:%Y/%m/%d %H:%M})"
 msgstr "訂購{shop}（建立於{time:%Y/%m/%d %H:%M}）"
 
-#: tsiahpng/models.py:121
+#: tsiahpng/models.py:112
 msgid "Today"
 msgstr "今天"
 
-#: tsiahpng/models.py:123
+#: tsiahpng/models.py:114
 msgid "Yesterday"
 msgstr "昨天"
 
-#: tsiahpng/models.py:125
+#: tsiahpng/models.py:116
 msgid "Tomorrow"
 msgstr "明天"
 
-#: tsiahpng/views.py:45
+#: tsiahpng/views.py:48
 #, fuzzy
 #| msgid "%(num_cat)d categories. %(num_product)d documented products."
 msgid "{num_cat:,} categories. {num_product:,} documented products."
 msgstr "{num_cat:,}個分類、{num_product:,}個已建檔項目"
 
-#: tsiahpng/views.py:52
+#: tsiahpng/views.py:55
 msgid "Menu List"
 msgstr "菜單清單"
 
-#: tsiahpng/views.py:73
-#, fuzzy, python-format
-#| msgid "%(num_cat)d categories. %(num_product)d documented products."
-msgid ""
-"There are %(num_cat)d categories and %(num_product)d products documented:"
-msgstr "%(num_cat)d個分類、%(num_product)d個已建檔項目"
-
-#: tsiahpng/views.py:92
+#: tsiahpng/views.py:87
 #, fuzzy, python-brace-format
 #| msgid "Add product to %(shop)s"
 msgid "Add product to {shop}"
 msgstr "新增商品到{shop}"
 
-#: tsiahpng/views.py:110
+#: tsiahpng/views.py:105
 msgid "Name could not be empty"
 msgstr "名稱不能空白"
 
-#: tsiahpng/views.py:115
+#: tsiahpng/views.py:110
 msgid "Price should be positive number"
 msgstr "價格應為正數"
 
-#: tsiahpng/views.py:127
+#: tsiahpng/views.py:122
 #, python-format
 msgid "Successfully add %(obj)s"
 msgstr "成功新增了%(obj)s"
 
-#: tsiahpng/views.py:157
+#: tsiahpng/views.py:152
 msgid "Order List"
 msgstr "訂單總覽"
 
-#: tsiahpng/views.py:182
+#: tsiahpng/views.py:177
 msgid "Create Order"
 msgstr "新增訂單"
 
-#: tsiahpng/views.py:225
+#: tsiahpng/views.py:220
 #, fuzzy
 #| msgid "Normal x%(qty)d"
 msgid "Normal ×{qty:,}"
 msgstr "正常 x{qty:,}"
 
-#: tsiahpng/views.py:315
+#: tsiahpng/views.py:310
 #, fuzzy
 #| msgid "%(user)s ordered %(items)s; $%(price)s in total."
 msgid "{user} ordered {items}; ${price:,} in total."
 msgstr "{user}買了{items}；共計{price:,}元。"
 
-#: tsiahpng/views.py:331
+#: tsiahpng/views.py:326
 #, fuzzy, python-brace-format
 #| msgid "No order"
 msgid "Close {order}"
