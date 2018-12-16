@@ -34,7 +34,7 @@
             <div class="field">
                 <label>{% trans 'Wanna...' %}</label>
 
-                <div class="ui multiple search selection dropdown product" id="select-item">
+                <div class="ui multiple search selection dropdown product" id="select-item" data-tooltip="{% trans 'You can select an item either from the dropdown list or by typing and search' %}">
                     <input type="hidden" name="tickets">
                     <i class="dropdown icon"></i>
                     <div class="default text">{% trans 'select item' %}</div>
@@ -166,9 +166,13 @@
 
         // on remove: remove row
         onRemove: function (rm_id, _, _) {
-            $('form.form tbody tr').filter(function () {
+            var ticket_row = $('form.form tbody tr').filter(function () {
                 if ($(this).data('id') === rm_id) { return this; }
-            }).get(-1).remove();
+            });
+            if (ticket_row.length === 0) {
+                return;
+            }
+            ticket_row.get(-1).remove();
         }
 
     });

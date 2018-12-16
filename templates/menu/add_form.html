@@ -23,7 +23,7 @@
         <div class="ui selection dropdown" id="select-category">
             <input type="hidden" name="category" value="{{ last_category }}">
             <i class="dropdown icon"></i>
-            <div class="default text"></div>
+            <div class="default text">{% trans 'select category' %}</div>
             <div class="menu">
                 {% for category in categories %}
                 <div class="item" data-value="{{ category.id }}">{{ category }}</div>

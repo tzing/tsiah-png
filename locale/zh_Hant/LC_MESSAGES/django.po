@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-14 16:31+0800\n"
+"POT-Creation-Date: 2018-12-16 22:19+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -64,6 +64,12 @@ msgstr "商店名稱"
 msgid "Category"
 msgstr "分類"
 
+#: templates/menu/add_form.html:26
+#, fuzzy
+#| msgid "Please select a category"
+msgid "select category"
+msgstr "請選擇分類"
+
 #: templates/menu/add_form.html:31
 msgid "No category"
 msgstr "不分類"
@@ -96,7 +102,7 @@ msgstr "請選擇分類"
 msgid "Item name could not be empty"
 msgstr "名稱不能空白"
 
-#: templates/menu/detail.html:29 templates/menu/list.html:46
+#: templates/menu/detail.html:31 templates/menu/list.html:46
 msgid "Add product"
 msgstr "新增商品"
 
@@ -117,8 +123,10 @@ msgid "Menu"
 msgstr "菜單"
 
 #: templates/navbar.html:7
-msgid "History"
-msgstr "歷史紀錄"
+#, fuzzy
+#| msgid "Order List"
+msgid "Order History"
+msgstr "訂單總覽"
 
 #: templates/order/close.html:7
 msgid "Are you sure you want to close this order?"
@@ -250,6 +258,14 @@ msgstr "彙整訊息"
 msgid "Select Template"
 msgstr "選擇模板"
 
+#: templates/order/detail.html:150 templates/order/detail.html:185
+msgid "Copy"
+msgstr "複製內容"
+
+#: templates/order/detail.html:184
+msgid "Copied!"
+msgstr "已複製內容"
+
 #: templates/order/list.html:7
 msgid "New order"
 msgstr "新增訂單"
@@ -279,6 +295,11 @@ msgstr "誰"
 #: templates/order/order_form.html:35
 msgid "Wanna..."
 msgstr "買個"
+
+#: templates/order/order_form.html:37
+msgid ""
+"You can select an item either from the dropdown list or by typing and search"
+msgstr "你可以從下拉選單選擇商品，或輸入文字以搜尋"
 
 #: templates/order/order_form.html:40
 #, fuzzy

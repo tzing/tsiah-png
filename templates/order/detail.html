@@ -3,16 +3,16 @@
 {% load humanize %}
 
 {% block content %}
-{% if order.note %}
 
 {% if success_message %}
 <div class="ui vertical segment">
     <div class="ui success message">
-        {{ success_message }}
+        {{ success_message | linebreaks }}
     </div>
 </div>
 {% endif %}
 
+{% if order.note %}
 <div class="ui vertical segment">
     {{ order.note | linebreaks }}
 </div>
@@ -146,6 +146,10 @@
 
         <div id="summary-templates-loader" class="ui loader"></div>
 
+        <div class="field">
+            <button id="copy-button" class="ui primary button">{% trans 'Copy' %}</button>
+        </div>
+
     </div>
 </div><!-- ./summary templates -->
 
@@ -171,6 +175,14 @@
                 $('#summary-templates-loader').removeClass('active');
             });
         }
+    });
+
+    $('#copy-button').click(function () {
+        $('#summary-string').select();
+        document.execCommand('copy');
+
+        $(this).text('{% trans "Copied!" %}');
+        setTimeout(function () { $('#copy-button').text("{% trans 'Copy' %}") }, 1500);
     });
 </script>
 {% endif %}

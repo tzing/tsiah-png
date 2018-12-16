@@ -97,13 +97,12 @@ Basically, you can run and use it *if you are on local network*.
 ## TODO
 
 - [ ] layout
-    - [ ] menu detail: too many category
+    - [x] menu detail: too many category
     - [ ] order list: too many order
 - [ ] Account: for quickly review the spent money
     - [ ] pay-as-you-go
     - [ ] prepaid
 - [ ] Deploy guide
-- [ ] Merge category (duplicated name is annoying)
 
 
 ## Minor Feature

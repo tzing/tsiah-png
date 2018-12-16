@@ -46,7 +46,7 @@
             </h2>
 
             {% if order.note %}
-            <p>{{ order.note }}</p>
+            <p>{{ order.note | linebreaks }}</p>
             {% endif %}
         </div>
 

@@ -15,7 +15,7 @@
 
             {% if order.shop.note %}
             <div class="description">
-                {{ order.shop.note }}
+                {{ order.shop.note | linebreaks }}
             </div>
             {% endif %}
         </div><!-- ./shop info content -->

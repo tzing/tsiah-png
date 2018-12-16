@@ -19,10 +19,12 @@
 {% endif %}
 
 <div class="ui second secondary menu" id="category-menu">
-    {% for category, _ in menu %}
-    <a class="item" href="#{{ category }}">{{ category }}</a>
-    {% endfor %}
-    <div class="right menu">
+    <div class="left menu twelve wide">
+        {% for category, _ in menu %}
+        <a class="item" href="#{{ category }}">{{ category }}</a>
+        {% endfor %}
+    </div>
+    <div class="right menu four wide">
         <div class="item">
             <a class="ui green labeled icon button" href="{% url 'menu_add' shop.id %}">
                 <i class="plus icon"></i>
@@ -49,7 +51,14 @@
 
 <script>
     $('#category-menu').sticky({
-        offset: 39,
+        offset: 40,
     });
+
+    $('.second.menu a.item').click(function () {
+        $('html, body').animate({
+            scrollTop: $($(this).attr('href')).offset().top - 88
+        }, 400);
+        return false;
+    })
 </script>
 {% endblock %}
