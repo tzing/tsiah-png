@@ -18,6 +18,30 @@
     padding-bottom: 3em;
 }
 
+/* menu layout */
+
+.ui.fixed.menu .dropdown.item {
+    display: none;
+}
+
+.ui.fixed.menu .container {
+    flex-flow: wrap;
+}
+
+@media screen and (max-width: 768px) {
+    .ui.fixed.menu .dropdown.item {
+        display: block;
+    }
+    .ui.fixed.menu .right.menu {
+        width: 100%;
+        flex-flow: wrap;
+    }
+    .ui.fixed.menu .right.menu .item {
+        width: 100% !important;
+        margin-left: 0 !important;
+    }
+}
+
 /* color */
 
 .price {

@@ -1,7 +1,8 @@
 {% load i18n %}
-<div class="ui fixed secondary inverted teal menu">
+<div id="navbar" class="ui fixed secondary inverted teal menu">
     <div class="ui container">
         <a href="{% url 'homepage' %}" class="header item">{% trans 'Tsia̍h-Pn̄g' %}</a>
+        <a class="right dropdown item"><i class="bars icon"></i></a>
         <div class="right menu">
             <a href="{% url 'menu_list' %}" class="item">{% trans 'Menu' %}</a>
             <a href="{% url 'order_list' %}" class="item">{% trans 'Order History' %}</a>
