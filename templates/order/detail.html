@@ -141,7 +141,7 @@
         </div>
 
         <div class="field">
-            <textarea id="summary-string"></textarea>
+            <textarea id="summary-string" contenteditable="true"></textarea>
         </div>
 
         <div id="summary-templates-loader" class="ui loader"></div>
@@ -178,7 +178,16 @@
     });
 
     $('#copy-button').click(function () {
-        $('#summary-string').select();
+        var el = $('#summary-string')[0];
+
+        var range = document.createRange();
+        range.selectNodeContents(el);
+
+        var selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        el.setSelectionRange(0, 999999);
         document.execCommand('copy');
 
         $(this).text('{% trans "Copied!" %}');
