@@ -217,7 +217,7 @@ def order_detail(request, order_id):
         qty_normal = related_tickets.filter(note__isnull=True).aggregate(
             val=Sum('quantity'))['val']
         if qty_normal:
-            desc.append(_('Normal ×{qty:,}').format(qty=qty_normal))
+            desc.append(_('Original ×{qty:,}').format(qty=qty_normal))
 
         for ticket in noted_tickets:
             desc.append(f'{ticket.note} ×{ticket.quantity}')

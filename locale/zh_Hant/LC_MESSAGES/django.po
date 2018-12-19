@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-16 22:19+0800\n"
+"POT-Creation-Date: 2018-12-19 21:16+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -118,11 +118,11 @@ msgstr "詳細資訊"
 msgid "No shop data"
 msgstr "沒有店家資料"
 
-#: templates/navbar.html:6
+#: templates/navbar.html:7
 msgid "Menu"
 msgstr "菜單"
 
-#: templates/navbar.html:7
+#: templates/navbar.html:8
 #, fuzzy
 #| msgid "Order List"
 msgid "Order History"
@@ -161,7 +161,7 @@ msgstr "商店名稱"
 #, fuzzy
 #| msgid "Select category"
 msgid "Select shop"
-msgstr "選擇分類"
+msgstr "選擇店家"
 
 #: templates/order/create.html:38
 msgid "Date"
@@ -258,11 +258,11 @@ msgstr "彙整訊息"
 msgid "Select Template"
 msgstr "選擇模板"
 
-#: templates/order/detail.html:150 templates/order/detail.html:185
+#: templates/order/detail.html:150 templates/order/detail.html:194
 msgid "Copy"
 msgstr "複製內容"
 
-#: templates/order/detail.html:184
+#: templates/order/detail.html:193
 msgid "Copied!"
 msgstr "已複製內容"
 
@@ -387,8 +387,8 @@ msgstr "新增訂單"
 #: tsiahpng/views.py:220
 #, fuzzy
 #| msgid "Normal x%(qty)d"
-msgid "Normal ×{qty:,}"
-msgstr "正常 x{qty:,}"
+msgid "Original ×{qty:,}"
+msgstr "原味 x{qty:,}"
 
 #: tsiahpng/views.py:310
 #, fuzzy
