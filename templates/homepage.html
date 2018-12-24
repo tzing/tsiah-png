@@ -1,25 +1,13 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% load static %}
 
 {% block __meta__ %}
 <title>{% trans 'Tsia̍h-Pn̄g' %}</title>
 {% endblock %}
 
 {% block __css__ %}
-<style>
-    .ui.head.segment {
-        padding: 8em 0 11em 0;
-    }
-
-    .ui.head.segment h1 {
-        font-size: 5em;
-        color: #ffffff;
-    }
-
-    .ui.head.segment p {
-        color: rgba(255, 255, 255, .7);
-    }
-</style>
+<link rel="stylesheet" type="text/css" href="{% static 'css/homepage.css' %}">
 {% endblock %}
 
 {% block body %}
@@ -33,9 +21,28 @@
 
 <div class="ui vertical segment">
     <div class="ui text container">
-        {% if order %}
+        {% with upcoming_count=upcoming_orders|length %}
+        {% if upcoming_count > 1 %}
+        <!-- link to all quick ordering form -->
         <div class="ui vertical segment">
-            <h2 class="ui header">
+            <h2 class="ui header">{% blocktrans %}{{ upcoming_count }} upcoming orders{% endblocktrans %}</h2>
+
+            <div class="ui quick secondary fluid vertical menu">
+                {% for order in upcoming_orders %}
+                <a class="item" href="#order-{{ order.id }}">
+                    {{ order }}
+                </a>
+                {% endfor %}
+            </div><!-- ./menu -->
+
+            <script type="text/javascript" src="{% static 'js/homepage-scroll.js' %}"></script>
+        </div><!-- ./link to all quick ordering form -->
+        {% endif %}{% endwith %}
+
+        {% for order in upcoming_orders %}
+        <!-- loop item: an upcoming order -->
+        <div class="ui vertical segment">
+            <h2 class="ui header" id="order-{{ order.id }}">
                 <i class="clipboard list icon"></i>
                 <div class="content">
                     <a href="{% url 'order_detail' order.id %}">{{ order }}</a>
@@ -55,27 +62,29 @@
         </div>
 
         <div class="ui vertical segment">
+            {% with products=order.shop.products %}
             {% include 'order/order_form.html' %}
-        </div>
-
-        {% else %}
+            {% endwith %}
+        </div><!-- ./loop item: an upcoming order -->
+        {% empty %}
         <div class="ui vertical segment">
             <p>{% trans 'No available orders' %}</p>
         </div>
-        {% endif %}
+        {% endfor %}
 
-        {% if all_orders %}
+        {% if opened_orders %}
+        <!-- all opened orders -->
         <div class="ui vertical segment">
             <h2 class="ui header">{% trans 'All Available Orders' %}</h2>
 
             <div class="ui secondary fluid vertical menu">
-                {% for order_ in all_orders %}
-                <a class="item" href="{% url 'order_detail' order_.id %}">
-                    {{ order_ }}
+                {% for order in opened_orders %}
+                <a class="item" href="{% url 'order_detail' order.id %}">
+                    {{ order }}
                 </a>
                 {% endfor %}
             </div>
-        </div>
+        </div><!-- ./all opened orders -->
         {% endif %}
 
     </div>

@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ValidationError
+import django.core.validators
 import django.contrib.auth.models
 
 from . import utils
@@ -10,14 +12,37 @@ from . import utils
 
 class Shop(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=256)
 
-    priority = models.IntegerField(default=0, db_index=True)
+    name = models.CharField(
+        verbose_name=_('Shop name'),
+        max_length=256,
+        unique=True,
+    )
 
-    image = models.ImageField(null=True, blank=True)
-    note = models.TextField(null=True, blank=True)
+    priority = models.IntegerField(
+        verbose_name=_('Priority'),
+        default=0,
+        db_index=True,
+    )
+
+    is_active = models.BooleanField(verbose_name=_('Is active'), default=True)
+
+    image = models.ImageField(
+        verbose_name=_('Menu/shop image'),
+        null=True,
+        blank=True,
+        validators=[django.core.validators.validate_image_file_extension])
+
+    note = models.TextField(
+        verbose_name=_('Note'),
+        null=True,
+        blank=True,
+    )
 
     class Meta:
+        verbose_name = _('Shop')
+        verbose_name_plural = _('Shops')
+
         ordering = ['-priority']
 
     def __str__(self):
@@ -31,14 +56,23 @@ class Shop(models.Model):
         super().save(*args, **kwargs)
 
     def products(self, **kwargs):
-        return Product.objects.filter(shop=self, **kwargs)
+        return Product.objects.filter(shop=self, is_active=True, **kwargs)
 
 
 class Category(models.Model):
     """Categories of the products
     """
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=256, unique=True)
+
+    name = models.CharField(
+        verbose_name=_('Category name'),
+        max_length=256,
+        unique=True,
+    )
+
+    class Meta:
+        verbose_name = _('Category')
+        verbose_name_plural = _('Categories')
 
     def __str__(self):
         return self.name
@@ -48,16 +82,44 @@ class Product(models.Model):
     """The products for sale
     """
     id = models.AutoField(primary_key=True)
-    shop = models.ForeignKey(Shop, models.CASCADE, db_index=True)
+
+    shop = models.ForeignKey(
+        verbose_name=_('Shop'),
+        to=Shop,
+        on_delete=models.CASCADE,
+        db_index=True,
+    )
+
     category = models.ForeignKey(
-        Category, models.SET_NULL, db_index=True, null=True, blank=True)
+        verbose_name=_('Category'),
+        to=Category,
+        on_delete=models.SET_NULL,
+        db_index=True,
+        null=True,
+        blank=True,
+    )
 
-    priority = models.IntegerField(default=0, db_index=True)
+    is_active = models.BooleanField(verbose_name=_('Is active'), default=True)
 
-    name = models.CharField(max_length=256)
-    price = models.PositiveIntegerField()
+    priority = models.IntegerField(
+        verbose_name=_('Priority'),
+        default=0,
+        db_index=True,
+    )
+
+    name = models.CharField(
+        verbose_name=_('Product name'),
+        max_length=256,
+    )
+
+    price = models.PositiveIntegerField(verbose_name=_('Price'))
 
     class Meta:
+        verbose_name = _('Product')
+        verbose_name_plural = _('Products')
+
+        unique_together = ('shop', 'name')
+
         ordering = ['shop', 'category', '-priority']
 
     def __str__(self):
@@ -74,17 +136,45 @@ class Order(models.Model):
     tickets from every user
     """
     id = models.AutoField(primary_key=True)
-    shop = models.ForeignKey(Shop, models.SET_NULL, null=True)
+
+    shop = models.ForeignKey(
+        verbose_name=_('Shop'),
+        to=Shop,
+        on_delete=models.SET_NULL,
+        null=True,
+    )
 
     order_date = models.DateField(
-        default=utils.order_date_default, db_index=True)
-    create_time = models.DateTimeField(auto_now_add=True)
-    is_open = models.BooleanField(default=True)
+        verbose_name=_('Order date'),
+        default=utils.order_date_default,
+        db_index=True,
+    )
 
-    alias = models.CharField(max_length=256, blank=True, null=True)
-    note = models.TextField(null=True, blank=True)
+    create_time = models.DateTimeField(
+        verbose_name=_('Creation time'),
+        auto_now_add=True,
+    )
+
+    is_open = models.BooleanField(verbose_name=_('Is opened'), default=True)
+    is_active = models.BooleanField(verbose_name=_('Is active'), default=True)
+
+    alias = models.CharField(
+        verbose_name=_('Order alias'),
+        max_length=256,
+        blank=True,
+        null=True,
+    )
+
+    note = models.TextField(
+        verbose_name=_('Note'),
+        null=True,
+        blank=True,
+    )
 
     class Meta:
+        verbose_name = _('Order')
+        verbose_name_plural = _('Orders')
+
         ordering = ['-order_date', 'create_time']
 
     def save(self, *args, **kwargs):
@@ -131,20 +221,42 @@ class Ticket(models.Model):
     """A ticket recorded the detail of the item that people ordered
     """
     id = models.AutoField(primary_key=True)
-    order = models.ForeignKey(Order, models.CASCADE, db_index=True)
+
+    order = models.ForeignKey(
+        verbose_name=_('Order'),
+        to=Order,
+        on_delete=models.CASCADE,
+        db_index=True,
+    )
+
     user = models.ForeignKey(
-        django.contrib.auth.models.User,
-        models.SET_NULL,
+        verbose_name=_('User'),
+        to=django.contrib.auth.models.User,
+        on_delete=models.SET_NULL,
         null=True,
-        db_index=True)
+        db_index=True,
+    )
 
-    item = models.ForeignKey(Product, models.SET_NULL, null=True)
+    item = models.ForeignKey(
+        verbose_name=_('Item'),
+        to=Product,
+        on_delete=models.SET_NULL,
+        null=True,
+    )
 
-    quantity = models.IntegerField(default=0)
-    price = models.IntegerField(default=0)
-    note = models.TextField(null=True, blank=True)
+    quantity = models.IntegerField(verbose_name=_('Quantity'), default=0)
+    price = models.IntegerField(verbose_name=_('Price'), default=0)
+
+    note = models.TextField(
+        verbose_name=_('Note'),
+        null=True,
+        blank=True,
+    )
 
     class Meta:
+        verbose_name = _('Ordered Item')
+        verbose_name_plural = _('Ordered Items')
+
         ordering = ['order', 'user']
 
     def save(self, *args, **kwargs):
@@ -221,9 +333,29 @@ class SummaryTemplate(models.Model):
     """
     id = models.AutoField(primary_key=True)
 
-    alias = models.CharField(max_length=256, blank=True, null=True)
+    alias = models.CharField(
+        verbose_name=_('Template name'),
+        max_length=256,
+        blank=True,
+        null=True,
+    )
 
-    template = models.TextField()  #TODO need validation
+    # TODO need validation
+    template = models.TextField(verbose_name=_('Template'))
+
+    priority = models.IntegerField(
+        verbose_name=_('Priority'),
+        default=0,
+        db_index=True,
+    )
+
+    is_active = models.BooleanField(verbose_name=_('Is active'), default=True)
+
+    class Meta:
+        verbose_name = _('Template of summary string')
+        verbose_name_plural = _('Templates of summary string')
+
+        ordering = ['-priority']
 
     def __str__(self):
         if self.alias:

@@ -1,6 +1,12 @@
+import uuid
+
 from django.urls import path
+from django.views.decorators.cache import cache_page
+from django.views.i18n import JavaScriptCatalog
 
 from . import views
+
+stage_id = uuid.uuid4()  # workaround for translation version
 
 urlpatterns = [
     path('', views.homepage, name='homepage'),
@@ -21,4 +27,11 @@ urlpatterns = [
         'api/summary/<int:order_id>',
         views.order_summary,
         name='api_summary_string'),
+
+    # i18n
+    path(
+        'jsi18n/',
+        cache_page(86400, key_prefix=f'jsi18n-{stage_id.hex}')(
+            JavaScriptCatalog.as_view(packages=['tsiahpng'])),
+        name='javascript-catalog'),
 ]

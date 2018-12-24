@@ -56,43 +56,5 @@
 
 </form>
 
-<script type="text/javascript">
-$('#select-shop').dropdown();
-
-$('#select-date').calendar({
-    type: 'date',
-    today: true,
-    formatter: {
-        date: function (date) {
-            var str = '';
-            str += date.getFullYear();
-            str += '/';
-            str += date.getMonth() + 1;
-            str += '/';
-            str += date.getDate();
-            return str;
-        }
-    }
-});
-
-$('form.form').form({
-    'on': 'blur',
-    fields: {
-        shop: {
-            identifier: 'shop',
-            rules: [{
-                type: 'empty',
-                prompt: '{% trans "Please specific a shop" %}'
-            }]
-        },
-        date: {
-            identifier: 'date',
-            rules: [{
-                type: 'empty',
-                prompt: '{% trans "Date could not be empty" %}'
-            }]
-        }
-    }
-});
-</script>
+<script type="text/javascript" src="{% static 'js/order/create.js' %}"></script>
 {% endblock %}

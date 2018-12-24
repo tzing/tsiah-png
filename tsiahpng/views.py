@@ -13,30 +13,25 @@ from . import utils
 
 
 def homepage(request):
-    orders = models.Order.objects.filter(is_open=True)
-    users = []
-    products = []
+    opened_orders = models.Order.objects.filter(is_open=True, is_active=True)
+    users = auth_models.User.objects.filter(is_active=True)
 
-    # nearest order
+    # quick ordering
     today = timezone.localtime().date()
-    nearest_order = orders.filter(order_date__gte=today).order_by(
-        'order_date', 'create_time').first()
-
-    if nearest_order:
-        users = auth_models.User.objects.filter(is_active=True)
-        products = models.Product.objects.filter(shop=nearest_order.shop)
+    endday = today + datetime.timedelta(3)
+    upcoming_orders = opened_orders.filter(
+        order_date__gte=today, order_date__lte=endday)
 
     return render(
         request, 'homepage.html', {
-            'order': nearest_order,
             'users': users,
-            'products': products,
-            'all_orders': orders,
+            'opened_orders': opened_orders,
+            'upcoming_orders': upcoming_orders,
         })
 
 
 def menu_list(request):
-    shops = models.Shop.objects.all()
+    shops = models.Shop.objects.filter(is_active=True)
 
     shop_dict = []
     for shop in shops:
@@ -128,14 +123,8 @@ def menu_add(request, shop_id):
     last_category = request.session.get(f'menu_add/last_category/{shop_id}',
                                         -1)
 
-    # page render
-    is_compact = request.GET.get('compact', False)
-    template = 'menu/add.html'
-    if is_compact:
-        template = 'menu/add_compact.html'
-
     return render(
-        request, template, {
+        request, 'menu/add.html', {
             'title': title,
             'shop': shop,
             'categories': categories,
@@ -146,7 +135,7 @@ def menu_add(request, shop_id):
 
 
 def order_list(request):
-    orders = models.Order.objects.all()
+    orders = models.Order.objects.filter(is_active=True)
 
     return render(request, 'order/list.html', {
         'title': _('Order List'),
@@ -170,7 +159,7 @@ def order_create(request):
 
         return redirect('order_list')
 
-    shops = models.Shop.objects.all()
+    shops = models.Shop.objects.filter(is_active=True)
     default_date = utils.order_date_default()
 
     return render(request, 'order/create.html', {
@@ -197,7 +186,7 @@ def order_detail(request, order_id):
 
     # basic infos for rendering
     users = auth_models.User.objects.filter(is_active=True)
-    products = models.Product.objects.filter(shop=order.shop)
+    products = order.shop.products()
     tickets = models.Ticket.objects.filter(order=order)
 
     # organize tickets (for order summary)
@@ -244,7 +233,7 @@ def order_detail(request, order_id):
         ))
 
     # templates
-    templates = models.SummaryTemplate.objects.all()
+    templates = models.SummaryTemplate.objects.filter(is_active=True)
 
     return render(
         request, 'order/detail.html', {

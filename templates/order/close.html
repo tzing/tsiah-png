@@ -1,5 +1,10 @@
 {% extends 'basic.html' %}
 {% load i18n %}
+{% load static %}
+
+{% block __js__ %}
+<script type="text/javascript" src="{% static 'js/order/close.js' %}"></script>
+{% endblock %}
 
 {% block content %}
 <div class="ui vertical segment">
@@ -13,10 +18,4 @@
         <a class="ui button" id="no-button">{% trans 'No' %}</a>
     </form>
 </div>
-
-<script>
-    $('#no-button').click(function () {
-        history.back();
-    })
-</script>
 {% endblock %}

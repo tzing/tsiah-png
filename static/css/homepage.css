@@ -1,0 +1,12 @@
+.ui.head.segment {
+    padding: 8em 0 11em 0;
+}
+
+.ui.head.segment h1 {
+    font-size: 5em;
+    color: #ffffff;
+}
+
+.ui.head.segment p {
+    color: rgba(255, 255, 255, .7);
+}

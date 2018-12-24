@@ -20,13 +20,14 @@ class ProductAdmin(admin.ModelAdmin):
         'shop',
         'category',
         'price',
+        'is_active',
     ]
 
 
 @admin.register(models.Order)
 class OrderAdmin(admin.ModelAdmin):
     list_filter = ['shop']
-    list_display = ['id', 'alias', 'shop']
+    list_display = ['id', 'alias', 'shop', 'is_open', 'is_active']
 
 
 @admin.register(models.Ticket)
@@ -37,4 +38,4 @@ class TicketAdmin(admin.ModelAdmin):
 
 @admin.register(models.SummaryTemplate)
 class SummaryTemplateAdmin(admin.ModelAdmin):
-    list_display = ['id', 'alias']
+    list_display = ['id', 'alias', 'is_active']

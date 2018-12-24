@@ -1,5 +1,6 @@
 {% load i18n %}
 {% load humanize %}
+{% load static %}
 <form class="ui form" method="POST" action="{% url 'order_detail' order.id %}">
     <div class="ui fluid raised card">
 
@@ -12,7 +13,7 @@
             <div class="required field">
                 <label>{% trans 'Who am I' %}</label>
 
-                <div class="ui selection dropdown" id="select-user">
+                <div class="ui user search selection dropdown">
                     <input type="hidden" name="user">
                     <i class="dropdown icon"></i>
                     <div class="default text">{% trans 'who' %}</div>
@@ -34,7 +35,7 @@
             <div class="field">
                 <label>{% trans 'Wanna...' %}</label>
 
-                <div class="ui multiple search selection dropdown product" id="select-item" data-tooltip="{% trans 'You can select an item either from the dropdown list or by typing and search' %}">
+                <div class="ui multiple search selection dropdown product" data-tooltip="{% trans 'You can select an item either from the dropdown list or by typing and search' %}">
                     <input type="hidden" name="tickets">
                     <i class="dropdown icon"></i>
                     <div class="default text">{% trans 'select item' %}</div>
@@ -89,91 +90,4 @@
 
 </form>
 
-<script>
-    $('form.form').form({
-        'on': 'blur',
-        fields: {
-            user: {
-                identifier: 'user',
-                rules: [{
-                    type: 'empty',
-                    prompt: '{% trans "Please specific a user" %}'
-                }]
-            },
-            tickets: {
-                identifier: 'tickets',
-                rules: [{
-                    type: 'empty',
-                    prompt: '{% trans "At least one item should be selected" %}'
-                }]
-            }
-        }
-    });
-
-    $('#select-user').dropdown();
-
-    $('#select-item').dropdown({
-        fullTextSearch: true,
-        match: 'text',
-
-        // on add: create row to order food
-        onAdd: function (add_id, _, add_obj) {
-            var id = add_id;
-            var name = add_obj.data('name');
-            var price = add_obj.data('price');
-
-            // remove 'no ticket' row
-            $('tr.hint').remove();
-
-            // add row
-            var row = $('<tr></tr>').data('id', id);
-            $('form.form tbody').append(row);
-
-            // item name
-            row.append($('<td></td>').append(name));
-
-            // quantity
-            row.append($('<td></td>').append(
-                $('<input>')
-                    .attr('type', 'number')
-                    .attr('name', 'quantity-' + id)
-                    .attr('value', 1)
-                    .attr('min', 0)
-                    .change(function () {
-                        $('input[name="price-' + id + '"]').val($(this).val() * price);
-                    })
-            ));
-
-            // price
-            row.append($('<td></td>').append(
-                $('<input>')
-                    .attr('type', 'number')
-                    .attr('name', 'price-' + id)
-                    .attr('min', 0)
-                    .attr('step', 5)
-                    .attr('value', price)
-            ));
-
-            // note
-            row.append($('<td></td>').append(
-                $('<input>')
-                    .attr('name', 'note-' + id)
-                    .attr('type', 'text')
-                    .attr('placeholder', '{% trans "Add something to " %}' + name)
-            ));
-
-        },
-
-        // on remove: remove row
-        onRemove: function (rm_id, _, _) {
-            var ticket_row = $('form.form tbody tr').filter(function () {
-                if ($(this).data('id') === rm_id) { return this; }
-            });
-            if (ticket_row.length === 0) {
-                return;
-            }
-            ticket_row.get(-1).remove();
-        }
-
-    });
-</script>
+<script type="text/javascript" src="{% static 'js/order/form.js' %}"></script>

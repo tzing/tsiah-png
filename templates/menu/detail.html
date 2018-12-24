@@ -1,6 +1,11 @@
 {% extends 'basic.html' %}
 {% load i18n %}
+{% load static %}
 {% load humanize %}
+
+{% block __js__ %}
+<script type="text/javascript" src="{% static 'js/menu/detail.js' %}"></script>
+{% endblock %}
 
 {% block content %}
 
@@ -48,17 +53,4 @@
     </div>
 </div>
 {% endfor %}
-
-<script>
-    $('#category-menu').sticky({
-        offset: 40,
-    });
-
-    $('.second.menu a.item').click(function () {
-        $('html, body').animate({
-            scrollTop: $($(this).attr('href')).offset().top - 88
-        }, 400);
-        return false;
-    })
-</script>
 {% endblock %}

@@ -1,0 +1,61 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-12-24 19:22+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: static/js/menu/add.js:11
+msgid "Please select a category"
+msgstr "請選擇分類"
+
+#: static/js/menu/add.js:18
+msgid "Item name could not be empty"
+msgstr "名稱不能空白"
+
+#: static/js/order/create.js:26
+#, fuzzy
+#| msgid "Please select a category"
+msgid "Please specific a shop"
+msgstr "請指定店家"
+
+#: static/js/order/create.js:33
+#, fuzzy
+#| msgid "Item name could not be empty"
+msgid "Date could not be empty"
+msgstr "日期不能空白"
+
+#: static/js/order/detail.js:38
+msgid "Copied!"
+msgstr "複製內容"
+
+#: static/js/order/detail.js:40
+msgid "Copy"
+msgstr "已複製內容"
+
+#: static/js/order/form.js:15
+#, fuzzy
+#| msgid "Please select a category"
+msgid "Please specific a user"
+msgstr "請指定店家"
+
+#: static/js/order/form.js:22
+msgid "At least one item should be selected"
+msgstr "至少需要選購一個項目"
+
+#: static/js/order/form.js:77
+msgid "Add something to "
+msgstr "加些什麼到"
