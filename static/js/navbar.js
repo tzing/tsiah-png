@@ -3,7 +3,7 @@ $(document).ready(function () {
         if ($(window).width() < 768) {
             $('#navbar .right.menu').hide();
         } else {
-            $('#navbar .right.menu').show();
+            $('#navbar .right.menu').css('display', 'flex');
         }
     });
 
