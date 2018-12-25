@@ -11,19 +11,28 @@
 {% endblock %}
 
 {% block content %}
+<div class="ui vertical segment">
+    <div class="ui breadcrumb">
+        <a class="section" href="{% url 'homepage' %}">{% trans 'Tsia̍h-Pn̄g' %}</a>
+        <div class="divider"> / </div>
+        <a class="section" href="{% url 'order_list' %}">{% trans 'Order History' %}</a>
+        <div class="divider"> / </div>
+        <div class="active section">{{ title }}</div>
+    </div>
+</div><!-- ./breadcrumb -->
 
 {% if success_message %}
 <div class="ui vertical segment">
     <div class="ui success message">
         {{ success_message | linebreaks }}
     </div>
-</div>
+</div><!-- ./success_message -->
 {% endif %}
 
 {% if order.note %}
 <div class="ui vertical segment">
     {{ order.note | linebreaks }}
-</div>
+</div><!-- ./note -->
 {% endif %}
 
 <div class="ui vertical segment">
@@ -40,7 +49,7 @@
         <li>{% blocktrans %}Order on {{ date }}{% endblocktrans %}</li>
         {% endwith %}
     </ul>
-</div>
+</div><!-- ./order info -->
 
 <div class="ui vertical segment">
     {% include 'order/shop_info_card.html' %}

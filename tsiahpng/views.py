@@ -313,6 +313,7 @@ def order_close(request, order_id):
 
     return render(request, 'order/close.html', {
         'title': _('Close {order}').format(order=order),
+        'order': order,
     })
 
 

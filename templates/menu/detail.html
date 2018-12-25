@@ -8,6 +8,15 @@
 {% endblock %}
 
 {% block content %}
+<div class="ui vertical segment">
+    <div class="ui breadcrumb">
+        <a class="section" href="{% url 'homepage' %}">{% trans 'Tsia̍h-Pn̄g' %}</a>
+        <div class="divider"> / </div>
+        <a class="section" href="{% url 'menu_list' %}">{% trans 'Menu' %}</a>
+        <div class="divider"> / </div>
+        <div class="active section">{{ title }}</div>
+    </div>
+</div>
 
 {% if shop.image %}
 <div class="ui vertical segment">

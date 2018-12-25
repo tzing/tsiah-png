@@ -8,6 +8,18 @@
 
 {% block content %}
 <div class="ui vertical segment">
+    <div class="ui breadcrumb">
+        <a class="section" href="{% url 'homepage' %}">{% trans 'Tsia̍h-Pn̄g' %}</a>
+        <div class="divider"> / </div>
+        <a class="section" href="{% url 'order_list' %}">{% trans 'Order History' %}</a>
+        <div class="divider"> / </div>
+        <a class="section" href="{% url 'order_detail' order.id %}">{{ order }}</a>
+        <div class="divider"> / </div>
+        <div class="active section">{% trans 'Close order' %}</div>
+    </div>
+</div><!-- ./breadcrumb -->
+
+<div class="ui vertical segment">
     <form class="ui form" method="POST">
         <p>{% trans 'Are you sure you want to close this order?' %}</p>
 
