@@ -309,10 +309,12 @@ def order_close(request, order_id):
     if request.method == 'POST' and request.POST.get('close', False):
         order.is_open = False
         order.save()
+
+        messages.success(request, _('Successfully closed this order'))
         return redirect('order_detail', order_id=order_id)
 
     return render(request, 'order/close.html', {
-        'title': _('Close {order}').format(order=order),
+        'title': _('Close order'),
         'order': order,
     })
 
