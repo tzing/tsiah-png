@@ -8,6 +8,8 @@ from django.utils import timezone
 from django.utils.translation import gettext as _
 import django.contrib.auth.models as auth_models
 
+from django.contrib import messages
+
 from . import models
 from . import utils
 
