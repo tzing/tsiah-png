@@ -68,7 +68,10 @@
         </div><!-- ./loop item: an upcoming order -->
         {% empty %}
         <div class="ui vertical segment">
-            <p>{% trans 'No available orders in the future' %}</p>
+            <p>
+                {% trans 'No orders in the next few days.' %}
+                <a href="{% url 'order_create' %}">{% trans 'Create one?' %}</a>
+            </p>
         </div>
         {% endfor %}
 

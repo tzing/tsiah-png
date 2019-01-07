@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-25 22:13+0800\n"
+"POT-Creation-Date: 2019-01-07 23:28+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,25 +25,6 @@ msgstr "繁體中文"
 #: msite/settings.py:116
 msgid "English"
 msgstr "英文"
-
-#: templates/account/list.html:7 templates/order/list.html:15
-msgid "New order"
-msgstr "新增訂單"
-
-#: templates/account/list.html:25 templates/order/detail.html:41
-#: templates/order/list.html:33
-#, fuzzy, python-format
-#| msgid "Ordering something... (Created on %(current_time)s)"
-msgid "Created on %(create_time)s"
-msgstr "建立於%(create_time)s"
-
-#: templates/account/list.html:46 templates/order/list.html:54
-msgid "No order"
-msgstr "沒有訂單"
-
-#: templates/account/list.html:48 templates/order/list.html:56
-msgid "Create one?"
-msgstr "新增一個？"
 
 #: templates/basic.html:5 templates/homepage.html:6 templates/menu/add.html:12
 #: templates/menu/detail.html:13 templates/menu/list.html:7
@@ -72,13 +53,15 @@ msgstr "%(upcoming_count)s個近期訂單"
 msgid "Ordering %(shop)s on %(date)s"
 msgstr "在%(date)s購買%(shop)s"
 
-#: templates/homepage.html:71
-#, fuzzy
-#| msgid "No available orders"
-msgid "No available orders in the future"
-msgstr "沒有未來的開放的訂單"
+#: templates/homepage.html:72
+msgid "No orders in the next few days."
+msgstr "沒有近期的開放的訂單。"
 
-#: templates/homepage.html:78
+#: templates/homepage.html:73 templates/order/list.html:56
+msgid "Create one?"
+msgstr "新增一個？"
+
+#: templates/homepage.html:81
 msgid "All Available Orders"
 msgstr "所有開放訂單"
 
@@ -113,22 +96,23 @@ msgstr "不分類"
 msgid "Product name"
 msgstr "商品名稱"
 
-#: templates/menu/add.html:61 templates/order/order_form.html:64
+#: templates/menu/add.html:61 templates/order/order_form.html:67
 #: tsiahpng/models.py:115 tsiahpng/models.py:248
 msgid "Price"
 msgstr "價格"
 
 #: templates/menu/add.html:65 templates/order/create.html:62
-#: templates/order/order_form.html:75
+#: templates/order/order_form.html:78
 msgid "Submit"
 msgstr "送出"
 
 #: templates/menu/add.html:66 templates/order/create.html:63
-#: templates/order/order_form.html:76
+#: templates/order/order_form.html:79
 msgid "Reset"
 msgstr "重設"
 
 #: templates/menu/detail.html:45 templates/menu/list.html:54
+#: templates/order/order_form.html:38
 msgid "Add product"
 msgstr "新增商品"
 
@@ -152,6 +136,7 @@ msgid "Order History"
 msgstr "訂單總覽"
 
 #: templates/order/close.html:18 templates/order/detail.html:137
+#: tsiahpng/views.py:317
 #, fuzzy
 #| msgid "No order"
 msgid "Close order"
@@ -201,6 +186,12 @@ msgstr "日期"
 msgid "Additional Note"
 msgstr "附加說明"
 
+#: templates/order/detail.html:41 templates/order/list.html:33
+#, fuzzy, python-format
+#| msgid "Ordering something... (Created on %(current_time)s)"
+msgid "Created on %(create_time)s"
+msgstr "建立於%(create_time)s"
+
 #: templates/order/detail.html:45
 #, python-format
 msgid "Ordering %(shop)s"
@@ -217,17 +208,17 @@ msgid "Order Summary"
 msgstr "訂單整理"
 
 #: templates/order/detail.html:70 templates/order/detail.html:104
-#: templates/order/order_form.html:62 tsiahpng/models.py:241
+#: templates/order/order_form.html:65 tsiahpng/models.py:241
 msgid "Item"
 msgstr "項目"
 
-#: templates/order/detail.html:71 templates/order/order_form.html:63
+#: templates/order/detail.html:71 templates/order/order_form.html:66
 #: tsiahpng/models.py:247
 msgid "Quantity"
 msgstr "數量"
 
 #: templates/order/detail.html:82 templates/order/detail.html:117
-#: templates/order/order_form.html:70
+#: templates/order/order_form.html:73
 msgid "No tickets"
 msgstr "還沒下單"
 
@@ -273,6 +264,14 @@ msgstr "選擇模板"
 msgid "Copy"
 msgstr "複製內容"
 
+#: templates/order/list.html:15
+msgid "New order"
+msgstr "新增訂單"
+
+#: templates/order/list.html:54
+msgid "No order"
+msgstr "沒有訂單"
+
 #: templates/order/order_form.html:8
 #, fuzzy
 #| msgid "Order List"
@@ -291,22 +290,26 @@ msgstr "誰"
 msgid "Wanna..."
 msgstr "買個"
 
-#: templates/order/order_form.html:38
+#: templates/order/order_form.html:37
+msgid "Register the product you want to buy"
+msgstr "將商品登錄到菜單中"
+
+#: templates/order/order_form.html:41
 msgid ""
 "You can select an item either from the dropdown list or by typing and search"
 msgstr "你可以從下拉選單選擇商品，或輸入文字以搜尋"
 
-#: templates/order/order_form.html:41
+#: templates/order/order_form.html:44
 #, fuzzy
 #| msgid "Select category"
 msgid "select item"
 msgstr "選擇項目"
 
-#: templates/order/order_form.html:47 tsiahpng/views.py:69
+#: templates/order/order_form.html:50 tsiahpng/views.py:69
 msgid "Unsorted"
 msgstr "未分類"
 
-#: templates/order/order_form.html:65 tsiahpng/models.py:37
+#: templates/order/order_form.html:68 tsiahpng/models.py:37
 #: tsiahpng/models.py:169 tsiahpng/models.py:251
 msgid "Note"
 msgstr "備註"
@@ -503,8 +506,6 @@ msgstr "至少需要選購一個項目"
 msgid "{user} ordered {items}; ${price:,} in total."
 msgstr "{user}買了{items}；共計{price:,}元。"
 
-#: tsiahpng/views.py:315
-#, fuzzy, python-brace-format
-#| msgid "No order"
-msgid "Close {order}"
-msgstr "關閉訂單「{order}」"
+#: tsiahpng/views.py:313
+msgid "Successfully closed this order"
+msgstr "成功關閉此訂單"

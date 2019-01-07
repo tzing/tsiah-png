@@ -33,7 +33,10 @@
 
             <!-- add item -->
             <div class="field">
-                <label>{% trans 'Wanna...' %}</label>
+                <label class="inline">{% trans 'Wanna...' %}</label>
+                <div class="extra" data-tooltip="{% trans 'Register the product you want to buy' %}">
+                    <a href="{% url 'menu_add' order.shop.id %}">{% trans 'Add product' %}</a>
+                </div>
 
                 <div class="ui multiple search selection dropdown product" data-tooltip="{% trans 'You can select an item either from the dropdown list or by typing and search' %}">
                     <input type="hidden" name="tickets">

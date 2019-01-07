@@ -90,6 +90,14 @@
 
 /* customized layout for cart */
 
+.ui.form .field .inline {
+    display: inline-block;
+}
+
+.ui.form .field .extra {
+    float: right;
+}
+
 .product.dropdown a.ui.label small,
 .product.dropdown a.ui.label div.label {
     display: none;
