@@ -34,3 +34,11 @@ def try_parse(value, default=0, type=int):
         return type(value)
     except (TypeError, ValueError):
         return default
+
+
+def str2bool(txt):
+    """Convert string to bool, use for query parameter
+    """
+    if not bool(txt):
+        return False
+    return str(txt).lower() in ('1', 'y', 'yes', 't', 'true')

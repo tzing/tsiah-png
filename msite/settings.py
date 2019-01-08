@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'tsiahpng.apps.TsiahpngConfig',
+    'api.apps.APIConfig',
 ]
 
 MIDDLEWARE = [

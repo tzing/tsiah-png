@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-24 19:22+0800\n"
+"POT-Creation-Date: 2019-01-09 00:04+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,12 +50,12 @@ msgstr "已複製內容"
 #, fuzzy
 #| msgid "Please select a category"
 msgid "Please specific a user"
-msgstr "請指定店家"
+msgstr "請指定使用者"
 
 #: static/js/order/form.js:22
 msgid "At least one item should be selected"
 msgstr "至少需要選購一個項目"
 
-#: static/js/order/form.js:77
+#: static/js/order/form.js:88
 msgid "Add something to "
 msgstr "加些什麼到"

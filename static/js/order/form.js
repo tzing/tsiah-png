@@ -25,7 +25,18 @@ var form = $('form.form').each(function (idx, item) {
         }
     });
 
-    $(item).find('.user.selection').dropdown();
+    $(item).find('.user.selection').dropdown({
+        apiSettings: {
+            url: $(this).data('url'),
+            data: {
+                sui: true,
+            }
+        },
+
+        filterRemoteData: true,
+        fullTextSearch: true,
+        match: 'text',
+    });
 
     $(item).find('.product.selection').dropdown({
         fullTextSearch: true,

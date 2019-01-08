@@ -5,7 +5,7 @@
 
 {% block __js__ %}
 <script type="text/javascript">
-    var template_query_url = '{% url "api_summary_string" order.id %}';
+    var template_query_url = '{% url "api:order_summary" order.id %}';
 </script>
 <script type="text/javascript" src="{% static 'js/order/detail.js' %}"></script>
 {% endblock %}

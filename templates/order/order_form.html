@@ -13,21 +13,11 @@
             <div class="required field">
                 <label>{% trans 'Who am I' %}</label>
 
-                <div class="ui user search selection dropdown">
+                <div class="ui user search selection dropdown" data-url="{% url 'api:users' %}">
                     <input type="hidden" name="user">
                     <i class="dropdown icon"></i>
                     <div class="default text">{% trans 'who' %}</div>
-                    <div class="menu">
-                        {% for user in users %}
-                        <div class="item" data-value="{{ user.get_username }}">
-                            {% if user.get_full_name %}
-                            {{ user.get_full_name }}
-                            {% else %}
-                            {{ user.get_username }}
-                            {% endif %}
-                        </div>
-                        {% endfor %}
-                    </div>
+                    <div class="menu"></div>
                 </div>
             </div><!-- ./who -->
 

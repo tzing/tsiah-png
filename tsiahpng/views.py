@@ -16,7 +16,6 @@ from . import utils
 
 def homepage(request):
     opened_orders = models.Order.objects.filter(is_open=True, is_active=True)
-    users = auth_models.User.objects.filter(is_active=True)
 
     # quick ordering
     today = timezone.localtime().date()
@@ -26,7 +25,6 @@ def homepage(request):
 
     return render(
         request, 'homepage.html', {
-            'users': users,
             'opened_orders': opened_orders,
             'upcoming_orders': upcoming_orders,
         })
@@ -187,7 +185,7 @@ def order_detail(request, order_id):
             error_message = message
 
     # basic infos for rendering
-    users = auth_models.User.objects.filter(is_active=True)
+    users = auth_models.User.objects.filter()
     products = order.shop.products()
     tickets = models.Ticket.objects.filter(order=order)
 
@@ -241,7 +239,6 @@ def order_detail(request, order_id):
         request, 'order/detail.html', {
             'title': str(order),
             'order': order,
-            'users': users,
             'products': products,
             'success_message': success_message,
             'error_message': error_message,
@@ -252,11 +249,11 @@ def order_detail(request, order_id):
 
 
 def order_detail_post(request, order) -> (bool, str):
-    username = request.POST.get('user')
-    if not username:
+    user_id = request.POST.get('user')
+    if not user_id:
         return False, _('Please specific a user')
 
-    user = auth_models.User.objects.get(username=username)
+    user = auth_models.User.objects.get(id=user_id)
 
     items_ids = set()
     for item_id in request.POST.get('tickets', '').split(','):

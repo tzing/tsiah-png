@@ -13,13 +13,30 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import uuid
+
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from django.views.i18n import JavaScriptCatalog
+from django.views.decorators.cache import cache_page
+
+stage_id = uuid.uuid4()  # workaround for translation version
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('tsiahpng.urls')),
+    path('api/', include('api.urls', namespace='api')),
+
+    # i18n
+    path(
+        'jsi18n/',
+        cache_page(86400, key_prefix=f'jsi18n-{stage_id.hex}')(
+            JavaScriptCatalog.as_view(packages=[
+                'tsiahpng',
+            ])),
+        name='javascript-catalog',
+    ),
 ] + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
