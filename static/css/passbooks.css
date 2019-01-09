@@ -1,0 +1,17 @@
+.description .ui.table {
+    margin-top: 1em;
+    margin-left: 2em;
+    font-size: .85em;
+}
+
+.description tfoot th.summation {
+    color: rgba(0, 0, 0, .6);
+    font-style: oblique;
+    text-align: right;
+}
+
+@media screen and (max-width: 768px) {
+    .description .ui.table {
+        width: 95%;
+    }
+}

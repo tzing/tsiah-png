@@ -1,0 +1,84 @@
+{% extends 'basic.html' %}
+{% load i18n %}
+{% load humanize %}
+{% load static %}
+{% load readability %}
+
+{% block __css__ %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/passbooks.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="ui vertical segment">
+    <div class="ui breadcrumb">
+        <a class="section" href="{% url 'homepage' %}">{% trans 'Tsia̍h-Pn̄g' %}</a>
+        <div class="divider"> / </div>
+        <div class="active section">{% trans 'Accounting' %}</div>
+    </div>
+</div><!-- ./breadcrumb -->
+
+<div class="ui items">
+    {% for passbook in passbooks %}
+    <div class="item">
+        <div class="content">
+            <div class="header"><a href="{% url 'account:detail' passbook.id %}">{{ passbook }}</a></div>
+
+            {% with user_balance=passbook.peruser_balance %}
+            {% with num_users=user_balance|length %}
+            <div class="meta">{% blocktrans %}{{ num_users }} active users{% endblocktrans %}</div>
+            {% endwith %}
+
+            <div class="description">
+                <table class="ui very basic unstackable table">
+                    <thead>
+                        <tr>
+                            <th class="four wide">{% trans 'User' %}</th>
+                            <th class="eight wide">{% trans 'Balance' %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user, balance in user_balance %}
+                        <tr>
+                            <td>{{ user | to_username }}</td>
+                            <td {% if balance < 0 %} class="negative" {% endif %}>
+                                ${{ balance | intcomma }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            {% with sum_balance=passbook.balance|intcomma %}
+                            <th class="summation" colspan="2">
+                                {% blocktrans %}Sum: ${{ sum_balance }}{% endblocktrans %}
+                            </th>
+                            {% endwith %}
+                        </tr>
+                    </tfoot>
+                </table>
+            </div><!-- ./description -->{% endwith %}
+
+            <div class="extra">
+
+                <div class="ui label">
+                    <a href="{% url 'account:detail' passbook.id %}">
+                        <i class="linkify icon"></i> {% trans 'View transactions' %}
+                    </a>
+                </div>
+
+                <div class="ui green label">
+                    <a href="{% url 'account:add' passbook.id %}">
+                        <i class="plus icon"></i> {% trans 'Add transaction' %}
+                    </a>
+                </div>
+
+            </div><!-- ./extra -->
+        </div><!-- ./content -->
+    </div>
+    {% empty %}
+    <div class="item">
+        {% trans 'No passbooks' %}
+    </div><!-- ./empty -->
+    {% endfor %}
+</div><!-- ./passbooks -->
+{% endblock %}

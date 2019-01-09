@@ -4,6 +4,11 @@
 
 {% block __js__ %}
 <script type="text/javascript" src="{% static 'js/order/close.js' %}"></script>
+<script type="text/javascript">
+    var user_query_url = "{% url 'api:users' %}";
+    var order_query_url = "{% url 'api:order_detail' order.id %}";
+    var passbook_query_url = "{% url 'api:passbooks' %}";
+</script>
 {% endblock %}
 
 {% block content %}
@@ -21,13 +26,69 @@
 
 <div class="ui vertical segment">
     <form class="ui form" method="POST">
-        <p>{% trans 'Are you sure you want to close this order?' %}</p>
 
         {% csrf_token %}
         <input type="hidden" name="close" value="1">
 
-        <button type="submit" class="ui primary submit button">{% trans 'Yes' %}</button>
-        <a class="ui button" id="no-button">{% trans 'No' %}</a>
+        <div class="ui vertical segment">
+            <p>{% blocktrans %}Are you sure you want to close the order “{{ order }}”?{% endblocktrans %}</p>
+        </div>
+
+        <div class="ui vertical segment">
+            <div class="field">
+                <div class="ui toggle checkbox" id="switch-account">
+                    <input type="checkbox" name="link-account" tabindex="0" class="hidden">
+                    <label>{% trans 'Also put this order on the bill' %}</label>
+                </div>
+            </div>
+        </div><!-- ./switch -->
+
+        <div id="account-panel" class="ui vertical hidden segment">
+
+            <input type="hidden" name="title" value="{{ order }}">
+            <input type="hidden" name="order" value="{{ order.id }}">
+            <input type="hidden" name="user">
+
+            <div class="required field">
+                <label>{% trans 'Passbook' %}</label>
+                <div class="ui search selection dropdown" id="select-passbook">
+                    <input type="hidden" name="passbook">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">{% trans 'select passbook' %}</div>
+                    <div class="menu"></div>
+                </div>
+            </div><!-- ./select passbook -->
+
+            <table id="user-balance" class="ui table">
+                <thead>
+                    <tr>
+                        <th class="four wide">{% trans 'User' %}</th>
+                        <th class="eight wide">{% trans 'Change in balance' %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="hint">
+                        <td class="center aligned" colspan="2">{% trans 'No user' %}</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th class="right aligned" colspan="2">
+                            {% trans 'Total: ' %}
+                            $<span id="total-balance">0</span>
+                        </th>
+                    </tr>
+                </tfoot>
+            </table><!-- ./transactions -->
+        </div>
+
+        <div class="ui error message"></div>
+
+        <div class="ui vertical segment">
+            <button type="submit" class="ui primary submit button">{% trans 'Yes' %}</button>
+            <a class="ui button" href="{% url 'order_detail' order.id  %}">{% trans 'No' %}</a>
+        </div>
+
     </form>
-</div>
+</div><!-- ./form -->
 {% endblock %}

@@ -43,10 +43,14 @@
     }
 }
 
-/* color */
+/* site-wide class */
 
 .price {
     color: #00b5ad;
+}
+
+.hidden {
+    display: none;
 }
 
 /* customized layout for list view */
@@ -101,4 +105,26 @@
 .product.dropdown a.ui.label small,
 .product.dropdown a.ui.label div.label {
     display: none;
+}
+
+/* customized table */
+
+.ui.table tr.hint {
+    color: rgba(0, 0, 0, .6);
+    font-style: oblique;
+}
+
+/* floating action buttons */
+
+.floating.action.buttons {
+    position: fixed;
+    bottom: 3em;
+    right: 2em;
+}
+
+@media screen and (max-width: 768px) {
+    .floating.action.buttons {
+        right: 1em;
+        bottom: 2em;
+    }
 }

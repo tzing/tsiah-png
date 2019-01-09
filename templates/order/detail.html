@@ -24,9 +24,19 @@
 {% if success_message %}
 <div class="ui vertical segment">
     <div class="ui success message">
-        {{ success_message | linebreaks }}
+        {% for message in success_message %}
+        <p>{{ message | linebreaks }}</p>
+        {% endfor %}
     </div>
 </div><!-- ./success_message -->
+{% endif %}
+
+{% if error_message %}
+<div class="ui vertical segment">
+    <div class="ui error message">
+        {% for message in error_message %}{{ message | linebreaks }}{% endfor %}
+    </div>
+</div><!-- ./error_messages -->
 {% endif %}
 
 {% if order.note %}

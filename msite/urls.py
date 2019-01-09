@@ -27,6 +27,7 @@ stage_id = uuid.uuid4()  # workaround for translation version
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('tsiahpng.urls')),
+    path('account/', include('account.urls', namespace='account')),
     path('api/', include('api.urls', namespace='api')),
 
     # i18n
@@ -35,6 +36,7 @@ urlpatterns = [
         cache_page(86400, key_prefix=f'jsi18n-{stage_id.hex}')(
             JavaScriptCatalog.as_view(packages=[
                 'tsiahpng',
+                'account',
             ])),
         name='javascript-catalog',
     ),

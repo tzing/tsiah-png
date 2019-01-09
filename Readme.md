@@ -67,7 +67,7 @@ Basically, you can run and use it *if you are on local network*.
 3. Built database
 
     ```bash
-    python manage.py makemigrations tsiahpng
+    python manage.py makemigrations tsiahpng account
     python manage.py migrate
     ```
 
@@ -104,9 +104,6 @@ Icons made by [Freepik](https://www.freepik.com/) from [www.flaticon.com](https:
 - [ ] layout
     - [x] menu detail: too many category
     - [ ] order list: too many order
-- [ ] Account: for quickly review the spent money
-    - [ ] pay-as-you-go
-    - [ ] prepaid
 - [ ] Deploy guide
 
 

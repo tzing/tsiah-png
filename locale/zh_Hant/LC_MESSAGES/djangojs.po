@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-09 00:04+0800\n"
+"POT-Creation-Date: 2019-01-09 21:08+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+#: static/js/account/add.js:17
+msgid "Please name the event"
+msgstr "請命名交易事件"
+
 #: static/js/menu/add.js:11
 msgid "Please select a category"
 msgstr "請選擇分類"
@@ -25,6 +29,12 @@ msgstr "請選擇分類"
 #: static/js/menu/add.js:18
 msgid "Item name could not be empty"
 msgstr "名稱不能空白"
+
+#: static/js/order/close.js:113
+#, fuzzy
+#| msgid "Please select a category"
+msgid "Please specify the accounting book"
+msgstr "請指定記帳本"
 
 #: static/js/order/create.js:26
 #, fuzzy

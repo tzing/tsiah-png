@@ -1,17 +1,19 @@
 import datetime
 
-from django.conf import settings
 from django.db.models import Sum
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.utils.translation import gettext as _
-import django.contrib.auth.models as auth_models
+
+from django.contrib import auth
+from django.contrib import messages
 
 from django.contrib import messages
 
 from . import models
 from . import utils
+
+import account.views
 
 
 def homepage(request):
@@ -23,11 +25,10 @@ def homepage(request):
     upcoming_orders = opened_orders.filter(
         order_date__gte=today, order_date__lte=endday)
 
-    return render(
-        request, 'homepage.html', {
-            'opened_orders': opened_orders,
-            'upcoming_orders': upcoming_orders,
-        })
+    return render(request, 'homepage.html', {
+        'opened_orders': opened_orders,
+        'upcoming_orders': upcoming_orders,
+    })
 
 
 def menu_list(request):
@@ -146,7 +147,8 @@ def order_list(request):
 def order_create(request):
     if request.method == 'POST':
         alias = request.POST.get('name')
-        shop = models.Shop.objects.get(id=request.POST['shop'])
+        shop_id = request.POST['shop']
+        shop = models.Shop.objects.get(id=shop_id)
         date = datetime.datetime.strptime(request.POST['date'], '%Y/%m/%d')
         note = request.POST.get('note')
 
@@ -157,35 +159,32 @@ def order_create(request):
             note=note,
         )
 
+        request.session['order_create/last_shop'] = shop_id
+
         return redirect('order_list')
 
     shops = models.Shop.objects.filter(is_active=True)
     default_date = utils.order_date_default()
+    last_shop = request.session.get('order_create/last_shop')
 
-    return render(request, 'order/create.html', {
-        'title': _('Create Order'),
-        'shops': shops,
-        'default_date': default_date,
-    })
+    return render(
+        request, 'order/create.html', {
+            'title': _('Create Order'),
+            'shops': shops,
+            'default_date': default_date,
+            'last_shop': last_shop,
+        })
 
 
 def order_detail(request, order_id):
     order = models.Order.objects.get(id=order_id)
 
-    # placeholder
-    success_message = None
-    error_message = None
-
     # proceed post
     if request.method == 'POST':
-        is_success, message = order_detail_post(request, order)
-        if is_success:
-            success_message = message
-        else:
-            error_message = message
+        order_detail_post(request, order)
 
     # basic infos for rendering
-    users = auth_models.User.objects.filter()
+    users = auth.models.User.objects.filter(is_active=True)
     products = order.shop.products()
     tickets = models.Ticket.objects.filter(order=order)
 
@@ -235,6 +234,12 @@ def order_detail(request, order_id):
     # templates
     templates = models.SummaryTemplate.objects.filter(is_active=True)
 
+    # messages
+    storage = messages.get_messages(request)
+    success_message = list(
+        filter(lambda m: m.level == messages.SUCCESS, storage))
+    error_message = list(filter(lambda m: m.level == messages.ERROR, storage))
+
     return render(
         request, 'order/detail.html', {
             'title': str(order),
@@ -253,7 +258,7 @@ def order_detail_post(request, order) -> (bool, str):
     if not user_id:
         return False, _('Please specific a user')
 
-    user = auth_models.User.objects.get(id=user_id)
+    user = auth.models.User.objects.get(id=user_id)
 
     items_ids = set()
     for item_id in request.POST.get('tickets', '').split(','):
@@ -290,16 +295,21 @@ def order_detail_post(request, order) -> (bool, str):
             ))
 
     if sum_qty == 0:
-        return False, _('At least one item should be selected')
+        messages.error(request, _('At least one item should be selected'))
+        return
+
     else:
         username = user.get_full_name()
         if not username:
             username = user.get_username()
-        return True, _('{user} ordered {items}; ${price:,} in total.').format(
+
+        msg = _('{user} ordered {items}; ${price:,} in total.').format(
             user=username,
             items=', '.join(str(t) for t in tickets),
             price=sum_price,
         )
+
+        messages.success(request, msg)
 
 
 def order_close(request, order_id):
@@ -310,21 +320,19 @@ def order_close(request, order_id):
         order.save()
 
         messages.success(request, _('Successfully closed this order'))
+
+        if request.POST.get('link-account', 'off') == 'on':
+            passbook_id = utils.try_parse(request.POST.get('passbook'))
+            if account.views.add_post(request, passbook_id):
+                request.session['order_close/last_passbook'] = passbook_id
+
         return redirect('order_detail', order_id=order_id)
 
-    return render(request, 'order/close.html', {
-        'title': _('Close order'),
-        'order': order,
-    })
+    last_passbook = request.session.get('order_close/last_passbook')
 
-
-def order_summary(request, order_id):
-    order = models.Order.objects.get(id=order_id)
-
-    template_id = request.GET.get('template')
-    if template_id is None:
-        template = models.SummaryTemplate.objects.first()
-    else:
-        template = models.SummaryTemplate.objects.get(id=template_id)
-
-    return HttpResponse(template.render(order))
+    return render(
+        request, 'order/close.html', {
+            'title': _('Close order'),
+            'order': order,
+            'last_passbook': last_passbook,
+        })

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'tsiahpng.apps.TsiahpngConfig',
+    'account.apps.AccountConfig',
     'api.apps.APIConfig',
 ]
 
