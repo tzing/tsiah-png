@@ -20,7 +20,12 @@ def overview(request):
 def detail(request, passbook_id):
     passbook = models.Passbook.objects.get(id=passbook_id)
     user_balances = passbook.peruser_balance()
-    users, balances = zip(*user_balances)
+
+    if user_balances:
+        users, balances = zip(*user_balances)
+    else:
+        users = []
+        balances = []
 
     # infos for each event
     transaction_table = []

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-09 21:08+0800\n"
+"POT-Creation-Date: 2019-01-10 23:12+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,6 +21,16 @@ msgstr ""
 #: static/js/account/add.js:17
 msgid "Please name the event"
 msgstr "請命名交易事件"
+
+#: static/js/account/add.js:24 static/js/order/form.js:15
+#, fuzzy
+#| msgid "Please select a category"
+msgid "Please specific a user"
+msgstr "請指定使用者"
+
+#: static/js/account/detail.js:42
+msgid "Total"
+msgstr "合計"
 
 #: static/js/menu/add.js:11
 msgid "Please select a category"
@@ -36,13 +46,13 @@ msgstr "名稱不能空白"
 msgid "Please specify the accounting book"
 msgstr "請指定記帳本"
 
-#: static/js/order/create.js:26
+#: static/js/order/create.js:28
 #, fuzzy
 #| msgid "Please select a category"
 msgid "Please specific a shop"
 msgstr "請指定店家"
 
-#: static/js/order/create.js:33
+#: static/js/order/create.js:35
 #, fuzzy
 #| msgid "Item name could not be empty"
 msgid "Date could not be empty"
@@ -55,12 +65,6 @@ msgstr "複製內容"
 #: static/js/order/detail.js:40
 msgid "Copy"
 msgstr "已複製內容"
-
-#: static/js/order/form.js:15
-#, fuzzy
-#| msgid "Please select a category"
-msgid "Please specific a user"
-msgstr "請指定使用者"
 
 #: static/js/order/form.js:22
 msgid "At least one item should be selected"

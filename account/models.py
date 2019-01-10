@@ -45,7 +45,11 @@ class Passbook(models.Model):
 
     def balance(self):
         transactions = Transaction.objects.filter(event__in=self.events())
-        return transactions.aggregate(val=models.Sum('balance'))['val']
+        balance = transactions.aggregate(val=models.Sum('balance'))['val']
+        if balance is None:
+            return 0
+        else:
+            return balance
 
     def peruser_balance(self):
         """Returns per-user balances
@@ -122,7 +126,12 @@ class Event(models.Model):
         return Transaction.objects.filter(event=self, **kwargs)
 
     def balance(self):
-        return self.transactions().aggregate(val=models.Sum('balance'))['val']
+        balance = self.transactions().aggregate(
+            val=models.Sum('balance'))['val']
+        if balance is None:
+            return 0
+        else:
+            return balance
 
 
 class Transaction(models.Model):

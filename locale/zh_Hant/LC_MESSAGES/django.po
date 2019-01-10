@@ -323,7 +323,7 @@ msgstr "確定要關閉訂單「%(order)s」？"
 
 #: templates/order/close.html:41
 msgid "Also put this order on the bill"
-msgstr ""
+msgstr "記帳囉"
 
 #: templates/order/close.html:57
 #, fuzzy

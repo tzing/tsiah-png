@@ -17,6 +17,13 @@ $(document).ready(function () {
                     prompt: gettext('Please name the event')
                 }]
             },
+            user: {
+                identifier: 'user',
+                rules: [{
+                    type: 'empty',
+                    prompt: gettext('Please specific a user')
+                }]
+            }
         }
     });
 
