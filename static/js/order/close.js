@@ -88,31 +88,26 @@ $(document).ready(function () {
 
     /**
      *  load data when the 'put it on bill' option is checked
+     *
+     *  also: add/remove form validation on switching
      */
+    var passbook_validator = {
+        rules: [{
+            type: 'empty',
+            prompt: gettext('Please specify the accounting book')
+        }]
+    };
+
     $('#switch-account').checkbox({
         onChecked: function () {
             load_account_data()
             $('#account-panel').slideDown();
+            $('form.form').form('add rule', 'passbook', passbook_validator);
         },
 
         onUnchecked: function () {
             $('#account-panel').slideUp();
-        },
-    });
-
-    /**
-     *  form validation
-     */
-    $('form.form').form({
-        on: 'blur',
-        fields: {
-            passbook: {
-                identifier: 'passbook',
-                rules: [{
-                    type: 'empty',
-                    prompt: gettext('Please specify the accounting book')
-                }]
-            },
+            $('form.form').form('remove rule', 'passbook');
         },
     });
 
