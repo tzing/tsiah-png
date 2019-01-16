@@ -329,7 +329,7 @@ msgstr "記帳囉"
 #, fuzzy
 #| msgid "Select category"
 msgid "select passbook"
-msgstr "選擇店家"
+msgstr "選擇記帳本"
 
 #: templates/order/close.html:88
 msgid "Yes"

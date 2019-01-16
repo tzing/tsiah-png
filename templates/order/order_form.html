@@ -14,7 +14,7 @@
                 <label>{% trans 'Who am I' %}</label>
 
                 <div class="ui user search selection dropdown" data-url="{% url 'api:users' %}">
-                    <input type="hidden" name="user">
+                    <input type="hidden" name="user" {% if last_user %}value="{{ last_user }}"{% endif %}>
                     <i class="dropdown icon"></i>
                     <div class="default text">{% trans 'who' %}</div>
                     <div class="menu"></div>

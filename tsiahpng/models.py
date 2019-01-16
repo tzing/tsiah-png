@@ -175,7 +175,7 @@ class Order(models.Model):
         verbose_name = _('Order')
         verbose_name_plural = _('Orders')
 
-        ordering = ['-order_date', 'create_time']
+        ordering = ['-order_date', '-create_time']
 
     def save(self, *args, **kwargs):
         if not self.alias:

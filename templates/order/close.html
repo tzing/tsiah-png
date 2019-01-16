@@ -52,7 +52,7 @@
             <div class="required field">
                 <label>{% trans 'Passbook' %}</label>
                 <div class="ui search selection dropdown" id="select-passbook">
-                    <input type="hidden" name="passbook">
+                    <input type="hidden" name="passbook" {% if last_passbook %}value="{{ last_passbook }}"{% endif %}>
                     <i class="dropdown icon"></i>
                     <div class="default text">{% trans 'select passbook' %}</div>
                     <div class="menu"></div>

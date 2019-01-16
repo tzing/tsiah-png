@@ -22,13 +22,19 @@ def homepage(request):
     # quick ordering
     today = timezone.localtime().date()
     endday = today + datetime.timedelta(3)
-    upcoming_orders = opened_orders.filter(
-        order_date__gte=today, order_date__lte=endday)
+    upcoming_orders = (opened_orders
+        .filter(order_date__gte=today,order_date__lte=endday)
+        .order_by('-order_date', 'create_time')) # yapf: disable
 
-    return render(request, 'homepage.html', {
-        'opened_orders': opened_orders,
-        'upcoming_orders': upcoming_orders,
-    })
+    # user
+    last_user = request.session.get('cart/last_user')
+
+    return render(
+        request, 'homepage.html', {
+            'last_user': last_user,
+            'opened_orders': opened_orders,
+            'upcoming_orders': upcoming_orders,
+        })
 
 
 def menu_list(request):
@@ -161,7 +167,7 @@ def order_create(request):
 
         request.session['order_create/last_shop'] = shop_id
 
-        return redirect('order_list')
+        return redirect('order_detail', order_id=obj.id)
 
     shops = models.Shop.objects.filter(is_active=True)
     default_date = utils.order_date_default()
@@ -234,6 +240,9 @@ def order_detail(request, order_id):
     # templates
     templates = models.SummaryTemplate.objects.filter(is_active=True)
 
+    # user
+    last_user = request.session.get('cart/last_user')
+
     # messages
     storage = messages.get_messages(request)
     success_message = list(
@@ -244,6 +253,7 @@ def order_detail(request, order_id):
         request, 'order/detail.html', {
             'title': str(order),
             'order': order,
+            'last_user': last_user,
             'products': products,
             'success_message': success_message,
             'error_message': error_message,
@@ -259,6 +269,7 @@ def order_detail_post(request, order) -> (bool, str):
         return False, _('Please specific a user')
 
     user = auth.models.User.objects.get(id=user_id)
+    request.session['cart/last_user'] = str(user_id)
 
     items_ids = set()
     for item_id in request.POST.get('tickets', '').split(','):
@@ -314,6 +325,9 @@ def order_detail_post(request, order) -> (bool, str):
 
 def order_close(request, order_id):
     order = models.Order.objects.get(id=order_id)
+
+    if not order.is_open:
+        return redirect('order_detail', order_id=order_id)
 
     if request.method == 'POST' and request.POST.get('close', False):
         order.is_open = False

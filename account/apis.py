@@ -13,26 +13,13 @@ def query_passbooks(request):
         sui (default: False)
             return the result in semantic ui format
     """
-    # parse parameters
     use_sui = utils.str2bool(request.GET.get('sui'))
 
-    # query
     passbooks = models.Passbook.objects.filter(is_active=True)
 
-    # make context
-    context = {}
-    for passbook in passbooks:
-        context[passbook.id] = str(passbook)
-
-    # return
-    if not use_sui:
-        return JsonResponse(context)
+    if use_sui:
+        context = [{'name': str(p), 'value': p.id} for p in passbooks]
+        return JsonResponse({'success': True, 'results': context})
     else:
-        return JsonResponse({
-            'success':
-            True,
-            'results': [{
-                'name': name,
-                'value': uid,
-            } for uid, name in context.items()]
-        })
+        context = dict((p.id, str(p)) for p in passbooks)
+        return JsonResponse(context)
