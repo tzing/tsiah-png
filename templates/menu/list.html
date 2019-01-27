@@ -1,5 +1,6 @@
 {% extends 'basic.html' %}
 {% load i18n %}
+{% load readability %}
 
 {% block content %}
 <div class="ui vertical segment">
@@ -11,7 +12,7 @@
 </div>
 
 <div class="ui items">
-    {% for shop, desc in shops %}
+    {% for shop in shops %}
     <div class="item">
 
         {% if shop.image %}
@@ -24,7 +25,7 @@
             <a class="header" href="{% url 'menu_detail' shop.id %}">{{ shop }}</a>
 
             <div class="meta">
-                <span>{{ desc }}</span>
+                <span>{{ shop | shop_summary }}</span>
             </div>
 
             {% if shop.note %}
@@ -65,5 +66,33 @@
         </div>
     </div>
     {% endfor %}
+</div><!-- ./menu -->
+
+{% if shops.has_previous or shops.has_next %}
+<div class="ui vertical segment center aligned">
+    <div class="ui pagination menu">
+        {% if shops.has_previous %}
+        <a class="item" href="?p=1">1</a>
+        {% if shops.previous_page_number > 2 %}
+        <div class="disabled item">...</div>
+        {% endif %}
+        {% if shops.previous_page_number > 1 %}
+        <a class="item" href="?p={{ shops.previous_page_number }}">{{ shops.previous_page_number }}</a>
+        {% endif %}
+        {% endif %}<!-- ./prev -->
+
+        <a class="active item">{{ shops.number }}</a>
+
+        {% if shops.has_next %}
+        {% if shops.next_page_number < shops.paginator.num_pages %}
+        <a class="item" href="?p={{ shops.next_page_number }}">{{ shops.next_page_number }}</a>
+        {% endif %}
+        {% if shops.next_page_number < shops.paginator.num_pages|add:"-1" %}
+        <div class="disabled item">...</div>
+        {% endif %}
+        <a class="item" href="?p={{ shops.paginator.num_pages }}">{{ shops.paginator.num_pages }}</a>
+        {% endif %}<!-- ./next -->
+    </div>
 </div>
+{% endif %}
 {% endblock %}

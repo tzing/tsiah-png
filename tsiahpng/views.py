@@ -1,5 +1,7 @@
 import datetime
 
+from django.core.paginator import Paginator
+from django.conf import settings
 from django.db.models import Sum
 from django.shortcuts import render, redirect
 from django.utils import timezone
@@ -40,22 +42,17 @@ def homepage(request):
 def menu_list(request):
     shops = models.Shop.objects.filter(is_active=True)
 
-    shop_dict = []
-    for shop in shops:
-        num_products = len(shop.products())
-        num_categories = len(
-            shop.products().values_list('category').order_by().distinct())
-        shop_dict.append(
-            (shop,
-             _('{num_cat:,} categories. {num_product:,} documented products.').
-             format(
-                 num_cat=num_categories,
-                 num_product=num_products,
-             )))
+    shop_per_page = 25
+    if hasattr(settings, 'SHOP_PER_PAGE'):
+        shop_per_page = getattr(settings, 'SHOP_PER_PAGE')
+    paginator = Paginator(shops, shop_per_page)
+
+    page = utils.try_parse(request.GET.get('p'), 1)
+    shops = paginator.get_page(page)
 
     return render(request, 'menu/list.html', {
         'title': _('Menu List'),
-        'shops': shop_dict,
+        'shops': shops,
     })
 
 
@@ -143,6 +140,14 @@ def menu_add(request, shop_id):
 
 def order_list(request):
     orders = models.Order.objects.filter(is_active=True)
+
+    order_per_page = 25
+    if hasattr(settings, 'ORDER_PER_PAGE'):
+        order_per_page = getattr(settings, 'ORDER_PER_PAGE')
+    paginator = Paginator(orders, order_per_page)
+
+    page = utils.try_parse(request.GET.get('p'), 1)
+    orders = paginator.get_page(page)
 
     return render(request, 'order/list.html', {
         'title': _('Order List'),

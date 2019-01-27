@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-10 23:12+0800\n"
+"POT-Creation-Date: 2019-01-27 23:04+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -40,7 +40,7 @@ msgstr "請選擇分類"
 msgid "Item name could not be empty"
 msgstr "名稱不能空白"
 
-#: static/js/order/close.js:113
+#: static/js/order/close.js:97
 #, fuzzy
 #| msgid "Please select a category"
 msgid "Please specify the accounting book"

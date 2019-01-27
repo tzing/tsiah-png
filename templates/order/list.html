@@ -58,5 +58,33 @@
         </div>
     </div>
     {% endfor %}
+</div><!-- ./orders -->
+
+{% if orders.has_previous or orders.has_next %}
+<div class="ui vertical segment center aligned">
+    <div class="ui pagination menu">
+        {% if orders.has_previous %}
+        <a class="item" href="?p=1">1</a>
+        {% if orders.previous_page_number > 2 %}
+        <div class="disabled item">...</div>
+        {% endif %}
+        {% if orders.previous_page_number > 1 %}
+        <a class="item" href="?p={{ orders.previous_page_number }}">{{ orders.previous_page_number }}</a>
+        {% endif %}
+        {% endif %}<!-- ./prev -->
+
+        <a class="active item">{{ orders.number }}</a>
+
+        {% if orders.has_next %}
+        {% if orders.next_page_number < orders.paginator.num_pages %}
+        <a class="item" href="?p={{ orders.next_page_number }}">{{ orders.next_page_number }}</a>
+        {% endif %}
+        {% if orders.next_page_number < orders.paginator.num_pages|add:"-1" %}
+        <div class="disabled item">...</div>
+        {% endif %}
+        <a class="item" href="?p={{ orders.paginator.num_pages }}">{{ orders.paginator.num_pages }}</a>
+        {% endif %}<!-- ./next -->
+    </div>
 </div>
+{% endif %}
 {% endblock %}

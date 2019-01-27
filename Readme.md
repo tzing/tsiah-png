@@ -101,9 +101,6 @@ Icons made by [Freepik](https://www.freepik.com/) from [www.flaticon.com](https:
 
 ## TODO
 
-- [ ] layout
-    - [x] menu detail: too many category
-    - [ ] order list: too many order
 - [ ] Deploy guide
 
 

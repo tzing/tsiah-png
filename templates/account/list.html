@@ -81,4 +81,32 @@
     </div><!-- ./empty -->
     {% endfor %}
 </div><!-- ./passbooks -->
+
+{% if passbooks.has_previous or passbooks.has_next %}
+<div class="ui vertical segment center aligned">
+    <div class="ui pagination menu">
+        {% if passbooks.has_previous %}
+        <a class="item" href="?p=1">1</a>
+        {% if passbooks.previous_page_number > 2 %}
+        <div class="disabled item">...</div>
+        {% endif %}
+        {% if passbooks.previous_page_number > 1 %}
+        <a class="item" href="?p={{ passbooks.previous_page_number }}">{{ passbooks.previous_page_number }}</a>
+        {% endif %}
+        {% endif %}<!-- ./prev -->
+
+        <a class="active item">{{ passbooks.number }}</a>
+
+        {% if passbooks.has_next %}
+        {% if passbooks.next_page_number < passbooks.paginator.num_pages %}
+        <a class="item" href="?p={{ passbooks.next_page_number }}">{{ passbooks.next_page_number }}</a>
+        {% endif %}
+        {% if passbooks.next_page_number < passbooks.paginator.num_pages|add:"-1" %}
+        <div class="disabled item">...</div>
+        {% endif %}
+        <a class="item" href="?p={{ passbooks.paginator.num_pages }}">{{ passbooks.paginator.num_pages }}</a>
+        {% endif %}<!-- ./next -->
+    </div>
+</div>
+{% endif %}
 {% endblock %}

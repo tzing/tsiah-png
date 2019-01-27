@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.utils.translation import gettext as _
 
+from django.conf import settings
+from django.core.paginator import Paginator
 from django.contrib import auth
 from django.contrib import messages
 
@@ -11,9 +13,19 @@ from . import models
 
 
 def overview(request):
+    passbooks = models.Passbook.objects.all()
+
+    account_per_page = 25
+    if hasattr(settings, 'ACCOUNT_PER_PAGE'):
+        account_per_page = getattr(settings, 'ACCOUNT_PER_PAGE')
+    paginator = Paginator(passbooks, account_per_page)
+
+    page = tsiahpng.utils.try_parse(request.GET.get('p'), 1)
+    passbooks = paginator.get_page(page)
+
     return render(request, 'account/list.html', {
         'title': _('Accounting'),
-        'passbooks': models.Passbook.objects.all(),
+        'passbooks': passbooks,
     })
 
 
