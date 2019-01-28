@@ -81,12 +81,17 @@ var form = $('form.form').each(function (idx, item) {
             ));
 
             // note
-            row.append($('<td></td>').append(
-                $('<input>')
-                    .attr('name', 'note-' + id)
-                    .attr('type', 'text')
-                    .attr('placeholder', gettext('Add something to ') + name)
-            ));
+            var allow_user_change = add_obj.data('allow-change');
+            if (allow_user_change) {
+                row.append($('<td></td>').append(
+                    $('<input>')
+                        .attr('name', 'note-' + id)
+                        .attr('type', 'text')
+                        .attr('placeholder', gettext('Add something to ') + name)
+                ));
+            } else {
+                row.append($('<td></td>'));
+            }
 
         },
 

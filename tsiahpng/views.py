@@ -82,6 +82,11 @@ def menu_detail(request, shop_id):
 def menu_add(request, shop_id):
     shop = models.Shop.objects.get(id=shop_id)
 
+    if not shop.allow_user_modify:
+        messages.error(request,
+                       _('Cannot add product to {shop}').format(shop=shop))
+        return redirect('menu_detail', shop_id=shop_id)
+
     # infos on page
     title = _('Add product to {shop}').format(shop=shop.name)
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-27 23:04+0800\n"
+"POT-Creation-Date: 2019-01-28 16:54+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -70,6 +70,6 @@ msgstr "已複製內容"
 msgid "At least one item should be selected"
 msgstr "至少需要選購一個項目"
 
-#: static/js/order/form.js:88
+#: static/js/order/form.js:90
 msgid "Add something to "
 msgstr "加些什麼到"

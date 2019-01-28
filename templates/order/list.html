@@ -1,5 +1,6 @@
 {% extends 'basic.html' %}
 {% load i18n %}
+{% load humanize%}
 
 {% block content %}
 <div class="ui vertical segment">
@@ -38,6 +39,12 @@
                 {{ order.note }}
             </div>
             {% endif %}
+
+            <div class="extra">
+                {% with total_price=order.total_price|intcomma total_qty=order.total_quantity|intcomma %}
+                {% blocktrans %}Ordered {{ total_qty }} items. ${{ total_price }} dollars in total.{% endblocktrans %}
+                {% endwith %}
+            </div>
 
         </div>
     </div>

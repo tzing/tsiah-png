@@ -24,9 +24,12 @@
             <!-- add item -->
             <div class="field">
                 <label class="inline">{% trans 'Wanna...' %}</label>
+
+                {% if shop.allow_user_modify %}
                 <div class="extra" data-tooltip="{% trans 'Register the product you want to buy' %}">
                     <a href="{% url 'menu_add' order.shop.id %}">{% trans 'Add product' %}</a>
                 </div>
+                {% endif %}
 
                 <div class="ui multiple search selection dropdown product" data-tooltip="{% trans 'You can select an item either from the dropdown list or by typing and search' %}">
                     <input type="hidden" name="tickets">
@@ -34,7 +37,7 @@
                     <div class="default text">{% trans 'select item' %}</div>
                     <div class="menu">
                         {% for product in products %}
-                        <div class="item" data-value="{{ product.id }}" data-price="{{ product.price }}" data-name="{{ product.name }}">
+                        <div class="item" data-value="{{ product.id }}" data-price="{{ product.price }}" data-name="{{ product.name }}" data-allow-change="{{ product.allow_user_modify | lower }}">
                             <div class="ui label">
                                 {% if product.category %}{{ product.category }}
                                 {% else %}{% trans 'Unsorted' %}

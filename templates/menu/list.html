@@ -1,6 +1,6 @@
 {% extends 'basic.html' %}
 {% load i18n %}
-{% load readability %}
+{% load summary %}
 
 {% block content %}
 <div class="ui vertical segment">
@@ -50,11 +50,13 @@
                     </a>
                 </div>
 
+                {% if shop.allow_user_modify %}
                 <div class="ui green label">
                     <a href="{% url 'menu_add' shop.id %}">
                         <i class="plus icon"></i> {% trans 'Add product' %}
                     </a>
                 </div>
+                {% endif %}
 
             </div>
         </div>

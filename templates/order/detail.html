@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load humanize %}
 {% load static %}
+{% load summary %}
 
 {% block __js__ %}
 <script type="text/javascript">
@@ -58,6 +59,16 @@
         {% with order.order_date as date %}
         <li>{% blocktrans %}Order on {{ date }}{% endblocktrans %}</li>
         {% endwith %}
+
+        {% with total_price=order.total_price|intcomma total_qty=order.total_quantity|intcomma %}
+        <li>{% blocktrans %}{{ total_qty }} items, ${{ total_price }} dollars in total.{% endblocktrans %}</li>
+        {% endwith %}
+
+        {% with per_category_quantity=order|per_category_quantity %}
+        {% if per_category_quantity %}
+        <li>{% blocktrans %}Ordered {{ per_category_quantity }}.{% endblocktrans %}</li>
+        {% endif %}
+        {% endwith %}
     </ul>
 </div><!-- ./order info -->
 
@@ -88,7 +99,7 @@
                 <td>{{ desc }}</td>
             </tr>
             {% empty %}
-            <tr>
+            <tr class="hint">
                 <td class="center aligned" colspan="2">{% trans 'No tickets' %}</td>
             </tr>
             {% endfor %}
@@ -123,7 +134,7 @@
                 <td>${{ subtotal | intcomma }}</td>
             </tr>
             {% empty %}
-            <tr>
+            <tr class="hint">
                 <td class="center aligned" colspan="3">{% trans 'No tickets' %}</td>
             </tr>
             {% endfor %}

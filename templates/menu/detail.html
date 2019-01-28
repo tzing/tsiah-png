@@ -38,6 +38,7 @@
         <a class="item" href="#{{ category }}">{{ category }}</a>
         {% endfor %}
     </div>
+    {% if shop.allow_user_modify %}
     <div class="right menu four wide">
         <div class="item">
             <a class="ui green labeled icon button" href="{% url 'menu_add' shop.id %}">
@@ -46,6 +47,7 @@
             </a>
         </div>
     </div>
+    {% endif %}
 </div><!-- ./category menu -->
 
 {% for category, products in menu %}

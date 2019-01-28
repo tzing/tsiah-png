@@ -27,6 +27,9 @@ class Shop(models.Model):
 
     is_active = models.BooleanField(verbose_name=_('Is active'), default=True)
 
+    allow_user_modify = models.BooleanField(
+        verbose_name=_('Allow users to make changes'), default=True)
+
     image = models.ImageField(
         verbose_name=_('Menu/shop image'),
         null=True,
@@ -70,9 +73,17 @@ class Category(models.Model):
         unique=True,
     )
 
+    priority = models.IntegerField(
+        verbose_name=_('Priority'),
+        default=0,
+        db_index=True,
+    )
+
     class Meta:
         verbose_name = _('Category')
         verbose_name_plural = _('Categories')
+
+        ordering = ['-priority']
 
     def __str__(self):
         return self.name
@@ -101,6 +112,9 @@ class Product(models.Model):
 
     is_active = models.BooleanField(verbose_name=_('Is active'), default=True)
 
+    allow_user_modify = models.BooleanField(
+        verbose_name=_('Allow users to make changes'), default=True)
+
     priority = models.IntegerField(
         verbose_name=_('Priority'),
         default=0,
@@ -120,7 +134,7 @@ class Product(models.Model):
 
         unique_together = ('shop', 'name')
 
-        ordering = ['shop', 'category', '-priority']
+        ordering = ['category', '-priority']
 
     def __str__(self):
         return self.name
@@ -209,6 +223,12 @@ class Order(models.Model):
 
     def tickets(self, **kwargs):
         return Ticket.objects.filter(order=self, **kwargs)
+
+    def total_quantity(self):
+        sum_qty = self.tickets().aggregate(val=models.Sum('quantity'))['val']
+        if not sum_qty:
+            return 0
+        return sum_qty
 
     def total_price(self):
         sum_price = self.tickets().aggregate(val=models.Sum('price'))['val']

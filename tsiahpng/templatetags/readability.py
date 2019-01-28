@@ -14,18 +14,3 @@ def to_username(user):
     if not name.strip():
         name = user.get_username()
     return name
-
-
-@register.filter
-def shop_summary(shop):
-    """Generate short summary string of the shop.
-    """
-    num_products = len(shop.products())
-    num_categories = len(
-        shop.products().values_list('category').order_by().distinct())
-
-    return _(
-        '{num_cat:,} categories. {num_product:,} documented products.').format(
-            num_cat=num_categories,
-            num_product=num_products,
-        )
