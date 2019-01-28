@@ -8,5 +8,5 @@ yapf = "*"
 ipython = "*"
 
 [packages]
-django = "*"
+django = ">=2.1.5"
 pillow = "*"
