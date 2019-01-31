@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load humanize %}
 {% load static %}
+{% load readability %}
 {% load summary %}
 
 {% block __js__ %}
@@ -22,23 +23,7 @@
     </div>
 </div><!-- ./breadcrumb -->
 
-{% if success_message %}
-<div class="ui vertical segment">
-    <div class="ui success message">
-        {% for message in success_message %}
-        <p>{{ message | linebreaks }}</p>
-        {% endfor %}
-    </div>
-</div><!-- ./success_message -->
-{% endif %}
-
-{% if error_message %}
-<div class="ui vertical segment">
-    <div class="ui error message">
-        {% for message in error_message %}{{ message | linebreaks }}{% endfor %}
-    </div>
-</div><!-- ./error_messages -->
-{% endif %}
+{% include 'respond_message.html' %}
 
 {% if order.note %}
 <div class="ui vertical segment">
@@ -77,9 +62,11 @@
 </div><!-- ./shop info -->
 
 {% if order.is_open %}
+{% with shop=order.shop %}
 <div class="ui vertical segment">
     {% include 'order/order_form.html' %}
 </div>
+{% endwith %}
 {% endif %}
 
 <div class="ui vertical segment">
@@ -127,9 +114,9 @@
             </tr>
         </thead>
         <tbody>
-            {% for person, items, subtotal in person_tickets %}
+            {% for user, items, subtotal in person_tickets %}
             <tr>
-                <td>{{ person }}</td>
+                <td>{{ user | to_username }}</td>
                 <td>{{ items }}</td>
                 <td>${{ subtotal | intcomma }}</td>
             </tr>

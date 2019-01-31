@@ -24,13 +24,7 @@
     </div>
 </div><!-- ./breadcrumb -->
 
-{% if success_message %}
-<div class="ui vertical segment">
-    <div class="ui success message">
-        {% for message in success_message %}{{ message | linebreaks }}{% endfor %}
-    </div>
-</div><!-- ./success_message -->
-{% endif %}
+{% include 'respond_message.html' %}
 
 {% if passbook.note %}
 <div class="ui vertical segment">

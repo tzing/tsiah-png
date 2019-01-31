@@ -19,14 +19,7 @@
     </div>
 </div>
 
-{% if success_message %}
-<div class="ui success message">
-    <div class="header">
-        {% trans 'Item added!' %}
-    </div>
-    <p>{{ success_message }}</p>
-</div>
-{% endif %}
+{% include 'respond_message.html' %}
 
 <form method="POST" class="ui form">
     {% csrf_token %}

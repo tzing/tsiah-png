@@ -53,11 +53,6 @@ def detail(request, passbook_id):
 
         transaction_table.append((event, balance))
 
-    # collect messages
-    storage = messages.get_messages(request)
-    success_message = list(
-        filter(lambda m: m.level == messages.SUCCESS, storage))
-
     return render(
         request, 'account/detail.html', {
             'title': passbook,
@@ -66,7 +61,7 @@ def detail(request, passbook_id):
             'active_users': users,
             'balances': balances,
             'transaction_table': transaction_table,
-            'success_message': success_message,
+            **tsiahpng.utils.get_messages(request),
         })
 
 
@@ -75,19 +70,14 @@ def add(request, passbook_id):
     """
     passbook = models.Passbook.objects.get(id=passbook_id)
 
-    # post
     if request.method == 'POST' and add_post(request, passbook_id):
         return redirect('account:detail', passbook_id=passbook_id)
-
-    # collect messages
-    storage = messages.get_messages(request)
-    error_message = list(filter(lambda m: m.level == messages.ERROR, storage))
 
     return render(
         request, 'account/add.html', {
             'title': _('Add transaction'),
             'passbook': passbook,
-            'error_message': error_message,
+            **tsiahpng.utils.get_messages(request),
         })
 
 
@@ -100,6 +90,9 @@ def add_post(request, passbook_id):
             if the event is created
     """
     assert request.method == 'POST'
+
+    if not tsiahpng.utils.is_new_post(request):
+        return
 
     # read fields
     passbook = models.Passbook.objects.get(id=passbook_id)

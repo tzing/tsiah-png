@@ -1,7 +1,10 @@
 import datetime
+import hashlib
 
 from django.conf import settings
 from django.utils import timezone
+
+from django.contrib import messages
 
 
 def order_date_default():
@@ -42,3 +45,26 @@ def str2bool(txt):
     if not bool(txt):
         return False
     return str(txt).lower() in ('1', 'y', 'yes', 't', 'true')
+
+
+def get_messages(request):
+    storage = messages.get_messages(request)
+    success = list(filter(lambda m: m.level == messages.SUCCESS, storage))
+    error = list(filter(lambda m: m.level == messages.ERROR, storage))
+    return {'success_messages': success, 'error_messages': error}
+
+
+def is_new_post(request):
+    """A utility to test if the post is duplicated sent, or really the new one.
+
+    Return
+    ------
+    is_valid : bool
+        True if this request is valid.
+    """
+    post_content = request.POST.urlencode().encode('utf-8')
+    hash_str = hashlib.sha1(post_content).hexdigest()
+    if request.session.get(f'{request.path}/last_post') == hash_str:
+        return False
+    request.session[f'{request.path}/last_post'] = hash_str
+    return True

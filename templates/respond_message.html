@@ -1,0 +1,15 @@
+{% if success_messages %}
+<div class="ui vertical segment">
+    <div class="ui success message">
+        {% for message in success_messages %}{{ message | linebreaks }}{% endfor %}
+    </div>
+</div>
+{% endif %}
+
+{% if error_messages %}
+<div class="ui vertical segment">
+    <div class="ui error message">
+        {% for message in error_messages %}{{ message | linebreaks }}{% endfor %}
+    </div>
+</div>
+{% endif %}

@@ -10,8 +10,6 @@ from django.utils.translation import gettext as _
 from django.contrib import auth
 from django.contrib import messages
 
-from django.contrib import messages
-
 from . import models
 from . import utils
 
@@ -90,11 +88,8 @@ def menu_add(request, shop_id):
     # infos on page
     title = _('Add product to {shop}').format(shop=shop.name)
 
-    success_message = None
-    error_message = []
-
     # proceed post
-    if request.method == 'POST':
+    if request.method == 'POST' and utils.is_new_post(request):
         # attributes
         category_id = utils.try_parse(request.POST.get('category'), -1)
         if category_id == -1:
@@ -106,12 +101,12 @@ def menu_add(request, shop_id):
 
         name = request.POST.get('name')
         if not name:
-            error_message.append(_('Name could not be empty'))
+            messages.error(request, _('Name could not be empty'))
             could_save = False
 
         price = utils.try_parse(request.POST.get('price'))
         if price <= 0:
-            error_message.append(_('Price should be positive number'))
+            messages.error(request, _('Price should be positive number'))
             could_save = False
 
         # create
@@ -123,8 +118,8 @@ def menu_add(request, shop_id):
                 price=price,
             )
 
-            success_message = _('Successfully add %(obj)s') % {'obj': obj}
-
+            messages.success(request,
+                             _('Successfully add {item}').format(item=obj))
             request.session[f'menu_add/last_category/{shop_id}'] = category_id
 
     # more infos on page
@@ -138,8 +133,7 @@ def menu_add(request, shop_id):
             'shop': shop,
             'categories': categories,
             'last_category': last_category,
-            'success_message': success_message,
-            'error_message': error_message,
+            **utils.get_messages(request),
         })
 
 
@@ -161,7 +155,7 @@ def order_list(request):
 
 
 def order_create(request):
-    if request.method == 'POST':
+    if request.method == 'POST' and utils.is_new_post(request):
         alias = request.POST.get('name')
         shop_id = request.POST['shop']
         shop = models.Shop.objects.get(id=shop_id)
@@ -189,6 +183,7 @@ def order_create(request):
             'shops': shops,
             'default_date': default_date,
             'last_shop': last_shop,
+            **utils.get_messages(request),
         })
 
 
@@ -199,51 +194,59 @@ def order_detail(request, order_id):
     if request.method == 'POST':
         order_detail_post(request, order)
 
-    # basic infos for rendering
-    users = auth.models.User.objects.filter(is_active=True)
-    products = order.shop.products()
-    tickets = models.Ticket.objects.filter(order=order)
+    # organize tickets, for order summary
+    tickets = order.tickets()
 
-    # organize tickets (for order summary)
+    products = tickets.values_list('item').order_by().distinct()
+    products = models.Product.objects.filter(id__in=products)
+
     grouped_tickets = []
     for product in products:
         related_tickets = tickets.filter(item=product)
         if len(related_tickets) == 0:
             continue
 
-        noted_tickets = related_tickets.filter(note__isnull=False)
-        if len(noted_tickets) == 0:
-            sum_qty = related_tickets.aggregate(val=Sum('quantity'))['val']
-            grouped_tickets.append((product, f'×{sum_qty}'))
-            continue
-
+        # collate
+        collated_tickets = models.Ticket.organize(related_tickets)
         desc = []
-        qty_normal = related_tickets.filter(note__isnull=True).aggregate(
-            val=Sum('quantity'))['val']
-        if qty_normal:
-            desc.append(_('Original ×{qty:,}').format(qty=qty_normal))
 
-        for ticket in noted_tickets:
+        # original taste
+        has_original = False
+        if collated_tickets[0].note is None:
+            has_original = True
+            original = collated_tickets[0]
+            if len(collated_tickets) == 1:
+                desc.append(_('×{qty:,}').format(qty=original.quantity))
+            else:
+                desc.append(
+                    _('Original ×{qty:,}').format(qty=original.quantity))
+
+        # special
+        special = collated_tickets
+        if has_original:
+            special = collated_tickets[1:]
+
+        for ticket in special:
             desc.append(f'{ticket.note} ×{ticket.quantity}')
 
         grouped_tickets.append((product, ', '.join(desc)))
 
     # organize tickets (for personal summary)
+    users = tickets.values_list('user').order_by().distinct()
+    users = auth.models.User.objects.filter(id__in=users)
+
     person_tickets = []
     for user in users:
         related_tickets = tickets.filter(user=user)
         if len(related_tickets) == 0:
             continue
 
-        username = user.get_full_name()
-        if not username:
-            username = user.get_username()
-
+        collated_tickets = models.Ticket.organize(related_tickets)
         subtotal = related_tickets.aggregate(val=Sum('price'))['val']
 
         person_tickets.append((
-            username,
-            ', '.join(str(t) for t in related_tickets),
+            user,
+            ', '.join(str(t) for t in collated_tickets),
             subtotal,
         ))
 
@@ -253,30 +256,29 @@ def order_detail(request, order_id):
     # user
     last_user = request.session.get('cart/last_user')
 
-    # messages
-    storage = messages.get_messages(request)
-    success_message = list(
-        filter(lambda m: m.level == messages.SUCCESS, storage))
-    error_message = list(filter(lambda m: m.level == messages.ERROR, storage))
-
     return render(
         request, 'order/detail.html', {
             'title': str(order),
             'order': order,
             'last_user': last_user,
-            'products': products,
-            'success_message': success_message,
-            'error_message': error_message,
             'grouped_tickets': grouped_tickets,
             'person_tickets': person_tickets,
             'summary_templates': templates,
+            **utils.get_messages(request)
         })
 
 
 def order_detail_post(request, order) -> (bool, str):
+    if not order.is_open:
+        messages.error(request, _('Order is closed. Could not add ticket.'))
+        return
+    if not utils.is_new_post(request):
+        return
+
     user_id = request.POST.get('user')
     if not user_id:
-        return False, _('Please specific a user')
+        messages.error(request, _('Please specific a user'))
+        return
 
     user = auth.models.User.objects.get(id=user_id)
     request.session['cart/last_user'] = str(user_id)
@@ -296,11 +298,12 @@ def order_detail_post(request, order) -> (bool, str):
         qty = utils.try_parse(request.POST.get(f'quantity-{item.id}'))
         if qty <= 0:
             continue
-        sum_qty += qty
 
         price = utils.try_parse(request.POST.get(f'price-{item.id}'))
         if price < 0:
             continue
+
+        sum_qty += qty
         sum_price += price
 
         note = request.POST.get(f'note-{item.id}')
@@ -316,7 +319,7 @@ def order_detail_post(request, order) -> (bool, str):
             ))
 
     if sum_qty == 0:
-        messages.error(request, _('At least one item should be selected'))
+        messages.error(request, _('No any valid order is received.'))
         return
 
     else:
@@ -359,4 +362,5 @@ def order_close(request, order_id):
             'title': _('Close order'),
             'order': order,
             'last_passbook': last_passbook,
+            **utils.get_messages(request),
         })

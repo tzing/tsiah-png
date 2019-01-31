@@ -24,6 +24,9 @@ $(document).ready(function () {
                     prompt: gettext('Please specific a user')
                 }]
             }
+        },
+        onSuccess: function (e) {
+            $('.submit.button').addClass('disable');
         }
     });
 

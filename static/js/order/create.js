@@ -35,6 +35,9 @@ $(document).ready(function () {
                     prompt: gettext('Date could not be empty')
                 }]
             }
+        },
+        onSuccess: function (e) {
+            $('.submit.button').addClass('disable');
         }
     });
 

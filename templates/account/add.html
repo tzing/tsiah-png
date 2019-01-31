@@ -22,13 +22,7 @@
     </div>
 </div><!-- ./breadcrumb -->
 
-{% if error_message %}
-<div class="ui vertical segment">
-    <div class="ui error message">
-        {% for message in error_message %}{{ message | linebreaks }}{% endfor %}
-    </div>
-</div><!-- ./error_messages -->
-{% endif %}
+{% include 'respond_message.html' %}
 
 <form method="POST" class="ui form">
     {% csrf_token %}

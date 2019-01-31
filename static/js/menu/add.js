@@ -18,6 +18,9 @@ $(document).ready(function () {
                     prompt: gettext('Item name could not be empty')
                 }]
             }
+        },
+        onSuccess: function (e) {
+            $('.submit.button').addClass('disable');
         }
     });
 });

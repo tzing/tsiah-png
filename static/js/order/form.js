@@ -22,6 +22,9 @@ var form = $('form.form').each(function (idx, item) {
                     prompt: gettext('At least one item should be selected')
                 }]
             }
+        },
+        onSuccess: function (e) {
+            $('.submit.button').addClass('disable');
         }
     });
 

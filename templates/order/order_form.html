@@ -27,7 +27,7 @@
 
                 {% if shop.allow_user_modify %}
                 <div class="extra" data-tooltip="{% trans 'Register the product you want to buy' %}">
-                    <a href="{% url 'menu_add' order.shop.id %}">{% trans 'Add product' %}</a>
+                    <a href="{% url 'menu_add' shop.id %}">{% trans 'Add product' %}</a>
                 </div>
                 {% endif %}
 
@@ -36,7 +36,7 @@
                     <i class="dropdown icon"></i>
                     <div class="default text">{% trans 'select item' %}</div>
                     <div class="menu">
-                        {% for product in products %}
+                        {% for product in shop.products %}
                         <div class="item" data-value="{{ product.id }}" data-price="{{ product.price }}" data-name="{{ product.name }}" data-allow-change="{{ product.allow_user_modify | lower }}">
                             <div class="ui label">
                                 {% if product.category %}{{ product.category }}

@@ -65,7 +65,7 @@
         </div>
 
         <div class="ui vertical segment">
-            {% with products=order.shop.products %}
+            {% with shop=order.shop %}
             {% include 'order/order_form.html' %}
             {% endwith %}
         </div><!-- ./loop item: an upcoming order -->
