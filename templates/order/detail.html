@@ -4,6 +4,7 @@
 {% load static %}
 {% load readability %}
 {% load summary %}
+{% load md2 %}
 
 {% block __js__ %}
 <script type="text/javascript">
@@ -27,7 +28,7 @@
 
 {% if order.note %}
 <div class="ui vertical segment">
-    {{ order.note | linebreaks }}
+    {{ order.note | markdown }}
 </div><!-- ./note -->
 {% endif %}
 

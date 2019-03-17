@@ -10,3 +10,4 @@ ipython = "*"
 [packages]
 django = ">=2.1.5"
 pillow = "*"
+django-markdown2 = "*"

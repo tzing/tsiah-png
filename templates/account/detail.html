@@ -3,6 +3,7 @@
 {% load humanize %}
 {% load static %}
 {% load readability %}
+{% load md2 %}
 
 {% block __css__ %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/transactions.css' %}">
@@ -28,7 +29,7 @@
 
 {% if passbook.note %}
 <div class="ui vertical segment">
-    {{ passbook.note | linebreaks }}
+    {{ passbook.note | markdown }}
 </div><!-- note -->
 {% endif %}
 

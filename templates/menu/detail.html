@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load static %}
 {% load humanize %}
+{% load md2 %}
 
 {% block __js__ %}
 <script type="text/javascript" src="{% static 'js/menu/detail.js' %}"></script>
@@ -28,7 +29,7 @@
 
 {% if shop.note %}
 <div class="ui vertical segment">
-    {{ shop.note | linebreaks }}
+    {{ shop.note | markdown }}
 </div>
 {% endif %}
 

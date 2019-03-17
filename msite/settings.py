@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'tsiahpng.apps.TsiahpngConfig',
     'account.apps.AccountConfig',
     'api.apps.APIConfig',
+    'django_markdown2',
 ]
 
 MIDDLEWARE = [

@@ -1,3 +1,4 @@
+{% load md2 %}
 <div class="ui items">
     <div class="item">
         {% if order.shop.image %}
@@ -15,7 +16,7 @@
 
             {% if order.shop.note %}
             <div class="description">
-                {{ order.shop.note | linebreaks }}
+                {{ order.shop.note | markdown }}
             </div>
             {% endif %}
         </div><!-- ./shop info content -->
