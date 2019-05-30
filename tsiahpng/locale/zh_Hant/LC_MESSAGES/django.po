@@ -1,0 +1,178 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-05-30 00:14+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: tsiahpng/apps.py:7
+msgid "Tsia̍h-Pn̄g"
+msgstr "呷飯"
+
+#: tsiahpng/models.py:10
+msgid "Shop name"
+msgstr "店家名稱"
+
+#: tsiahpng/models.py:13 tsiahpng/models.py:68 tsiahpng/models.py:117
+msgid "Ordering"
+msgstr "排序"
+
+#: tsiahpng/models.py:17 tsiahpng/models.py:101 tsiahpng/models.py:161
+msgid "Active"
+msgstr "有效"
+
+#: tsiahpng/models.py:19
+msgid "Unselect this instead of deleting shop."
+msgstr "以取消選取代替刪除店家。"
+
+#: tsiahpng/models.py:23 tsiahpng/models.py:106
+msgid "Changable"
+msgstr "可變動"
+
+#: tsiahpng/models.py:25
+msgid "Uncheck if users are not allowed to change menu."
+msgstr "取消選取以禁止使用者變更菜單。"
+
+#: tsiahpng/models.py:29
+msgid "Image"
+msgstr "圖片"
+
+#: tsiahpng/models.py:32
+msgid "Menu or shop photo."
+msgstr "菜單圖片或店家照片。"
+
+#: tsiahpng/models.py:35 tsiahpng/models.py:166 tsiahpng/models.py:241
+msgid "Note"
+msgstr "備註"
+
+#: tsiahpng/models.py:38 tsiahpng/models.py:89 tsiahpng/models.py:149
+msgid "Shop"
+msgstr "店家"
+
+#: tsiahpng/models.py:39
+msgid "Shops"
+msgstr "店家"
+
+#: tsiahpng/models.py:64
+msgid "Category name"
+msgstr "分類名稱"
+
+#: tsiahpng/models.py:72 tsiahpng/models.py:92
+msgid "Category"
+msgstr "分類"
+
+#: tsiahpng/models.py:73
+msgid "Categories"
+msgstr "分類"
+
+#: tsiahpng/models.py:86
+msgid "Product name"
+msgstr "商品名稱"
+
+#: tsiahpng/models.py:103
+msgid "Unselect this instead of deleting product."
+msgstr "以取消選取代替刪除商品"
+
+#: tsiahpng/models.py:108
+msgid "Uncheck if users are not allowed to make changes."
+msgstr "取消選取以禁止使用者變更項目。"
+
+#: tsiahpng/models.py:111
+msgid "Mergable"
+msgstr "可合併"
+
+#: tsiahpng/models.py:113
+msgid "Uncheck if its quantity should not be summarized."
+msgstr "取消選取以避免統計時合併數量。"
+
+#: tsiahpng/models.py:120
+msgid "Price"
+msgstr "價格"
+
+#: tsiahpng/models.py:123
+msgid "Product"
+msgstr "商品"
+
+#: tsiahpng/models.py:124
+msgid "Products"
+msgstr "商品"
+
+#: tsiahpng/models.py:146
+msgid "Order alias"
+msgstr "訂單別名"
+
+#: tsiahpng/models.py:152
+msgid "Order date"
+msgstr "訂購日期"
+
+#: tsiahpng/models.py:156
+msgid "Available"
+msgstr "可用"
+
+#: tsiahpng/models.py:158
+msgid "Unselect this to prevent users from ordering."
+msgstr "取消勾選以停止使用者訂購。"
+
+#: tsiahpng/models.py:163
+msgid "Unselect this instead of deleting order."
+msgstr "以取消選取代替刪除訂單。"
+
+#: tsiahpng/models.py:169
+msgid "Date created"
+msgstr "建立日期"
+
+#: tsiahpng/models.py:173 tsiahpng/models.py:219
+msgid "Order"
+msgstr "訂單"
+
+#: tsiahpng/models.py:174
+msgid "Orders"
+msgstr "訂單"
+
+#: tsiahpng/models.py:189
+msgid "Ordering {shop} on {time:%Y/%m/%d}"
+msgstr "在{time:%Y/%m/%d}訂購{shop}"
+
+#: tsiahpng/models.py:208
+msgid "Total ordered quantity"
+msgstr "總訂購數"
+
+#: tsiahpng/models.py:209
+msgid "Total cost"
+msgstr "總金額"
+
+#: tsiahpng/models.py:223
+msgid "User"
+msgstr "使用者"
+
+#: tsiahpng/models.py:231
+msgid "Ordered Product"
+msgstr "訂購項目"
+
+#: tsiahpng/models.py:237
+msgid "Quantity"
+msgstr "數量"
+
+#: tsiahpng/models.py:238
+msgid "Cost"
+msgstr "金額"
+
+#: tsiahpng/models.py:245
+msgid "Ordered Item"
+msgstr "訂購項目"
+
+#: tsiahpng/models.py:246
+msgid "Ordered Items"
+msgstr "訂購項目"
