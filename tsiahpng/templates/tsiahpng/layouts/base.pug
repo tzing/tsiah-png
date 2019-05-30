@@ -3,6 +3,15 @@ html
   head
     include tsiahpng/includes/head.pug
     block extra_head
+
   body
-    block body
-      p hello base page!
+    include tsiahpng/includes/nav.pug
+
+    block main
+      p main block.
+
+    .ui.vertical.footer.segment
+      include tsiahpng/includes/footer.pug
+
+    include tsiahpng/includes/js.pug
+    block extra_scripts
