@@ -1,17 +1,19 @@
 -load static
+-load sass_tags
 //- meta
 meta(charset='utf-8')
 meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
 meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0')
-link(rel='shortcut icon', href="{% static 'favicon/favicon.ico' %}")
-link(rel='icon', type='image/png', sizes='32x32', href="{% static 'favicon/favicon-32x32.png' %}")
-link(rel='icon', type='image/png', sizes='16x16', href="{% static 'favicon/favicon-16x16.png' %}")
-link(rel='apple-touch-icon', sizes='180x180', href="{% static 'favicon/apple-touch-icon.png' %}")
-link(rel='manifest', href="{% static 'favicon/site.webmanifest' %}")
-link(rel='mask-icon', href="{% static 'favicon/safari-pinned-tab.svg' %}", color='#00b5ad')
+link(rel='shortcut icon', href="{% static 'tsiahpng/favicon/favicon.ico' %}")
+link(rel='icon', type='image/png', sizes='32x32', href="{% static 'tsiahpng/favicon/favicon-32x32.png' %}")
+link(rel='icon', type='image/png', sizes='16x16', href="{% static 'tsiahpng/favicon/favicon-16x16.png' %}")
+link(rel='apple-touch-icon', sizes='180x180', href="{% static 'tsiahpng/favicon/apple-touch-icon.png' %}")
+link(rel='manifest', href="{% static 'tsiahpng/favicon/site.webmanifest' %}")
+link(rel='mask-icon', href="{% static 'tsiahpng/favicon/safari-pinned-tab.svg' %}", color='#00b5ad')
 meta(name='msapplication-TileColor', content='#00b5ad')
-meta(name='msapplication-config', content="{% static 'favicon/browserconfig.xml' %}")
+meta(name='msapplication-config', content="{% static 'tsiahpng/favicon/browserconfig.xml' %}")
 meta(name='theme-color', content='#00b5ad')
 
 //- css
 link(rel='stylesheet', type='text/css', href="{% static 'semantic/semantic.min.css' %}")
+link(href="{% sass_src 'tsiahpng/css/tsiahpng.scss' %}", rel='stylesheet', type='text/css')

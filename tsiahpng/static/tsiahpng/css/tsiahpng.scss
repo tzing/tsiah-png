@@ -1,0 +1,20 @@
+// site layout
+.ui.head.segment {
+    margin-top: 39px;
+    padding: 5em 0;
+}
+
+.ui.main.segment {
+    padding-bottom: 3em;
+}
+
+.ui.footer.segment {
+    padding: 3em 0 5em 0;
+    border-bottom: 0;
+}
+
+// secondary
+.ui.container .segment {
+    border-bottom: 0;
+    padding-bottom: 3em;
+}

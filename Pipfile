@@ -6,9 +6,15 @@ verify_ssl = true
 [dev-packages]
 black = "*"
 ipython = "*"
+libsass = "*"
+django-compressor = "*"
 
 [packages]
 django = ">=2.1.5"
 pillow = "*"
 django-markdown2 = "*"
 pypugjs = "*"
+django-sass-processor = "*"
+
+[pipenv]
+allow_prereleases = true
