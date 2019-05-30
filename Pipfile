@@ -4,10 +4,11 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-yapf = "*"
+black = "*"
 ipython = "*"
 
 [packages]
 django = ">=2.1.5"
 pillow = "*"
 django-markdown2 = "*"
+pypugjs = "*"
