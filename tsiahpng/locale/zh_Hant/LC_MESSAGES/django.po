@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-30 00:14+0800\n"
+"POT-Creation-Date: 2019-05-30 15:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: tsiahpng/apps.py:7
+#: tsiahpng/apps.py:7 tsiahpng/templates/tsiahpng/includes/nav.pug:4
+#: tsiahpng/templates/tsiahpng/layouts/basic.pug:5
 msgid "Tsia̍h-Pn̄g"
 msgstr "呷飯"
 
@@ -176,3 +177,12 @@ msgstr "訂購項目"
 #: tsiahpng/models.py:246
 msgid "Ordered Items"
 msgstr "訂購項目"
+
+#: tsiahpng/templates/tsiahpng/includes/nav.pug:8
+msgid "Admin Panel"
+msgstr "控制台"
+
+#: tsiahpng/templates/tsiahpng/layouts/basic.pug:5
+#: tsiahpng/templates/tsiahpng/layouts/basic.pug:12
+msgid "Untitled Page"
+msgstr "未命名頁面"

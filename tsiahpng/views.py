@@ -6,7 +6,6 @@ from django.urls import path
 from django.views.i18n import JavaScriptCatalog
 from django.views.decorators.cache import cache_page
 
-
 from . import admin
 
 app_name = "tsiahpng"
@@ -18,5 +17,5 @@ urlpatterns = [
         caches(JavaScriptCatalog.as_view(packages=["tsiahpng"])),
         name="javascript-catalog",
     ),
-    path("administration/", admin.site.urls),
+    path("administration/", admin.site.urls, name="admin"),
 ]
