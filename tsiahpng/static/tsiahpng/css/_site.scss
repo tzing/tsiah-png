@@ -1,0 +1,17 @@
+body>.ui.vertical.segment {
+    &.head {
+        margin-top: 39px;
+        padding: 5em 0;
+    }
+
+    &.main {
+        padding-bottom: 3em;
+
+    }
+
+    &.footer {
+        padding: 3em 0 5em 0;
+        border-bottom: 0;
+
+    }
+}
