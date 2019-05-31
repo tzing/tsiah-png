@@ -1,8 +1,27 @@
+-load i18n
 !!! 5
 html
   head
     include tsiahpng/includes/head.pug
+    block title
+      title {% if title %}{{ title }}{% else %}{% trans 'Untitled Page' %}{% endif %} | {% trans 'Tsia̍h-Pn̄g' %}
     block extra_head
+
   body
-    block body
-      p hello base page!
+    include tsiahpng/includes/nav.pug
+
+    block main
+      .ui.vertical.head.segment
+        .ui.container
+          h1.ui.header {% if title %}{{ title }}{% else %}{% trans 'Untitled Page' %}{% endif %}
+
+      .ui.vertical.main.segment
+        .ui.text.container
+          block content
+            p hello content!
+
+    .ui.vertical.footer.segment
+      include tsiahpng/includes/footer.pug
+
+    include tsiahpng/includes/js.pug
+    block extra_scripts

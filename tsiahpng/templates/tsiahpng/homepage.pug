@@ -1,0 +1,21 @@
+-extends 'tsiahpng/layouts/base.pug'
+-load i18n
+-load static
+-load sass_tags
+
+block title
+  title {% trans 'Tsia̍h-Pn̄g' %}
+
+block extra_head
+  link(href="{% sass_src 'tsiahpng/css/homepage.scss' %}", rel='stylesheet', type='text/css')
+
+block main
+  .ui.vertical.teal.inverted.head.segment.center.aligned
+    .ui.container
+      h1.ui.header {{ title }}
+      if subtitle
+        p {{ subtitle }}
+
+  .ui.vertical.main.segment
+    .ui.text.container
+      p this is homepage

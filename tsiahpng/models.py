@@ -256,3 +256,33 @@ class Ticket(models.Model):
             return f"{name} ({self.note})"
         else:
             return name
+
+
+class WelcomeText(models.Model):
+    """Welcome string to be displayed in homepage.
+    """
+
+    id = models.AutoField(primary_key=True)
+
+    title = models.CharField(verbose_name=_("Title"), max_length=128)
+    subtitle = models.CharField(
+        verbose_name=_("Subtitle"), max_length=256, null=True, blank=True
+    )
+
+    is_active = models.BooleanField(
+        verbose_name=_("Active"),
+        default=True,
+        help_text=_("Unselect this to disable this text."),
+    )
+
+    class Meta:
+        verbose_name = _("Welcome Text")
+        verbose_name_plural = _("Welcome Texts")
+
+    def __str__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.subtitle:
+            self.subtitle = None
+        super().save(*args, **kwargs)
