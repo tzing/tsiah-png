@@ -19,10 +19,10 @@ class Shop(models.Model):
         help_text=_("Unselect this instead of deleting shop."),
     )
 
-    changable = models.BooleanField(
-        verbose_name=_("Changable"),
+    changeable = models.BooleanField(
+        verbose_name=_("Changeable"),
         default=True,
-        help_text=_("Uncheck if users are not allowed to change menu."),
+        help_text=_("Uncheckeded if users are not allowed to change menu."),
     )
 
     image = models.ImageField(
@@ -52,6 +52,14 @@ class Shop(models.Model):
 
     def products(self, **kwargs):
         return Product.objects.filter(shop=self, is_active=True, **kwargs)
+
+    def num_products(self):
+        return len(self.products())
+
+    def num_categories(self):
+        products = self.products()
+        categories = products.values_list("category").order_by().distinct()
+        return len(categories)
 
 
 class Category(models.Model):
@@ -102,15 +110,15 @@ class Product(models.Model):
         default=True,
         help_text=_("Unselect this instead of deleting product."),
     )
-    changable = models.BooleanField(
-        verbose_name=_("Changable"),
+    changeable = models.BooleanField(
+        verbose_name=_("Changeable"),
         default=True,
-        help_text=_("Uncheck if users are not allowed to make changes."),
+        help_text=_("Unchecked if users are not allowed to make changes."),
     )
     mergable = models.BooleanField(
         verbose_name=_("Mergable"),
         default=True,
-        help_text=_("Uncheck if its quantity should not be summarized."),
+        help_text=_("Unchecked if its quantity should not be summarized."),
     )
 
     ordering = models.IntegerField(

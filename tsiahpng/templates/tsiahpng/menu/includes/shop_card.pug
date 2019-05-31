@@ -1,0 +1,44 @@
+//- required: `shop` object
+-load humanize
+-load i18n
+-load md2
+.shop.item
+  //- photo
+  if shop.image
+    .image
+      img(src='{{ shop.image.url }}')
+
+  .content
+    //- name FIXME url
+    a.header(href="#") {{ shop }}
+
+    //- summary product counts
+    .meta
+      p
+        -blocktrans with num_cat=shop.num_categories|intcomma num_prod=shop.num_products|intcomma
+          {{ num_cat }} categories, {{ num_prod }} products.
+
+    //- description
+    if shop.note
+      .description {{ shop.note | markdown }}
+
+    .extra
+      //- link to image
+      if shop.image
+        .ui.blue.label
+          a(href='{{ shop.image.url }}', target='_blank')
+            i.image.icon
+            | {% trans 'View large picture' %}
+
+      //- link to detailed menu FIXME url
+      .ui.label
+        a(href="#")
+          i.linkify.icon
+          |  {% trans 'Menu details' %}
+
+      //- link to create item  FIXME url
+      if shop.changeable
+        .ui.green.label
+          a(href="#")
+            i.plus.icon
+            |  {% trans 'Add product' %}

@@ -1,0 +1,22 @@
+-extends 'tsiahpng/layouts/base.pug'
+-load i18n
+-load static
+-load sass_tags
+
+block extra_head
+  link(href="{% sass_src 'tsiahpng/css/menu.scss' %}", rel='stylesheet', type='text/css')
+
+block content
+  //- breadcrumb
+  include tsiahpng/includes/breadcrumb.pug
+
+  //- shop list
+  .ui.items
+    -for shop in shops
+      //- shop info
+      include tsiahpng/menu/includes/shop_card.pug
+      //- or empty
+      -empty
+        .item
+          .content
+            .header {% trans 'No any menu yet.' %}

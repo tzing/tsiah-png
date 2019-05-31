@@ -127,3 +127,4 @@ dmypy.json
 
 # generated static files
 collected_statics/
+media/

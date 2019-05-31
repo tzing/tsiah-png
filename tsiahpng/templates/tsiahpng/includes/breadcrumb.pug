@@ -1,0 +1,6 @@
+-load i18n
+.ui.rimless.vertical.segment
+  .ui.breadcrumb
+    a.section(href="{% url 'tsiahpng:welcome' %}") {% trans 'Home' %}
+    .divider  /
+    .active.section {{ title }}
