@@ -12,8 +12,9 @@ block extra_head
 block main
   .ui.vertical.teal.inverted.head.segment.center.aligned
     .ui.container
-      h1.ui.header {% trans 'Welcome!' %}
-      p {% trans "I'm hungry" %}
+      h1.ui.header {{ title }}
+      if subtitle
+        p {{ subtitle }}
 
   .ui.vertical.main.segment
     .ui.text.container

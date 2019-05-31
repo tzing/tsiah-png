@@ -61,12 +61,17 @@ class TicketAdmin(admin.ModelAdmin):
     list_display = ["__str__", "order", "user", "cost"]
 
 
+class WelcomeTextAdmin(admin.ModelAdmin):
+    list_display = ["__str__", "is_active"]
+
+
 # django admin
 admin.site.register(models.Shop, admin_class=ShopAdmin)
 admin.site.register(models.Category)
 admin.site.register(models.Product, admin_class=ProductAdmin)
 admin.site.register(models.Order, admin_class=OrderAdmin)
 admin.site.register(models.Ticket, admin_class=TicketAdmin)
+admin.site.register(models.WelcomeText, admin_class=WelcomeTextAdmin)
 
 # customized admin
 site = TsiahPngAdminSite(name="tsiahpng_admin")
@@ -78,3 +83,4 @@ site.register(models.Category)
 site.register(models.Product, admin_class=ProductAdmin)
 site.register(models.Order, admin_class=OrderAdmin)
 site.register(models.Ticket, admin_class=TicketAdmin)
+site.register(models.WelcomeText, admin_class=WelcomeTextAdmin)

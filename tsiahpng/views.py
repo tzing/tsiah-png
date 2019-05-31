@@ -1,16 +1,29 @@
+import random
 import uuid
 
 from django.shortcuts import render
 from django.urls import path
 
+from django.utils.translation import gettext as _
+
 from django.views.i18n import JavaScriptCatalog
 from django.views.decorators.cache import cache_page
 
 from . import admin
+from . import models
 
 
-def welcome(request):
-    return render(request, "tsiahpng/homepage.pug")
+def homepage(request):
+    context = {}
+
+    # welcome string
+    if models.WelcomeText.objects.exists():
+        welcome = random.choice(models.WelcomeText.objects.filter(is_active=True))
+        context.update(title=welcome.title, subtitle=welcome.subtitle)
+    else:
+        context.update(title=_("Welcome"), subtitle=None)
+
+    return render(request, "tsiahpng/homepage.pug", context)
 
 
 # url confs
@@ -18,7 +31,7 @@ app_name = "tsiahpng"
 caches = cache_page(86400, key_prefix=f"jsi18n-{uuid.uuid4().hex}")
 
 urlpatterns = [
-    path("", welcome, name="welcome"),
+    path("", homepage, name="welcome"),
     path(
         "jsi18n/",
         caches(JavaScriptCatalog.as_view(packages=["tsiahpng"])),
