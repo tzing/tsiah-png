@@ -36,7 +36,7 @@ class TsiahPngAdminSite(admin.AdminSite):
 
 
 class ShopAdmin(admin.ModelAdmin):
-    list_display = ["__str__", "is_active", "changable"]
+    list_display = ["__str__", "is_active", "changeable"]
 
 
 class ProductAdmin(admin.ModelAdmin):

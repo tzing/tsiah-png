@@ -6,6 +6,10 @@ body>.ui.vertical.segment {
 
     &.main {
         padding-bottom: 3em;
+
+        .ui.rimless.vertical.segment {
+            border-bottom: 0;
+        }
     }
 
     &.footer {

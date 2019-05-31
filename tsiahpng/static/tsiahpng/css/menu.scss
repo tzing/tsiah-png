@@ -1,0 +1,18 @@
+.ui.items>.shop.item {
+    border-bottom: 1px solid rgba(34, 36, 38, .15);
+    padding-bottom: 2em;
+
+    &:last-child {
+        border-bottom: 0;
+    }
+
+    // align the extra to the bottom
+    .content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .extra {
+        margin-top: auto;
+    }
+}

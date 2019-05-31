@@ -26,12 +26,21 @@ def homepage(request):
     return render(request, "tsiahpng/homepage.pug", context)
 
 
+def shop_list(request):
+    return render(
+        request,
+        "tsiahpng/menu/index.pug",
+        {"title": _("Menu"), "shops": models.Shop.objects.filter(is_active=True)},
+    )
+
+
 # url confs
 app_name = "tsiahpng"
 caches = cache_page(86400, key_prefix=f"jsi18n-{uuid.uuid4().hex}")
 
 urlpatterns = [
     path("", homepage, name="welcome"),
+    path("menu/", shop_list, name="shop_list"),
     path(
         "jsi18n/",
         caches(JavaScriptCatalog.as_view(packages=["tsiahpng"])),
