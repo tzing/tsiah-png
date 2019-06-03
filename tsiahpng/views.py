@@ -13,6 +13,8 @@ from django.views.decorators.cache import cache_page
 
 from . import admin
 from . import models
+from . import forms
+from . import settings
 
 
 def homepage(request):
@@ -24,6 +26,8 @@ def homepage(request):
         context.update(title=welcome.title, subtitle=welcome.subtitle)
     else:
         context.update(title=_("Welcome"), subtitle=None)
+
+    # TODO messages
 
     return render(request, "tsiahpng/homepage.pug", context)
 
@@ -44,6 +48,8 @@ def shop_detail(request):
         messages.error(request, _("Shop not exists."))
         return redirect("tsiahpng:welcome")
 
+    # TODO messages
+
     raise NotImplementedError()  # FIXME
 
 
@@ -60,13 +66,35 @@ def shop_add_product(request, shop_id):
         messages.error(request, _("{shop} is not changeable.").format(shop=shop))
         return redirect("tsiahpng:shop_detail", shop_id=shop_id)
 
-    raise NotImplementedError()  # FIXME
+    # form
+    if request.method == "POST":
+        form = forms.CreateProductForm(request.POST)
+        if form.is_valid():
+            prod = form.to_model()
+            if prod:
+                messages.success(
+                    request, _(f"Successfully add {prod}.").format(shop=shop)
+                )
+                return redirect("tsiahpng:shop_detail", shop_id=shop_id)
+        else:
+            messages.error(request, _("Invalid requests."))
 
     # render
     return render(
         request,
         "tsiahpng/menu/add_product.pug",
-        {"title": _("Add product to {shop}".format(shop=shop))},
+        {
+            "title": _("Add product to {shop}".format(shop=shop)),
+            "shop": shop,
+            "categories": models.Category.objects.all(),
+            "default_product_price": request.session.get(
+                f"shop_add_product/{shop.id}/price", settings.DEFAULT_PROD_PRICE
+            ),
+            "last_category": request.session.get(
+                f"shop_add_product/{shop.id}/category", -1
+            ),
+            "messages": messages.get_messages(request),
+        },
     )
 
 

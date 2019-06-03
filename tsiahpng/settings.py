@@ -17,7 +17,6 @@ DEFAULT_PROD_PRICE = getattr(settings, "DEFAULT_PROD_PRICE", 30)
 
 def assert_type(name, type_):
     value = globals()[name]
-    print(value, type_)
     assert isinstance(
         value, type_
     ), f"Expected {type_.__name__} for {name}, got {type(value).__name__}"
