@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from . import default
+from . import settings
 
 
 class Shop(models.Model):
@@ -125,7 +126,9 @@ class Product(models.Model):
         verbose_name=_("Ordering"), default=-1, db_index=True
     )
 
-    price = models.PositiveIntegerField(verbose_name=_("Price"))
+    price = models.PositiveIntegerField(
+        verbose_name=_("Price"), default=settings.DEFAULT_PROD_PRICE
+    )
 
     class Meta:
         verbose_name = _("Product")

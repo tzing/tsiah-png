@@ -2,9 +2,55 @@
 -load i18n
 -load static
 
+
 block content
   //- breadcrumb
-  include tsiahpng/menu/includes/breadcrumb.pug
+  .ui.rimless.vertical.segment
+    .ui.breadcrumb
+      a.section(href="{% url 'tsiahpng:welcome' %}") {% trans 'Home' %}
+      .divider  /
+      a.section(href="{% url 'tsiahpng:shop_list' %}") {% trans 'Menu' %}
+      .divider  /
+      a.section(href="{% url 'tsiahpng:shop_detail' shop.id %}") {{ shop }}
+      .divider  /
+      .active.section {{ title }}
 
-  //- shop list
-  p hello
+  //- form
+  .ui.rimless.vertical.segment
+    form.ui.form(method='POST')
+      //- hidden fields
+      -csrf_token
+      input#id_shop(type='hidden', name='shop', value='{{ shop.id }}')
+
+      //- category
+      .field
+        label(for='id_category') {% trans 'Category' %}
+        #id_category.ui.selection.dropdown
+          input(type='hidden', name='category', value='{{ last_category }}')
+          i.dropdown.icon
+          .default.text {% trans 'select category' %}
+          .menu
+            -for category in categories
+              .item(data-value='{{ category.id }}') {{ category }}
+            .item(data-value='-1') {% trans 'No category' %}
+
+      //- name
+      .field
+        label(for='id_name') {% trans 'Product name' %}
+        input#id_name(type='text', name='name', maxlength='128', required='')
+
+      //- price
+      .field
+        label(for='id_price') {% trans 'Price' %}
+        input#id_price(type='number', name='price', value='{{ default_product_price }}', required='')
+
+      //- submit
+      .ui.primary.submit.button {% trans 'Submit' %}
+      .ui.reset.button {% trans 'Reset' %}
+
+      //- errors
+      .ui.error.message
+
+
+block extra_scripts
+  script(type='text/javascript' src='{% static "tsiahpng/js/menu/add_product.js" %}')
