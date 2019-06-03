@@ -34,29 +34,36 @@ def shop_list(request):
     return render(
         request,
         "tsiahpng/menu/index.pug",
-        {"title": _("Menu"), "shops": models.Shop.objects.filter(is_active=True)},
+        {
+            "title": _("Menu"),
+            "shops": models.Shop.objects.filter(is_active=True),
+            "messages": messages.get_messages(request),
+        },
     )
 
 
 def shop_detail(request, shop_id):
     # get shop
     try:
-        shop = models.Shop.objects.get(id=shop_id)
+        shop = models.Shop.objects.get(id=shop_id, is_active=True)
     except models.Shop.DoesNotExist:
         messages.error(request, _("Shop not exists."))
-        return redirect("tsiahpng:welcome")
+        return redirect("tsiahpng:shop_list")
 
-    raise NotImplementedError()  # FIXME
-    return render(request, "", {"messages": messages.get_messages(request)})
+    return render(
+        request,
+        "tsiahpng/menu/detail.pug",
+        {"title": str(shop), "shop": shop, "messages": messages.get_messages(request)},
+    )
 
 
 def shop_add_product(request, shop_id):
     # get shop
     try:
-        shop = models.Shop.objects.get(id=shop_id)
+        shop = models.Shop.objects.get(id=shop_id, is_active=True)
     except models.Shop.DoesNotExist:
         messages.error(request, _("Shop not exists."))
-        return redirect("tsiahpng:welcome")
+        return redirect("tsiahpng:shop_list")
 
     # check permission
     if not shop.changeable:
