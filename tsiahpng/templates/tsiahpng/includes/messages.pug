@@ -1,19 +1,20 @@
 -if messages
   -regroup messages by level as leveled_messages
-  -for group in leveled_messages
-    {% if group.grouper == 40 %}
-    .ui.message.error.transition
-      include tsiahpng/includes/message_list.pug
-    {% elif group.grouper == 30 %}
-    .ui.message.warning.transition
-      include tsiahpng/includes/message_list.pug
-    {% elif group.grouper == 25 %}
-    .ui.message.success.transition
-      include tsiahpng/includes/message_list.pug
-    {% elif group.grouper == 20 %}
-    .ui.message.info.transition
-      include tsiahpng/includes/message_list.pug
-    {% else %}
-    .ui.message.transition
-      include tsiahpng/includes/message_list.pug
-    {% endif %}
+  .ui.rimless.vertical.segment
+    -for group in leveled_messages
+      {% if group.grouper == 40 %}
+      .ui.message.error.transition
+        include tsiahpng/includes/message_list.pug
+      {% elif group.grouper == 30 %}
+      .ui.message.warning.transition
+        include tsiahpng/includes/message_list.pug
+      {% elif group.grouper == 25 %}
+      .ui.message.success.transition
+        include tsiahpng/includes/message_list.pug
+      {% elif group.grouper == 20 %}
+      .ui.message.info.transition
+        include tsiahpng/includes/message_list.pug
+      {% else %}
+      .ui.message.transition
+        include tsiahpng/includes/message_list.pug
+      {% endif %}
