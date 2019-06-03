@@ -5,7 +5,7 @@
 .shop.item
   //- photo
   if shop.image
-    .image
+    a.image(href='{{ shop.image.url }}', target='_blank')
       img(src='{{ shop.image.url }}')
 
   .content
