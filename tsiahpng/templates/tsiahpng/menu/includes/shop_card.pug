@@ -14,9 +14,7 @@
 
     //- summary product counts
     .meta
-      p
-        -blocktrans with num_cat=shop.num_categories|intcomma num_prod=shop.num_products|intcomma
-          {{ num_cat }} categories, {{ num_prod }} products.
+      p {% blocktrans with num_cat=shop.num_categories|intcomma num_prod=shop.num_products|intcomma %}{{ num_cat }} categories, {{ num_prod }} products.{% endblocktrans %}
 
     //- description
     if shop.note

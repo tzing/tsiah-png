@@ -18,7 +18,7 @@ from . import settings
 
 
 def homepage(request):
-    context = {}
+    context = {"messages": messages.get_messages(request)}
 
     # welcome string
     if models.WelcomeText.objects.exists():
@@ -26,8 +26,6 @@ def homepage(request):
         context.update(title=welcome.title, subtitle=welcome.subtitle)
     else:
         context.update(title=_("Welcome"), subtitle=None)
-
-    # TODO messages
 
     return render(request, "tsiahpng/homepage.pug", context)
 
@@ -40,7 +38,7 @@ def shop_list(request):
     )
 
 
-def shop_detail(request):
+def shop_detail(request, shop_id):
     # get shop
     try:
         shop = models.Shop.objects.get(id=shop_id)
@@ -48,9 +46,8 @@ def shop_detail(request):
         messages.error(request, _("Shop not exists."))
         return redirect("tsiahpng:welcome")
 
-    # TODO messages
-
     raise NotImplementedError()  # FIXME
+    return render(request, "", {"messages": messages.get_messages(request)})
 
 
 def shop_add_product(request, shop_id):
@@ -84,7 +81,7 @@ def shop_add_product(request, shop_id):
         request,
         "tsiahpng/menu/add_product.pug",
         {
-            "title": _("Add product to {shop}".format(shop=shop)),
+            "title": _("Add product to {shop}").format(shop=shop),
             "shop": shop,
             "categories": models.Category.objects.all(),
             "default_product_price": request.session.get(
@@ -109,11 +106,7 @@ urlpatterns = [
     path("menu/<int:shop_id>", shop_detail, name="shop_detail"),
     path("menu/<int:shop_id>/add", shop_add_product, name="shop_add_product"),
     # js i18n
-    path(
-        "jsi18n/",
-        caches(JavaScriptCatalog.as_view(packages=["tsiahpng"])),
-        name="javascript-catalog",
-    ),
+    path("jsi18n/", caches(JavaScriptCatalog.as_view()), name="javascript-catalog"),
     # admin panel
     path("administration/", admin.site.urls, name="admin"),
 ]
