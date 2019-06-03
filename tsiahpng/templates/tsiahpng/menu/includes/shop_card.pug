@@ -5,18 +5,16 @@
 .shop.item
   //- photo
   if shop.image
-    .image
+    a.image(href='{{ shop.image.url }}', target='_blank')
       img(src='{{ shop.image.url }}')
 
   .content
-    //- name FIXME url
-    a.header(href="#") {{ shop }}
+    //- name
+    a.header(href="{% url 'tsiahpng:shop_detail' shop.id %}") {{ shop }}
 
     //- summary product counts
     .meta
-      p
-        -blocktrans with num_cat=shop.num_categories|intcomma num_prod=shop.num_products|intcomma
-          {{ num_cat }} categories, {{ num_prod }} products.
+      p {% blocktrans with num_cat=shop.num_categories|intcomma num_prod=shop.num_products|intcomma %}{{ num_cat }} categories, {{ num_prod }} products.{% endblocktrans %}
 
     //- description
     if shop.note
@@ -30,15 +28,15 @@
             i.image.icon
             | {% trans 'View large picture' %}
 
-      //- link to detailed menu FIXME url
+      //- link to detailed menu
       .ui.label
-        a(href="#")
+        a(href="{% url 'tsiahpng:shop_detail' shop.id %}")
           i.linkify.icon
           |  {% trans 'Menu details' %}
 
-      //- link to create item  FIXME url
+      //- link to create item
       if shop.changeable
         .ui.green.label
-          a(href="#")
+          a(href="{% url 'tsiahpng:shop_add_product' shop.id %}")
             i.plus.icon
             |  {% trans 'Add product' %}

@@ -1,0 +1,20 @@
+-extends 'tsiahpng/layouts/base.pug'
+-load i18n
+-load static
+
+
+block content
+  //- breadcrumb
+  .ui.rimless.vertical.segment
+    .ui.breadcrumb
+      a.section(href="{% url 'tsiahpng:welcome' %}") {% trans 'Home' %}
+      .divider  /
+      a.section(href="{% url 'tsiahpng:shop_list' %}") {% trans 'Menu' %}
+      .divider  /
+      .active.section {{ title }}
+
+  //- messages
+  include tsiahpng/includes/messages.pug
+
+  //- shop info
+  include tsiahpng/menu/includes/shop_info.pug
