@@ -2,6 +2,7 @@ import collections
 import random
 import uuid
 
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.urls import path
 
@@ -13,9 +14,10 @@ from django.views.i18n import JavaScriptCatalog
 from django.views.decorators.cache import cache_page
 
 from . import admin
-from . import models
 from . import forms
+from . import models
 from . import settings
+from . import utils
 
 
 def homepage(request):
@@ -32,12 +34,17 @@ def homepage(request):
 
 
 def shop_list(request):
+    shops = models.Shop.objects.filter(is_active=True)
+
+    idx_page = utils.try_parse(request.GET.get("p"), 1)
+    paginator = Paginator(shops, settings.SHOP_PER_PAGE)
+
     return render(
         request,
         "tsiahpng/menu/index.pug",
         {
             "title": _("Menu"),
-            "shops": models.Shop.objects.filter(is_active=True),
+            "shops": paginator.get_page(idx_page),
             "messages": messages.get_messages(request),
         },
     )
