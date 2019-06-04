@@ -54,13 +54,10 @@ class Shop(models.Model):
     def products(self, **kwargs):
         return Product.objects.filter(shop=self, is_active=True, **kwargs)
 
-    def num_products(self):
-        return len(self.products())
-
-    def num_categories(self):
+    def related_categories(self):
         products = self.products()
         categories = products.values_list("category").order_by().distinct()
-        return len(categories)
+        return categories
 
 
 class Category(models.Model):
