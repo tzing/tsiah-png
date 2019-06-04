@@ -62,7 +62,10 @@ def shop_detail(request, shop_id):
     sorted_products = collections.OrderedDict()
     for category in shop.related_categories():
         sorted_products[category] = shop.products(category=category)
-    sorted_products[None] = shop.products(category=None)
+
+    unsorted_products = shop.products(category=None)
+    if unsorted_products:
+        sorted_products[None] = unsorted_products
 
     return render(
         request,
