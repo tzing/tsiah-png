@@ -1,3 +1,4 @@
+import collections
 import random
 import uuid
 
@@ -50,10 +51,21 @@ def shop_detail(request, shop_id):
         messages.error(request, _("Shop not exists."))
         return redirect("tsiahpng:shop_list")
 
+    # organize products
+    sorted_products = collections.OrderedDict()
+    for category in shop.related_categories():
+        sorted_products[category] = shop.products(category=category)
+    sorted_products[None] = shop.products(category=None)
+
     return render(
         request,
         "tsiahpng/menu/detail.pug",
-        {"title": str(shop), "shop": shop, "messages": messages.get_messages(request)},
+        {
+            "title": str(shop),
+            "shop": shop,
+            "messages": messages.get_messages(request),
+            "related_products": sorted_products,
+        },
     )
 
 

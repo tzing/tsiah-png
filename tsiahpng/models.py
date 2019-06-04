@@ -55,8 +55,8 @@ class Shop(models.Model):
         return Product.objects.filter(shop=self, is_active=True, **kwargs)
 
     def related_categories(self):
-        products = self.products()
-        categories = products.values_list("category").order_by().distinct()
+        category_ids = self.products().values_list("category").order_by().distinct()
+        categories = Category.objects.filter(id__in=category_ids)
         return categories
 
 

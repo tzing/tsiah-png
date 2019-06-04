@@ -1,7 +1,10 @@
 -extends 'tsiahpng/layouts/base.pug'
 -load i18n
 -load static
+-load sass_tags
 
+block extra_head
+  link(href="{% sass_src 'tsiahpng/css/menu.scss' %}", rel='stylesheet', type='text/css')
 
 block content
   //- breadcrumb
@@ -17,4 +20,26 @@ block content
   include tsiahpng/includes/messages.pug
 
   //- shop info
-  include tsiahpng/menu/includes/shop_info.pug
+  .ui.rimless.vertical.segment
+    include tsiahpng/menu/includes/shop_info.pug
+
+  //- action
+  //- TODO move `if` when there is any other action added
+  if shop.changeable
+    .ui.rimless.vertical.segment
+      h3.header {% trans 'Action' %}
+
+      a.ui.labeled.basic.green.icon.button(href="{% url 'tsiahpng:shop_add_product' shop.id %}")
+        i.plus.icon
+        | {% trans 'Add product' %}
+
+  //- categories
+  .ui.rimless.vertical.segment
+    h3.header {% trans 'Menu' %}
+
+    #full-list.ui.basic.segment
+      include tsiahpng/menu/includes/detail_menu.pug
+
+block extra_scripts
+  script(type='text/javascript', src="{% static 'tsiahpng/js/scrollspy.js' %}")
+  script(type='text/javascript', src="{% static 'tsiahpng/js/menu/detail.js' %}")
