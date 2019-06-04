@@ -124,6 +124,23 @@ def shop_add_product(request, shop_id):
     )
 
 
+def order_list(request):
+    orders = models.Order.objects.filter(is_active=True)
+
+    idx_page = utils.try_parse(request.GET.get("p"), 1)
+    paginator = Paginator(orders, settings.ORDER_PER_PAGE)
+
+    return render(
+        request,
+        "tsiahpng/order/index.pug",
+        {
+            "title": _("Order"),
+            "orders": paginator.get_page(idx_page),
+            "messages": messages.get_messages(request),
+        },
+    )
+
+
 # url confs
 app_name = "tsiahpng"
 caches = cache_page(86400, key_prefix=f"jsi18n-{uuid.uuid4().hex}")
@@ -134,6 +151,8 @@ urlpatterns = [
     path("menu/", shop_list, name="shop_list"),
     path("menu/<int:shop_id>", shop_detail, name="shop_detail"),
     path("menu/<int:shop_id>/add", shop_add_product, name="shop_add_product"),
+    # order
+    path("order/", order_list, name="order_list"),
     # js i18n
     path("jsi18n/", caches(JavaScriptCatalog.as_view()), name="javascript-catalog"),
     # admin panel

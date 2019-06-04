@@ -1,0 +1,13 @@
+-extends 'tsiahpng/layouts/base.pug'
+-load i18n
+
+block content
+  //- breadcrumb
+  include tsiahpng/includes/breadcrumb.pug
+
+  //- messages
+  include tsiahpng/includes/messages.pug
+
+  //- paginator
+  -with paginator=orders
+    include tsiahpng/includes/pagination.pug
