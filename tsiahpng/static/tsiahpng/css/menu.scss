@@ -16,3 +16,9 @@
         margin-top: auto;
     }
 }
+
+.column {
+    &>.price {
+        padding-left: .3rem;
+    }
+}
