@@ -17,6 +17,8 @@ block content
     .ui.grid
       {% for order in orders %}
       include tsiahpng/order/includes/order_card.pug
+      {% empty %}
+      p {% trans 'No any order yet.' %}
       {% endfor %}
 
   //- paginator
