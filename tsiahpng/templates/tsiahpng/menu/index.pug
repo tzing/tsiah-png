@@ -1,6 +1,7 @@
 -extends 'tsiahpng/layouts/base.pug'
 -load i18n
 -load sass_tags
+-load static
 
 block extra_head
   link(href="{% sass_src 'tsiahpng/css/menu.scss' %}", rel='stylesheet', type='text/css')
@@ -26,3 +27,9 @@ block content
   //- paginator
   -with paginator=shops
     include tsiahpng/includes/pagination.pug
+
+block fab
+  include tsiahpng/includes/gotop.pug
+
+block extra_scripts
+  script(type='text/javascript', src="{% static 'tsiahpng/js/gotop.js' %}")
