@@ -9,6 +9,9 @@ block content
   //- breadcrumb
   include tsiahpng/order/includes/breadcrumb.pug
 
+  //- messages
+  include tsiahpng/includes/messages.pug
+
   //- form
   .ui.rimless.vertical.segment
     form.ui.form(method='POST')
@@ -17,21 +20,4 @@ block content
 
 block extra_scripts
   script(type='text/javascript', src="{% static 'tsiahpng/js/lib/calendar.min.js' %}")
-  script.
-    $('.ui.selection.dropdown').dropdown();
-
-    $('.ui.calendar').calendar({
-        type: 'date',
-        today: true,
-        formatter: {
-            date: function (date) {
-                var str = '';
-                str += date.getFullYear();
-                str += '/';
-                str += date.getMonth() + 1;
-                str += '/';
-                str += date.getDate();
-                return str;
-            }
-        }
-    });
+  script(type='text/javascript', src="{% static 'tsiahpng/js/order/create_order.js' %}")

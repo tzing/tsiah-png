@@ -96,13 +96,12 @@ def shop_add_product(request, shop_id):
     # form
     if request.method == "POST":
         form = forms.CreateProductForm(request.POST)
-        if form.is_valid():
-            prod = form.to_model()
-            if prod:
-                messages.success(
-                    request, _(f"Successfully add {prod}.").format(shop=shop)
-                )
-                return redirect("tsiahpng:shop_detail", shop_id=shop_id)
+        prod = form.to_model()
+        if prod:
+            messages.success(request, _(f"Successfully add {prod}.").format(prod=prod))
+            request.session[f"shop_add_product/{shop.id}/price"] = prod.price
+            request.session[f"shop_add_product/{shop.id}/category"] = prod.category.id
+            return redirect("tsiahpng:shop_detail", shop_id=shop_id)
         else:
             messages.error(request, _("Invalid requests."))
 
@@ -143,7 +142,22 @@ def order_list(request):
 
 
 def order_create(request):
+    # post request
+    if request.method == "POST":
+        form = forms.CreateOrderForm(request.POST)
+        order = form.to_model()
+        if order:
+            messages.success(
+                request, _(f'Successfully create order "{order}".').format(order=order)
+            )
+            request.session["order_create/last_shop"] = order.shop.id
+            return redirect("tsiahpng:order_list")  # FIXME link
+        else:
+            messages.error(request, _("Invalid requests."))
+
+    # shops
     shops = models.Shop.objects.filter(is_active=True)
+
     return render(
         request,
         "tsiahpng/order/create_order.pug",
@@ -152,6 +166,7 @@ def order_create(request):
             "shops": shops,
             "default_date": default.default_order_date(),
             "last_shop": request.session.get("order_create/last_shop"),
+            "messages": messages.get_messages(request),
         },
     )
 
