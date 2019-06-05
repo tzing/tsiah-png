@@ -151,6 +151,7 @@ def order_create(request):
             "title": _("Create order"),
             "shops": shops,
             "default_date": default.default_order_date(),
+            "last_shop": request.session.get("order_create/last_shop"),
         },
     )
 

@@ -10,9 +10,10 @@ block content
   include tsiahpng/order/includes/breadcrumb.pug
 
   //- form
-  form.ui.form(method='POST')
-    -csrf_token
-    include tsiahpng/order/includes/create_order_form.pug
+  .ui.rimless.vertical.segment
+    form.ui.form(method='POST')
+      -csrf_token
+      include tsiahpng/order/includes/create_order_form.pug
 
 block extra_scripts
   script(type='text/javascript', src="{% static 'tsiahpng/js/lib/calendar.min.js' %}")

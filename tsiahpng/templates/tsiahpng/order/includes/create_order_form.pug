@@ -9,7 +9,7 @@
 .required.field
   label {% trans 'Shop' %}
   .ui.selection.dropdown
-    input(type='hidden', name='shop', value='{{ last_shop }}')
+    | <input type="hidden" name="shop"{% if last_shop %}value="{{ last_shop }}"{% endif %}>
     i.dropdown.icon
     .default.text {% trans 'Select shop' %}
     .menu
