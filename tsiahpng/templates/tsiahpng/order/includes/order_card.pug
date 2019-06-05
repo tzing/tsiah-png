@@ -1,0 +1,36 @@
+-load i18n
+-load humanize
+-load md2
+.eight.wide.computer.eight.wide.tablet.sixteen.wide.mobile.column
+  a.ui.fluid.card(href='#')
+    .content
+      .header
+        .right.floated.meta {{ order.order_date | naturalday }}
+        | {{ order.shop }}
+
+      if order.alias
+        .meta
+          p {{ order.alias }}
+
+    if order.note
+      .content
+        .description
+          | {{ order.note | markdown }}
+
+    .extra.content
+      .ui.list
+        .item
+          i.shopping.bag.icon
+          .content {% blocktrans with qty=order.sum_quantity|intcomma cost=order.sum_cost|intcomma %}Ordered {{ qty }} items, ${{ cost }} in total.{% endblocktrans %}
+        .item
+          i.calendar.check.outline.icon
+          .content {% blocktrans with date=order.order_date %}Submitted on {{ date }}.{% endblocktrans %}
+        .item
+          i.calendar.outline.icon
+          .content {% blocktrans with date=order.date_created|naturaltime %}Created on {{ date }}.{% endblocktrans %}
+
+    if order.is_available
+      .green.extra.content.center.aligned
+        p
+          i.check.icon
+          | {% trans 'Available for ordering.' %}

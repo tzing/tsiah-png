@@ -1,5 +1,9 @@
 -extends 'tsiahpng/layouts/base.pug'
 -load i18n
+-load sass_tags
+
+block extra_head
+  link(href="{% sass_src 'tsiahpng/css/order.scss' %}", rel='stylesheet', type='text/css')
 
 block content
   //- breadcrumb
@@ -7,6 +11,13 @@ block content
 
   //- messages
   include tsiahpng/includes/messages.pug
+
+  //- order list
+  .ui.rimless.vertical.segment
+    .ui.grid
+      {% for order in orders %}
+      include tsiahpng/order/includes/order_card.pug
+      {% endfor %}
 
   //- paginator
   -with paginator=orders
