@@ -1,0 +1,36 @@
+-extends 'tsiahpng/layouts/base.pug'
+-load i18n
+-load static
+
+block extra_head
+  link(rel='stylesheet', type='text/css', href="{% static 'tsiahpng/css/calendar.min.css' %}")
+
+block content
+  //- breadcrumb
+  include tsiahpng/order/includes/breadcrumb.pug
+
+  //- form
+  form.ui.form(method='POST')
+    -csrf_token
+    include tsiahpng/order/includes/create_order_form.pug
+
+block extra_scripts
+  script(type='text/javascript', src="{% static 'tsiahpng/js/lib/calendar.min.js' %}")
+  script.
+    $('.ui.selection.dropdown').dropdown();
+
+    $('.ui.calendar').calendar({
+        type: 'date',
+        today: true,
+        formatter: {
+            date: function (date) {
+                var str = '';
+                str += date.getFullYear();
+                str += '/';
+                str += date.getMonth() + 1;
+                str += '/';
+                str += date.getDate();
+                return str;
+            }
+        }
+    });

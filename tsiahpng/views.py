@@ -14,6 +14,7 @@ from django.views.i18n import JavaScriptCatalog
 from django.views.decorators.cache import cache_page
 
 from . import admin
+from . import default
 from . import forms
 from . import models
 from . import settings
@@ -141,6 +142,19 @@ def order_list(request):
     )
 
 
+def order_create(request):
+    shops = models.Shop.objects.filter(is_active=True)
+    return render(
+        request,
+        "tsiahpng/order/create_order.pug",
+        {
+            "title": _("Create order"),
+            "shops": shops,
+            "default_date": default.default_order_date(),
+        },
+    )
+
+
 # url confs
 app_name = "tsiahpng"
 caches = cache_page(86400, key_prefix=f"jsi18n-{uuid.uuid4().hex}")
@@ -153,6 +167,7 @@ urlpatterns = [
     path("menu/<int:shop_id>/add", shop_add_product, name="shop_add_product"),
     # order
     path("order/", order_list, name="order_list"),
+    path("order/new/", order_create, name="order_create"),
     # js i18n
     path("jsi18n/", caches(JavaScriptCatalog.as_view()), name="javascript-catalog"),
     # admin panel

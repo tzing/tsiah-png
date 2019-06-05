@@ -1,0 +1,36 @@
+-load i18n
+
+//- readable name
+.field
+  label {% trans 'Order alias' %}
+  input(type='text', name='name')
+
+//- shop
+.required.field
+  label {% trans 'Shop' %}
+  .ui.selection.dropdown
+    input(type='hidden', name='shop', value='{{ last_shop }}')
+    i.dropdown.icon
+    .default.text {% trans 'Select shop' %}
+    .menu
+      -for shop in shops
+        .item(data-value='{{ shop.id }}') {{ shop }}
+
+//- date
+.required.field
+  label {% trans 'Order date' %}
+  .ui.calendar
+    .ui.input.left.icon
+      i.calendar.alternate.outline.icon
+      input(type='text', name='date', value="{{ default_date | date:'Y/n/j' }}")
+
+//- note
+.field
+  label {% trans 'Note' %}
+  textarea(name='note')
+
+//- submit
+.ui.primary.submit.button {% trans 'Submit' %}
+.ui.reset.button {% trans 'Reset' %}
+
+.ui.error.message
