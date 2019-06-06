@@ -42,7 +42,7 @@ def percategory_quantity(order):
     # get products
     product_ids = order.tickets().values_list("item").order_by().distinct()
     if not product_ids:
-        return "no items"
+        return _("no items")
 
     products = models.Product.objects.filter(id__in=product_ids)
 
