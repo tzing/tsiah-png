@@ -56,7 +56,7 @@ def shop_detail(request, shop_id):
     try:
         shop = models.Shop.objects.get(id=shop_id, is_active=True)
     except models.Shop.DoesNotExist:
-        messages.error(request, _("Shop not exists."))
+        messages.error(request, _("Shop #{id} not exists.").format(id=shop_id))
         return redirect("tsiahpng:shop_list")
 
     # organize products
@@ -68,6 +68,9 @@ def shop_detail(request, shop_id):
     if unsorted_products:
         sorted_products[None] = unsorted_products
 
+    # available orders
+    orders = models.Order.objects.filter(shop=shop, is_active=True, is_available=True)
+
     return render(
         request,
         "tsiahpng/menu/detail.pug",
@@ -76,6 +79,7 @@ def shop_detail(request, shop_id):
             "shop": shop,
             "messages": messages.get_messages(request),
             "related_products": sorted_products,
+            "available_orders": orders,
         },
     )
 
@@ -85,7 +89,7 @@ def shop_add_product(request, shop_id):
     try:
         shop = models.Shop.objects.get(id=shop_id, is_active=True)
     except models.Shop.DoesNotExist:
-        messages.error(request, _("Shop not exists."))
+        messages.error(request, _("Shop #{id} not exists.").format(id=shop_id))
         return redirect("tsiahpng:shop_list")
 
     # check permission
@@ -141,6 +145,19 @@ def order_list(request):
     )
 
 
+def order_detail(request, order_id):
+    # get order
+    try:
+        order = models.Order.objects.get(id=order_id, is_active=True)
+    except models.Order.DoesNotExist:
+        messages.error(request, _("Order #{id} id not exists.").format(id=order_id))
+        return redirect("tsiahpng:order_list")
+
+    return render(
+        request, "tsiahpng/order/detail.pug", {"title": str(order), "order": order}
+    )
+
+
 def order_create(request):
     # post request
     if request.method == "POST":
@@ -179,11 +196,12 @@ urlpatterns = [
     path("", homepage, name="welcome"),
     # menu
     path("menu/", shop_list, name="shop_list"),
-    path("menu/<int:shop_id>", shop_detail, name="shop_detail"),
+    path("menu/<int:shop_id>/", shop_detail, name="shop_detail"),
     path("menu/<int:shop_id>/add", shop_add_product, name="shop_add_product"),
     # order
     path("order/", order_list, name="order_list"),
     path("order/new/", order_create, name="order_create"),
+    path("order/<int:order_id>/", order_detail, name="order_detail"),
     # js i18n
     path("jsi18n/", caches(JavaScriptCatalog.as_view()), name="javascript-catalog"),
     # admin panel

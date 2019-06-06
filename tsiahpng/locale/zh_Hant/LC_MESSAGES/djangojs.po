@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-05 06:34+0000\n"
+"POT-Creation-Date: 2019-06-06 06:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,3 +28,11 @@ msgstr "請輸入商品名稱。"
 #: tsiahpng/static/tsiahpng/js/menu/add_product.js:29
 msgid "Please enter a positive integer price."
 msgstr "請輸入正整數價格。"
+
+#: tsiahpng/static/tsiahpng/js/order/create_order.js:27
+msgid "Please select ordered shop."
+msgstr "請選擇訂購店家。"
+
+#: tsiahpng/static/tsiahpng/js/order/create_order.js:37
+msgid "Please pick a valid date."
+msgstr "請選擇有效的日期。"

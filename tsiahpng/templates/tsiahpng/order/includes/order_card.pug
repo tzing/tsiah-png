@@ -3,7 +3,7 @@
 -load humanize_extra
 -load md2
 .eight.wide.computer.eight.wide.tablet.sixteen.wide.mobile.column
-  a.ui.fluid.card(href='#')
+  a.ui.fluid.card(href="{% url 'tsiahpng:order_detail' order.id %}")
     .content
       .header
         .right.floated.meta {{ order.order_date | short_naturalday }}

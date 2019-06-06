@@ -1,6 +1,6 @@
 'use strict';
 
-$('.secondary.vertical.menu').sticky({
+$('.ui.right.rail .secondary.vertical.menu').sticky({
     context: '#full-list',
     offset: 80
 });
