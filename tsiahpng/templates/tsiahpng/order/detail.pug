@@ -1,5 +1,11 @@
 -extends 'tsiahpng/layouts/base.pug'
 -load i18n
+-load static
+-load md2
+-load sass_tags
+
+block extra_head
+  link(href="{% sass_src 'tsiahpng/css/order.scss' %}", rel='stylesheet', type='text/css')
 
 block content
   //- breadcrumb
@@ -7,3 +13,28 @@ block content
 
   //- messages
   include tsiahpng/includes/messages.pug
+
+  //- order notes
+  if order.note
+    .ui.rimless.vertical.segment
+      | {{ order.note | markdown }}
+
+  //- order description
+  .ui.rimless.vertical.description.segment
+    include tsiahpng/order/includes/order_description.pug
+
+  //- shop info
+  .ui.rimless.vertical.segment
+    h3.header {% trans 'Shop information' %}
+    -with shop=order.shop
+      include tsiahpng/menu/includes/shop_info.pug
+
+  //- TODO ordering form
+  //- TODO per product view
+  //- TODO per user view
+
+block fab
+  include tsiahpng/includes/gotop.pug
+
+block extra_scripts
+  script(type='text/javascript', src="{% static 'tsiahpng/js/gotop.js' %}")

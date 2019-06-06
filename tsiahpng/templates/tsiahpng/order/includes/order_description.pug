@@ -1,0 +1,24 @@
+-load i18n
+-load humanize
+-load humanize_extra
+
+.ui.list
+  //- ordered shop
+  .item
+    i.home.icon
+    .content {% blocktrans with shop=order.shop %}Ordering {{ shop }}.{% endblocktrans %}
+
+  //- order date
+  .item
+    i.shipping.fast.icon
+    .content {% blocktrans with date=order.order_date ndate=order.order_date|short_naturalday %}Would be submitted on <span data-tooltip="{{ date }}">{{ ndate }}</span>.{% endblocktrans %}
+
+  //- ordered item count & cost
+  .item
+    i.shopping.bag.icon
+    .content {% blocktrans with qty=order.sum_quantity|intcomma cost=order.sum_cost|intcomma data=order|percategory_quantity %}Ordered <span data-tooltip="{{ data }}">{{ qty }} items</span>, ${{ cost }} in total.{% endblocktrans %}
+
+  //- order creation time
+  .item
+    i.calendar.outline.icon
+    .content {% blocktrans with ndate=order.date_created|naturaltime date=order.date_created %}This order is created on <span data-tooltip="{{ date }}">{{ ndate }}</span>.{% endblocktrans %}

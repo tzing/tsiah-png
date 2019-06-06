@@ -25,7 +25,7 @@
           .content {% blocktrans with qty=order.sum_quantity|intcomma cost=order.sum_cost|intcomma %}Ordered {{ qty }} items, ${{ cost }} in total.{% endblocktrans %}
         .item
           i.calendar.check.outline.icon
-          .content {% blocktrans with date=order.order_date %}Submitted on {{ date }}.{% endblocktrans %}
+          .content {% blocktrans with date=order.order_date %}Submit on {{ date }}.{% endblocktrans %}
         .item
           i.calendar.outline.icon
           .content {% blocktrans with date=order.date_created|naturaltime %}Created on {{ date }}.{% endblocktrans %}
