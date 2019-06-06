@@ -1,5 +1,6 @@
+//- required: `order` object
 -load i18n
-form.ui.form(method='POST', action="{% url 'tsiahpng:order_detail' order.id %}")
+form.ui.ordering.form(method='POST', action="{% url 'tsiahpng:order_detail' order.id %}")
   .ui.fluid.raised.card
     //- header
     .content
@@ -15,3 +16,19 @@ form.ui.form(method='POST', action="{% url 'tsiahpng:order_detail' order.id %}")
           i.dropdown.icon
           .default.text {% trans 'who' %}
           .menu
+
+      //- item selection
+      .required.field
+        label(class='inline') {% trans 'Wanna...' %}
+
+        if order.shop.changeable
+          .extra
+            a(href="{% url 'tsiahpng:shop_add_product' order.shop.id %}") {% trans 'Add product' %}
+
+        .ui.product.multiple.search.selection.dropdown
+          input(type='hidden', name='items')
+          i.dropdown.icon
+          .default.text {% trans 'select item' %}
+          .menu
+            for product in order.shop.products
+              include ./dropdownitem_product.pug
