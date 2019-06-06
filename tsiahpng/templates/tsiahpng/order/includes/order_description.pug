@@ -6,7 +6,7 @@
   //- ordered shop
   .item
     i.home.icon
-    .content {% blocktrans with shop=order.shop %}Ordering {{ shop }}.{% endblocktrans %}
+    .content {% url 'tsiahpng:shop_detail' order.shop.id as shop_url %}{% blocktrans with shop=order.shop %}Ordering <a href="{{ shop_url }}">{{ shop }}</a>.{% endblocktrans %}
 
   //- order date
   .item
