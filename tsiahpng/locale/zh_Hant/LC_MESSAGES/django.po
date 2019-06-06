@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-06 06:44+0000\n"
+"POT-Creation-Date: 2019-06-06 13:18+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -259,6 +259,7 @@ msgstr "新增品項"
 
 #: tsiahpng/templates/tsiahpng/menu/includes/detail_menu.pug:12
 #: tsiahpng/templates/tsiahpng/menu/includes/detail_menu.pug:21
+#: tsiahpng/templatetags/tsiahpngtags.py:68
 msgid "Unsorted"
 msgstr "未分類"
 
@@ -297,6 +298,10 @@ msgstr "詳細資訊"
 msgid "No any menu yet."
 msgstr "目前沒有任何菜單。"
 
+#: tsiahpng/templates/tsiahpng/order/detail.pug:28
+msgid "Shop information"
+msgstr "店家資訊"
+
 #: tsiahpng/templates/tsiahpng/order/includes/create_order_form.pug:14
 msgid "Select shop"
 msgstr "選擇店家"
@@ -308,7 +313,7 @@ msgstr "訂購了%(qty)s件商品，共%(cost)s元。"
 
 #: tsiahpng/templates/tsiahpng/order/includes/order_card.pug:28
 #, python-format
-msgid "Submitted on %(date)s."
+msgid "Submit on %(date)s."
 msgstr "將於%(date)s訂購。"
 
 #: tsiahpng/templates/tsiahpng/order/includes/order_card.pug:31
@@ -320,21 +325,59 @@ msgstr "建立於%(date)s。"
 msgid "Available for ordering."
 msgstr "可以訂購"
 
+#: tsiahpng/templates/tsiahpng/order/includes/order_description.pug:9
+#, python-format
+msgid "Ordering <a href=\"%(shop_url)s\">%(shop)s</a>."
+msgstr "訂購<a href=\"%(shop_url)s\">%(shop)s</a>。"
+
+#: tsiahpng/templates/tsiahpng/order/includes/order_description.pug:14
+#, python-format
+msgid "Would be submitted on <span data-tooltip=\"%(date)s\">%(ndate)s</span>."
+msgstr "預計於<span data-tooltip=\"%(date)s\">%(ndate)s</span>購買。"
+
+#: tsiahpng/templates/tsiahpng/order/includes/order_description.pug:19
+#, python-format
+msgid ""
+"Ordered <span data-tooltip=\"%(data)s\">%(qty)s items</span>, $%(cost)s in "
+"total."
+msgstr ""
+"訂購了<span data-tooltip=\"%(data)s\">%(qty)s件商品</span>，共%(cost)s元。"
+
+#: tsiahpng/templates/tsiahpng/order/includes/order_description.pug:24
+#, python-format
+msgid ""
+"This order is created on <span data-tooltip=\"%(date)s\">%(ndate)s</span>."
+msgstr "這個訂單建立於<span data-tooltip=\"%(date)s\">%(ndate)s</span>。"
+
 #: tsiahpng/templates/tsiahpng/order/index.pug:29
 msgid "No any order yet."
 msgstr "目前沒有任何訂單。"
 
-#: tsiahpng/templatetags/humanize_extra.py:23
+#: tsiahpng/templatetags/tsiahpngtags.py:26
 msgid "today"
 msgstr "今天"
 
-#: tsiahpng/templatetags/humanize_extra.py:25
+#: tsiahpng/templatetags/tsiahpngtags.py:28
 msgid "tomorrow"
 msgstr "明天"
 
-#: tsiahpng/templatetags/humanize_extra.py:27
+#: tsiahpng/templatetags/tsiahpngtags.py:30
 msgid "yesterday"
 msgstr "昨天"
+
+#: tsiahpng/templatetags/tsiahpngtags.py:45
+msgid "no items"
+msgstr "沒有項目"
+
+#: tsiahpng/templatetags/tsiahpngtags.py:61
+#: tsiahpng/templatetags/tsiahpngtags.py:68
+#, python-brace-format
+msgid "{cat} ×{qty}"
+msgstr "{cat} ×{qty}"
+
+#: tsiahpng/templatetags/tsiahpngtags.py:71
+msgid ", "
+msgstr "、"
 
 #: tsiahpng/views.py:32
 msgid "Welcome"
