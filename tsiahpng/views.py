@@ -4,7 +4,7 @@ import uuid
 
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
-from django.urls import path
+from django.urls import path, include
 
 from django.contrib import messages
 
@@ -202,6 +202,8 @@ urlpatterns = [
     path("order/", order_list, name="order_list"),
     path("order/new/", order_create, name="order_create"),
     path("order/<int:order_id>/", order_detail, name="order_detail"),
+    # API
+    path("api/", include("tsiahpng.apis", namespace="api")),
     # js i18n
     path("jsi18n/", caches(JavaScriptCatalog.as_view()), name="javascript-catalog"),
     # admin panel

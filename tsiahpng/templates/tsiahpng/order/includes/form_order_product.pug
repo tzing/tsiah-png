@@ -1,0 +1,17 @@
+-load i18n
+form.ui.form(method='POST', action="{% url 'tsiahpng:order_detail' order.id %}")
+  .ui.fluid.raised.card
+    //- header
+    .content
+      h3.ui.sub.header {% trans 'Order it!' %}
+
+    //- body
+    .content
+      //- who am i
+      .required.field
+        label {% trans 'Who am I' %}
+        .ui.user.search.selection.dropdown
+          | <input type="hidden" name="user"{% if last_user %} value="{{ last_user }}"{% endif %}>
+          i.dropdown.icon
+          .default.text {% trans 'who' %}
+          .menu

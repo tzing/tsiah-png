@@ -29,7 +29,11 @@ block content
     -with shop=order.shop
       include tsiahpng/menu/includes/shop_info.pug
 
-  //- TODO ordering form
+  //- ordering form
+  if order.is_available
+    .ui.rimless.vertical.segment
+      include tsiahpng/order/includes/form_order_product.pug
+
   //- TODO per product view
   //- TODO per user view
 
@@ -38,3 +42,14 @@ block fab
 
 block extra_scripts
   script(type='text/javascript', src="{% static 'tsiahpng/js/gotop.js' %}")
+
+  include tsiahpng/includes/ajax.pug
+  script.
+    $('.user.selection').dropdown({
+        apiSettings: {
+          action:'get user',
+        },
+        filterRemoteData: true,
+        fullTextSearch: true,
+        match: 'text',
+    });
