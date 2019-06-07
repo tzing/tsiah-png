@@ -2,6 +2,7 @@ import collections
 import random
 import uuid
 
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.urls import path
 
@@ -13,9 +14,10 @@ from django.views.i18n import JavaScriptCatalog
 from django.views.decorators.cache import cache_page
 
 from . import admin
-from . import models
 from . import forms
+from . import models
 from . import settings
+from . import utils
 
 
 def homepage(request):
@@ -32,12 +34,17 @@ def homepage(request):
 
 
 def shop_list(request):
+    shops = models.Shop.objects.filter(is_active=True)
+
+    idx_page = utils.try_parse(request.GET.get("p"), 1)
+    paginator = Paginator(shops, settings.SHOP_PER_PAGE)
+
     return render(
         request,
         "tsiahpng/menu/index.pug",
         {
             "title": _("Menu"),
-            "shops": models.Shop.objects.filter(is_active=True),
+            "shops": paginator.get_page(idx_page),
             "messages": messages.get_messages(request),
         },
     )
@@ -55,7 +62,10 @@ def shop_detail(request, shop_id):
     sorted_products = collections.OrderedDict()
     for category in shop.related_categories():
         sorted_products[category] = shop.products(category=category)
-    sorted_products[None] = shop.products(category=None)
+
+    unsorted_products = shop.products(category=None)
+    if unsorted_products:
+        sorted_products[None] = unsorted_products
 
     return render(
         request,
@@ -114,6 +124,23 @@ def shop_add_product(request, shop_id):
     )
 
 
+def order_list(request):
+    orders = models.Order.objects.filter(is_active=True)
+
+    idx_page = utils.try_parse(request.GET.get("p"), 1)
+    paginator = Paginator(orders, settings.ORDER_PER_PAGE)
+
+    return render(
+        request,
+        "tsiahpng/order/index.pug",
+        {
+            "title": _("Order"),
+            "orders": paginator.get_page(idx_page),
+            "messages": messages.get_messages(request),
+        },
+    )
+
+
 # url confs
 app_name = "tsiahpng"
 caches = cache_page(86400, key_prefix=f"jsi18n-{uuid.uuid4().hex}")
@@ -124,6 +151,8 @@ urlpatterns = [
     path("menu/", shop_list, name="shop_list"),
     path("menu/<int:shop_id>", shop_detail, name="shop_detail"),
     path("menu/<int:shop_id>/add", shop_add_product, name="shop_add_product"),
+    # order
+    path("order/", order_list, name="order_list"),
     # js i18n
     path("jsi18n/", caches(JavaScriptCatalog.as_view()), name="javascript-catalog"),
     # admin panel

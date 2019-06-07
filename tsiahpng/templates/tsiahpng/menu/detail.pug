@@ -34,12 +34,17 @@ block content
         | {% trans 'Add product' %}
 
   //- categories
-  .ui.rimless.vertical.segment
-    h3.header {% trans 'Menu' %}
+  -if related_products
+    .ui.rimless.vertical.segment
+      h3.header {% trans 'Menu' %}
 
-    #full-list.ui.basic.segment
-      include tsiahpng/menu/includes/detail_menu.pug
+      #full-list.ui.basic.segment
+        include tsiahpng/menu/includes/detail_menu.pug
+
+block fab
+  include tsiahpng/includes/gotop.pug
 
 block extra_scripts
   script(type='text/javascript', src="{% static 'tsiahpng/js/scrollspy.js' %}")
   script(type='text/javascript', src="{% static 'tsiahpng/js/menu/detail.js' %}")
+  script(type='text/javascript', src="{% static 'tsiahpng/js/gotop.js' %}")

@@ -1,0 +1,47 @@
+-extends 'tsiahpng/layouts/base.pug'
+-load i18n
+-load sass_tags
+-load static
+
+block extra_head
+  link(href="{% sass_src 'tsiahpng/css/order.scss' %}", rel='stylesheet', type='text/css')
+
+block content
+  //- breadcrumb
+  include tsiahpng/includes/breadcrumb.pug
+
+  //- messages
+  include tsiahpng/includes/messages.pug
+
+  //- actions
+  .ui.rimless.vertical.segment
+    //- create order
+    a.ui.labeled.basic.green.icon.button(href="{% url 'tsiahpng:order_create' %}")
+      i.plus.icon
+      | {% trans 'Create order' %}
+
+  //- order list
+  .ui.rimless.vertical.segment
+    .ui.grid
+      {% for order in orders %}
+      include tsiahpng/order/includes/order_card.pug
+      {% empty %}
+      p {% trans 'No any order yet.' %}
+      {% endfor %}
+
+  //- paginator
+  -with paginator=orders
+    include tsiahpng/includes/pagination.pug
+
+block fab
+  include tsiahpng/includes/gotop.pug
+
+  .wrap.computer.only
+    a.massive.green.circular.ui.icon.button(
+        data-tooltip="{% trans 'Create order' %}",
+        data-position="left center",
+        href="{% url 'tsiahpng:order_create' %}")
+      i.icon.edit
+
+block extra_scripts
+  script(type='text/javascript', src="{% static 'tsiahpng/js/gotop.js' %}")

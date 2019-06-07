@@ -18,3 +18,9 @@ body>.ui.vertical.segment {
         color: rgba(0, 0, 0, .6);
     }
 }
+
+@media screen and (max-width: 768px) {
+    .computer.only {
+        display: none;
+    }
+}

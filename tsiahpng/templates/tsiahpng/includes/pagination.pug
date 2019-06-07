@@ -1,0 +1,20 @@
+-if paginator.has_previous or paginator.has_next
+  .ui.vertical.segment.center.aligned
+    .ui.pagination.menu
+      //- previous pages
+      -if paginator.has_previous
+        a.item(href='?p=1') 1
+        -if paginator.previous_page_number > 2
+          .disabled.item ...
+        -if paginator.previous_page_number > 1
+          a.item(href='?p={{ paginator.previous_page_number }}') {{ paginator.previous_page_number }}
+
+      a.active.item {{ paginator.number }}
+
+      //- next pages
+      -if paginator.has_next
+        -if paginator.next_page_number < paginator.paginator.num_pages
+          a.item(href='?p={{ paginator.next_page_number }}') {{ paginator.next_page_number }}
+        -if paginator.next_page_number < paginator.paginator.num_pages|add:"-1"
+          .disabled.item ...
+        a.item(href='?p={{ paginator.paginator.num_pages }}') {{ paginator.paginator.num_pages }}
