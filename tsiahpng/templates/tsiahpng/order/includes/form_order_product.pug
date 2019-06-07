@@ -32,3 +32,22 @@ form.ui.ordering.form(method='POST', action="{% url 'tsiahpng:order_detail' orde
           .menu
             for product in order.shop.products
               include ./dropdownitem_product.pug
+
+      //- placeholder for tickets
+      table.ui.table
+        thead
+          tr
+            th.four.wide {% trans 'Item' %}
+            th.two.wide {% trans 'Quantity' %}
+            th.three.wide {% trans 'Price' %}
+            th.seven.wide {% trans 'Note' %}
+        tbody
+          tr.hint
+            td.center.aligned(colspan='4') {% trans 'No tickets' %}
+
+      //- error message (local)
+      .ui.error.message
+
+      //- submit
+      .ui.primary.submit.button {% trans 'Submit' %}
+      .ui.reset.button {% trans 'Reset' %}
