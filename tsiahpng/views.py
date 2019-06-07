@@ -14,6 +14,7 @@ from django.views.i18n import JavaScriptCatalog
 from django.views.decorators.cache import cache_page
 
 from . import admin
+from . import default
 from . import forms
 from . import models
 from . import settings
@@ -95,13 +96,12 @@ def shop_add_product(request, shop_id):
     # form
     if request.method == "POST":
         form = forms.CreateProductForm(request.POST)
-        if form.is_valid():
-            prod = form.to_model()
-            if prod:
-                messages.success(
-                    request, _(f"Successfully add {prod}.").format(shop=shop)
-                )
-                return redirect("tsiahpng:shop_detail", shop_id=shop_id)
+        prod = form.to_model()
+        if prod:
+            messages.success(request, _(f"Successfully add {prod}.").format(prod=prod))
+            request.session[f"shop_add_product/{shop.id}/price"] = prod.price
+            request.session[f"shop_add_product/{shop.id}/category"] = prod.category.id
+            return redirect("tsiahpng:shop_detail", shop_id=shop_id)
         else:
             messages.error(request, _("Invalid requests."))
 
@@ -141,6 +141,36 @@ def order_list(request):
     )
 
 
+def order_create(request):
+    # post request
+    if request.method == "POST":
+        form = forms.CreateOrderForm(request.POST)
+        order = form.to_model()
+        if order:
+            messages.success(
+                request, _(f'Successfully create order "{order}".').format(order=order)
+            )
+            request.session["order_create/last_shop"] = order.shop.id
+            return redirect("tsiahpng:order_list")  # FIXME link
+        else:
+            messages.error(request, _("Invalid requests."))
+
+    # shops
+    shops = models.Shop.objects.filter(is_active=True)
+
+    return render(
+        request,
+        "tsiahpng/order/create_order.pug",
+        {
+            "title": _("Create order"),
+            "shops": shops,
+            "default_date": default.default_order_date(),
+            "last_shop": request.session.get("order_create/last_shop"),
+            "messages": messages.get_messages(request),
+        },
+    )
+
+
 # url confs
 app_name = "tsiahpng"
 caches = cache_page(86400, key_prefix=f"jsi18n-{uuid.uuid4().hex}")
@@ -153,6 +183,7 @@ urlpatterns = [
     path("menu/<int:shop_id>/add", shop_add_product, name="shop_add_product"),
     # order
     path("order/", order_list, name="order_list"),
+    path("order/new/", order_create, name="order_create"),
     # js i18n
     path("jsi18n/", caches(JavaScriptCatalog.as_view()), name="javascript-catalog"),
     # admin panel

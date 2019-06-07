@@ -1,0 +1,23 @@
+-extends 'tsiahpng/layouts/base.pug'
+-load i18n
+-load static
+
+block extra_head
+  link(rel='stylesheet', type='text/css', href="{% static 'tsiahpng/css/calendar.min.css' %}")
+
+block content
+  //- breadcrumb
+  include tsiahpng/order/includes/breadcrumb.pug
+
+  //- messages
+  include tsiahpng/includes/messages.pug
+
+  //- form
+  .ui.rimless.vertical.segment
+    form.ui.form(method='POST')
+      -csrf_token
+      include tsiahpng/order/includes/create_order_form.pug
+
+block extra_scripts
+  script(type='text/javascript', src="{% static 'tsiahpng/js/lib/calendar.min.js' %}")
+  script(type='text/javascript', src="{% static 'tsiahpng/js/order/create_order.js' %}")

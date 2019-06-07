@@ -3,7 +3,7 @@
 input#id_shop(type='hidden', name='shop', value='{{ shop.id }}')
 
 //- category
-.field
+.required.field
   label(for='id_category') {% trans 'Category' %}
   #id_category.ui.selection.dropdown
     input(type='hidden', name='category', value='{{ last_category }}')
@@ -15,12 +15,12 @@ input#id_shop(type='hidden', name='shop', value='{{ shop.id }}')
       .item(data-value='-1') {% trans 'No category' %}
 
 //- name
-.field
+.required.field
   label(for='id_name') {% trans 'Product name' %}
   input#id_name(type='text', name='name', maxlength='128', required='')
 
 //- price
-.field
+.required.field
   label(for='id_price') {% trans 'Price' %}
   input#id_price(type='number', name='price', value='{{ default_product_price }}', required='')
 
