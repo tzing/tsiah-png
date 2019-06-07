@@ -4,3 +4,16 @@
         color: #ffffff;
     }
 }
+
+.description.segment {
+    i.icon {
+        min-width: 1.6rem;
+    }
+
+    span {
+        border-bottom: 1px dashed #000;
+        text-decoration: none;
+    }
+}
+
+@import 'order_form'

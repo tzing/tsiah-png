@@ -2,6 +2,7 @@
 -load i18n
 -load static
 -load sass_tags
+-load tsiahpngtags
 
 block extra_head
   link(href="{% sass_src 'tsiahpng/css/menu.scss' %}", rel='stylesheet', type='text/css')
@@ -22,6 +23,16 @@ block content
   //- shop info
   .ui.rimless.vertical.segment
     include tsiahpng/menu/includes/shop_info.pug
+
+  //- related orders
+  if available_orders
+    .ui.rimless.vertical.segment
+      h3.header {% trans 'Available orders' %}
+
+      .ui.fluid.secondary.vertical.menu
+        for order in available_orders
+          a.item(href="{% url 'tsiahpng:order_detail' order.id %}") {{ order }}
+            .ui.label {{ order.order_date | short_naturalday }}
 
   //- action
   //- TODO move `if` when there is any other action added

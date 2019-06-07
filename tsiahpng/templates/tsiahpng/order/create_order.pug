@@ -16,7 +16,7 @@ block content
   .ui.rimless.vertical.segment
     form.ui.form(method='POST')
       -csrf_token
-      include tsiahpng/order/includes/create_order_form.pug
+      include tsiahpng/order/includes/form_create_order.pug
 
 block extra_scripts
   script(type='text/javascript', src="{% static 'tsiahpng/js/lib/calendar.min.js' %}")

@@ -1,0 +1,17 @@
+.ordering.form {
+    .field {
+        .inline {
+            display: inline-block;
+        }
+
+        .extra {
+            float: right;
+        }
+    }
+
+    .product.dropdown {
+        .price {
+            padding-left: .6rem;
+        }
+    }
+}
