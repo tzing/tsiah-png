@@ -7,11 +7,22 @@
         .extra {
             float: right;
         }
-    }
 
-    .product.dropdown {
-        .price {
-            padding-left: .6rem;
+        .product.dropdown {
+
+            // list item
+            .price {
+                padding-left: .6rem;
+            }
+
+            // selected label
+            a.ui.label {
+
+                .price,
+                .ui.label {
+                    display: none;
+                }
+            }
         }
     }
 
