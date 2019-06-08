@@ -1,4 +1,5 @@
 -load i18n
+-load tsiahpngtags
 //- who am i
 .required.field
   label {% trans 'Who am I' %}
@@ -7,6 +8,9 @@
     i.dropdown.icon
     .default.text {% trans 'who' %}
     .menu
+      for user in users
+        .item(data-value='{{ user.id }}') {{ user | username }}
+          .id {{ user }}
 
 //- item selection
 .required.field

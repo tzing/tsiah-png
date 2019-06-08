@@ -154,7 +154,9 @@ def order_detail(request, order_id):
         return redirect("tsiahpng:order_list")
 
     return render(
-        request, "tsiahpng/order/detail.pug", {"title": str(order), "order": order}
+        request,
+        "tsiahpng/order/detail.pug",
+        {"title": str(order), "order": order, **utils.get_stuff_ordering(request)},
     )
 
 
@@ -202,8 +204,6 @@ urlpatterns = [
     path("order/", order_list, name="order_list"),
     path("order/new/", order_create, name="order_create"),
     path("order/<int:order_id>/", order_detail, name="order_detail"),
-    # API
-    path("api/", include("tsiahpng.apis", namespace="api")),
     # js i18n
     path("jsi18n/", caches(JavaScriptCatalog.as_view()), name="javascript-catalog"),
     # admin panel

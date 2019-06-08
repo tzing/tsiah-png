@@ -43,5 +43,4 @@ block fab
 block extra_scripts
   script(type='text/javascript', src="{% static 'tsiahpng/js/gotop.js' %}")
   if order.is_available
-    include tsiahpng/includes/ajax.pug
     script(type='text/javascript', src="{% static 'tsiahpng/js/order/ordering.js' %}")

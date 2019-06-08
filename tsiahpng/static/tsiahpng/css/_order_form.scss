@@ -8,20 +8,37 @@
             float: right;
         }
 
-        .product.dropdown {
+    }
 
-            // list item
-            .price {
-                padding-left: .6rem;
+    .user.dropdown {
+
+        // list item
+        .id {
+            float: right;
+            color: rgba(0, 0, 0, .6);
+        }
+
+        // selected label
+        .text {
+            .id {
+                display: none;
             }
+        }
+    }
 
-            // selected label
-            a.ui.label {
+    .product.dropdown {
 
-                .price,
-                .ui.label {
-                    display: none;
-                }
+        // list item
+        .price {
+            padding-left: .6rem;
+        }
+
+        // selected label
+        a.ui.label {
+
+            .price,
+            .ui.label {
+                display: none;
             }
         }
     }

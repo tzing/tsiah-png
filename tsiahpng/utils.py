@@ -1,3 +1,5 @@
+from django.contrib import auth
+
 __all__ = ("try_parse", "str2bool", "get_username")
 
 
@@ -23,3 +25,12 @@ def get_username(user):
     if not name:
         name = user.get_username().strip()
     return name
+
+
+def get_stuff_ordering(request):
+    """Query stuffs for ordering form.
+    """
+    return {
+        "users": auth.models.User.objects.filter(is_active=True),
+        "last_user": request.session.get("ordering/last_user"),
+    }

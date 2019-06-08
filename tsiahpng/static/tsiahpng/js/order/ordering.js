@@ -84,10 +84,6 @@
 }(jQuery));
 
 $('.user.selection').dropdown({
-    apiSettings: {
-        action: 'get user',
-    },
-    filterRemoteData: true,
     fullTextSearch: true,
     match: 'text',
 });
