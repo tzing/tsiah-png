@@ -13,14 +13,16 @@
     .user.dropdown {
 
         // list item
-        .id {
-            float: right;
-            color: rgba(0, 0, 0, .6);
+        .menu {
+            .extra {
+                float: right;
+                color: rgba(0, 0, 0, .6);
+            }
         }
 
         // selected label
         .text {
-            .id {
+            .extra {
                 display: none;
             }
         }

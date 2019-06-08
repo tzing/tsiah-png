@@ -10,7 +10,7 @@
     .menu
       for user in users
         .item(data-value='{{ user.id }}') {{ user | username }}
-          .id {{ user }}
+          .extra {{ user }}
 
 //- item selection
 .required.field
