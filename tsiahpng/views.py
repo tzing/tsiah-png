@@ -68,8 +68,10 @@ def shop_detail(request, shop_id):
     if unsorted_products:
         sorted_products[None] = unsorted_products
 
-    # available orders
-    orders = models.Order.objects.filter(shop=shop, is_active=True, is_available=True)
+    # recent orders
+    orders = models.Order.objects.filter(shop=shop, is_active=True)[
+        : settings.MAX_RECENT_ORDERS
+    ]
 
     return render(
         request,
@@ -79,7 +81,7 @@ def shop_detail(request, shop_id):
             "shop": shop,
             "messages": messages.get_messages(request),
             "related_products": sorted_products,
-            "available_orders": orders,
+            "recent_orders": orders,
         },
     )
 
