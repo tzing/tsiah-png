@@ -259,11 +259,12 @@ class Ticket(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        name = f"{self.item} ×{self.quantity}"
         if self.note:
-            return f"{name} ({self.note})"
+            return _("{item}({note}) ×{qty}").format(
+                item=self.item, qty=self.quantity, note=self.note
+            )
         else:
-            return name
+            return _("{item} ×{qty}").format(item=self.item, qty=self.quantity)
 
 
 class WelcomeText(models.Model):

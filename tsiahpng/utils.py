@@ -1,8 +1,11 @@
 import hashlib
 
+from django.db.models import QuerySet, Sum
 from django.contrib import auth
 
-__all__ = ("try_parse", "str2bool", "get_username")
+from . import models
+
+__all__ = ("try_parse", "str2bool", "get_username", "is_new_post", "organize_tickets")
 
 
 def try_parse(value, default=0, type=int):
@@ -52,3 +55,93 @@ def is_new_post(request):
         return False
     request.session[f"{request.path}/last_post"] = hash_str
     return True
+
+
+def organize_tickets(tickets):
+    """Organize scattered tickets into distinct items.
+
+    Parameters
+    ----------
+        tickets : query set
+            query set of models.Ticket object
+
+    Returns
+    -------
+        tickets : list of models.Ticket
+            a set of distinct tickets; NOTE these tickets are created as
+            memory objects and should not save to database, or there might
+            exists duplicated projects.
+    """
+    if isinstance(tickets, QuerySet):
+        return organize_tickets_qs(tickets)
+
+    product_ids = set(t.item.id for t in tickets)
+    products = models.Product.objects.filter(id__in=product_ids)
+
+    organized_tickets = []
+    for product in products:
+        related_tickets = tuple(filter(lambda t: t.item == product, tickets))
+
+        # original taste
+        original_taste = tuple(filter(lambda t: t.note is None, related_tickets))
+        if original_taste:
+            organized_tickets.append(aggregate_tickets(original_taste))
+
+        if len(original_taste) == len(related_tickets):
+            continue
+
+        # those with notes
+        special_tastes = tuple(filter(lambda t: t.note is not None, related_tickets))
+        notes = set(t.note for t in special_tastes)
+        for note in notes:
+            same_taste = filter(lambda t: t.note == note, special_tastes)
+            organized_tickets.append(aggregate_tickets(same_taste))
+
+    return organized_tickets
+
+
+def organize_tickets_qs(tickets):
+    assert isinstance(tickets, QuerySet)
+    assert tickets.model is models.Ticket
+
+    product_ids = tickets.values_list("item").order_by().distinct()
+    products = models.Product.objects.filter(id__in=product_ids)
+
+    organized_tickets = []
+    for product in products:
+        related_tickets = tickets.filter(item=product)
+
+        # original taste
+        original_taste = related_tickets.filter(note__isnull=True)
+        if original_taste:
+            organized_tickets.append(aggregate_tickets(original_taste))
+
+        if len(original_taste) == len(related_tickets):
+            continue
+
+        # those with notes
+        special_tastes = related.filter(note__isnull=False)
+        notes = special_tastes.values_list("note", flat=True).order_by().distinct()
+        for note in notes:
+            same_taste = special_tastes.filter(note=note)
+            organized_tickets.append(aggregate_tickets(same_taste))
+
+    return organized_tickets
+
+
+def aggregate_tickets(tickets):
+    assert tickets
+    sample = next(iter(tickets))
+    return models.Ticket(
+        item=sample.item,
+        quantity=aggregate_fields(tickets, "quantity"),
+        cost=aggregate_fields(tickets, "cost"),
+        note=sample.note,
+    )
+
+
+def aggregate_fields(tickets, field):
+    if isinstance(tickets, QuerySet):
+        return tickets.aggregate(val=Sum(field))["val"]
+    else:
+        return sum(getattr(t, field) for t in tickets)

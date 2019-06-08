@@ -83,3 +83,8 @@ def dictsum(value, arg):
         return sum(getattr(v, arg) for v in value)
     except AttributeError:
         return 0
+
+
+@register.filter()
+def organize_tickets(tickets):
+    return utils.organize_tickets(tickets)
