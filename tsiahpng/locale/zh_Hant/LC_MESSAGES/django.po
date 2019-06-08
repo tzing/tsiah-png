@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-08 05:14+0000\n"
+"POT-Creation-Date: 2019-06-08 05:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -130,8 +130,8 @@ msgid "Order date"
 msgstr "訂購日期"
 
 #: tsiahpng/models.py:164
-msgid "Available"
-msgstr "訂單可用"
+msgid "Available for ordering"
+msgstr "可以訂購"
 
 #: tsiahpng/models.py:166
 msgid "Unselect this to prevent users from ordering."
@@ -365,7 +365,6 @@ msgid "Wanna..."
 msgstr "買個"
 
 #: tsiahpng/templates/tsiahpng/order/includes/ordering/content.pug:22
-#| msgid "select category"
 msgid "select item"
 msgstr "選擇項目"
 

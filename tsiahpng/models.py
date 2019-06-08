@@ -161,7 +161,7 @@ class Order(models.Model):
     )
 
     is_available = models.BooleanField(
-        verbose_name=_("Available"),
+        verbose_name=_("Available for ordering"),
         default=True,
         help_text=_("Unselect this to prevent users from ordering."),
     )
