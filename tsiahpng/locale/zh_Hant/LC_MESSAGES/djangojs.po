@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-06 06:44+0000\n"
+"POT-Creation-Date: 2019-06-08 05:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,3 +36,8 @@ msgstr "請選擇訂購店家。"
 #: tsiahpng/static/tsiahpng/js/order/create_order.js:37
 msgid "Please pick a valid date."
 msgstr "請選擇有效的日期。"
+
+#: tsiahpng/static/tsiahpng/js/order/ordering.js:45
+#, javascript-format
+msgid "Note for %s"
+msgstr "加些/少些什麼到%s"

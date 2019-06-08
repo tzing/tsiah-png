@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-06 13:18+0000\n"
+"POT-Creation-Date: 2019-06-08 05:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,12 +57,13 @@ msgid "Menu or shop photo."
 msgstr "菜單圖片或店家照片。"
 
 #: tsiahpng/models.py:36 tsiahpng/models.py:174 tsiahpng/models.py:249
-#: tsiahpng/templates/tsiahpng/order/includes/create_order_form.pug:29
+#: tsiahpng/templates/tsiahpng/order/includes/form_create_order.pug:29
+#: tsiahpng/templates/tsiahpng/order/includes/ordering/table_tickets.pug:8
 msgid "Note"
 msgstr "備註"
 
 #: tsiahpng/models.py:39 tsiahpng/models.py:95 tsiahpng/models.py:157
-#: tsiahpng/templates/tsiahpng/order/includes/create_order_form.pug:10
+#: tsiahpng/templates/tsiahpng/order/includes/form_create_order.pug:10
 msgid "Shop"
 msgstr "店家"
 
@@ -106,6 +107,7 @@ msgstr "取消選取以避免統計時合併數量。"
 
 #: tsiahpng/models.py:127
 #: tsiahpng/templates/tsiahpng/menu/includes/form_add_product.pug:24
+#: tsiahpng/templates/tsiahpng/order/includes/ordering/table_tickets.pug:7
 msgid "Price"
 msgstr "價格"
 
@@ -118,12 +120,12 @@ msgid "Products"
 msgstr "商品"
 
 #: tsiahpng/models.py:154
-#: tsiahpng/templates/tsiahpng/order/includes/create_order_form.pug:5
+#: tsiahpng/templates/tsiahpng/order/includes/form_create_order.pug:5
 msgid "Order alias"
 msgstr "訂單別名"
 
 #: tsiahpng/models.py:160
-#: tsiahpng/templates/tsiahpng/order/includes/create_order_form.pug:21
+#: tsiahpng/templates/tsiahpng/order/includes/form_create_order.pug:21
 msgid "Order date"
 msgstr "訂購日期"
 
@@ -174,6 +176,7 @@ msgid "Ordered Product"
 msgstr "訂購項目"
 
 #: tsiahpng/models.py:245
+#: tsiahpng/templates/tsiahpng/order/includes/ordering/table_tickets.pug:6
 msgid "Quantity"
 msgstr "數量"
 
@@ -209,7 +212,6 @@ msgstr "歡迎文字"
 msgid "Welcome Texts"
 msgstr "歡迎文字"
 
-#: tsiahpng/templates/tsiahpng/homepage.pug:24
 #: tsiahpng/templates/tsiahpng/includes/breadcrumb.pug:4
 #: tsiahpng/templates/tsiahpng/menu/add_product.pug:10
 #: tsiahpng/templates/tsiahpng/menu/detail.pug:14
@@ -217,20 +219,9 @@ msgstr "歡迎文字"
 msgid "Home"
 msgstr "首頁"
 
-#: tsiahpng/templates/tsiahpng/homepage.pug:31
-#: tsiahpng/templates/tsiahpng/menu/detail.pug:41
-msgid "Action"
-msgstr "操作"
-
-#: tsiahpng/templates/tsiahpng/homepage.pug:36
-#: tsiahpng/templates/tsiahpng/order/index.pug:21
-#: tsiahpng/templates/tsiahpng/order/index.pug:41 tsiahpng/views.py:182
-msgid "Create order"
-msgstr "建立於訂單"
-
 #: tsiahpng/templates/tsiahpng/includes/gotop.pug:3
 msgid "Go to top"
-msgstr ""
+msgstr "回到頂部"
 
 #: tsiahpng/templates/tsiahpng/layouts/base.pug:7
 #: tsiahpng/templates/tsiahpng/layouts/base.pug:16
@@ -252,13 +243,19 @@ msgstr "控制台"
 msgid "Available orders"
 msgstr "開放的訂單"
 
+#: tsiahpng/templates/tsiahpng/menu/detail.pug:41
+msgid "Action"
+msgstr "操作"
+
 #: tsiahpng/templates/tsiahpng/menu/detail.pug:45
 #: tsiahpng/templates/tsiahpng/menu/includes/shop_card.pug:42
+#: tsiahpng/templates/tsiahpng/order/includes/ordering/content.pug:17
 msgid "Add product"
 msgstr "新增品項"
 
 #: tsiahpng/templates/tsiahpng/menu/includes/detail_menu.pug:12
 #: tsiahpng/templates/tsiahpng/menu/includes/detail_menu.pug:21
+#: tsiahpng/templates/tsiahpng/order/includes/ordering/item_product.pug:9
 #: tsiahpng/templatetags/tsiahpngtags.py:68
 msgid "Unsorted"
 msgstr "未分類"
@@ -272,12 +269,14 @@ msgid "No category"
 msgstr "無分類"
 
 #: tsiahpng/templates/tsiahpng/menu/includes/form_add_product.pug:28
-#: tsiahpng/templates/tsiahpng/order/includes/create_order_form.pug:33
+#: tsiahpng/templates/tsiahpng/order/includes/form_create_order.pug:33
+#: tsiahpng/templates/tsiahpng/order/includes/ordering/content.pug:35
 msgid "Submit"
 msgstr "送出"
 
 #: tsiahpng/templates/tsiahpng/menu/includes/form_add_product.pug:29
-#: tsiahpng/templates/tsiahpng/order/includes/create_order_form.pug:34
+#: tsiahpng/templates/tsiahpng/order/includes/form_create_order.pug:34
+#: tsiahpng/templates/tsiahpng/order/includes/ordering/content.pug:36
 msgid "Reset"
 msgstr "重置"
 
@@ -302,9 +301,13 @@ msgstr "目前沒有任何菜單。"
 msgid "Shop information"
 msgstr "店家資訊"
 
-#: tsiahpng/templates/tsiahpng/order/includes/create_order_form.pug:14
+#: tsiahpng/templates/tsiahpng/order/includes/form_create_order.pug:14
 msgid "Select shop"
 msgstr "選擇店家"
+
+#: tsiahpng/templates/tsiahpng/order/includes/form_ordering.pug:7
+msgid "Order it!"
+msgstr "下單囉"
 
 #: tsiahpng/templates/tsiahpng/order/includes/order_card.pug:25
 #, python-format
@@ -348,6 +351,36 @@ msgstr ""
 msgid ""
 "This order is created on <span data-tooltip=\"%(date)s\">%(ndate)s</span>."
 msgstr "這個訂單建立於<span data-tooltip=\"%(date)s\">%(ndate)s</span>。"
+
+#: tsiahpng/templates/tsiahpng/order/includes/ordering/content.pug:4
+msgid "Who am I"
+msgstr "我是"
+
+#: tsiahpng/templates/tsiahpng/order/includes/ordering/content.pug:8
+msgid "who"
+msgstr "誰"
+
+#: tsiahpng/templates/tsiahpng/order/includes/ordering/content.pug:13
+msgid "Wanna..."
+msgstr "買個"
+
+#: tsiahpng/templates/tsiahpng/order/includes/ordering/content.pug:22
+#| msgid "select category"
+msgid "select item"
+msgstr "選擇項目"
+
+#: tsiahpng/templates/tsiahpng/order/includes/ordering/table_tickets.pug:5
+msgid "Item"
+msgstr "項目"
+
+#: tsiahpng/templates/tsiahpng/order/includes/ordering/table_tickets.pug:11
+msgid "No tickets"
+msgstr "還沒下單"
+
+#: tsiahpng/templates/tsiahpng/order/index.pug:21
+#: tsiahpng/templates/tsiahpng/order/index.pug:41 tsiahpng/views.py:182
+msgid "Create order"
+msgstr "建立訂單"
 
 #: tsiahpng/templates/tsiahpng/order/index.pug:29
 msgid "No any order yet."
