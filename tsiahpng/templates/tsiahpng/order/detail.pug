@@ -42,30 +42,6 @@ block fab
 
 block extra_scripts
   script(type='text/javascript', src="{% static 'tsiahpng/js/gotop.js' %}")
-
-  include tsiahpng/includes/ajax.pug
-  script(type='text/javascript', src="{% static 'tsiahpng/js/order/ordering.js' %}")
-  script.
-    $('.ui.form').form({
-      on: 'blur',
-      fields: {
-          user: {
-              identifier: 'user',
-              rules: [
-                  {
-                      type: 'empty',
-                      prompt: gettext('Please tell me who you are.')
-                  },
-              ]
-          },
-          product:{
-              identifier: 'items',
-              rules: [
-                  {
-                      type: 'empty',
-                      prompt: gettext('Cart is empty.')
-                  },
-              ]
-          },
-      }
-    });
+  if order.is_available
+    include tsiahpng/includes/ajax.pug
+    script(type='text/javascript', src="{% static 'tsiahpng/js/order/ordering.js' %}")

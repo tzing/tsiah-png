@@ -104,6 +104,8 @@ $('.product.selection').dropdown({
             name: jObj.data('name'),
             changeable: jObj.data('changeable')
         })
+
+        // hide hint
         table.find('tr.hint').hide();
         table.find('tfoot').show();
     },
@@ -126,5 +128,25 @@ $('.product.selection').dropdown({
             table.find('tfoot').hide();
         }
 
+    }
+});
+
+$('.ui.form').form({
+    on: 'blur',
+    fields: {
+        user: {
+            identifier: 'user',
+            rules: [{
+                type: 'empty',
+                prompt: gettext('Please tell me who you are.')
+            }]
+        },
+        product: {
+            identifier: 'items',
+            rules: [{
+                type: 'empty',
+                prompt: gettext('Cart is empty.')
+            }]
+        },
     }
 });
