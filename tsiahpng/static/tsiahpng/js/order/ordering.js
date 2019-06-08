@@ -127,7 +127,7 @@ $('.product.selection').dropdown({
     }
 });
 
-$('.ui.form').form({
+$('.ui.ordering.form').form({
     on: 'blur',
     fields: {
         user: {

@@ -33,6 +33,12 @@ ORDER_PER_PAGE = getattr(settings, "ORDER_PER_PAGE", ITEMS_PER_PAGE)
 ``ITEMS_PER_PAGE``.
 """
 
+ALLOW_ANYONE_ALTER_ORDER_STATUS = getattr(
+    settings, "ALLOW_ANYONE_ALTER_ORDER_STATUS", True
+)
+"""[bool] Let anyone create or close orders.
+"""
+
 
 def _assert_type(name, type_):
     value = globals()[name]
@@ -46,3 +52,4 @@ _assert_type("DEFAULT_PROD_PRICE", int)
 _assert_type("ITEMS_PER_PAGE", int)
 _assert_type("SHOP_PER_PAGE", int)
 _assert_type("ORDER_PER_PAGE", int)
+_assert_type("ALLOW_ANYONE_ALTER_ORDER_STATUS", bool)

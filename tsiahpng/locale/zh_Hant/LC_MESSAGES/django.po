@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-08 11:43+0000\n"
+"POT-Creation-Date: 2019-06-08 14:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -195,10 +195,12 @@ msgid "Ordered Items"
 msgstr "訂購項目"
 
 #: tsiahpng/models.py:263
+#, python-brace-format
 msgid "{item}({note}) ×{qty}"
 msgstr ""
 
 #: tsiahpng/models.py:267
+#, python-brace-format
 msgid "{item} ×{qty}"
 msgstr ""
 
@@ -319,6 +321,15 @@ msgstr "訂單總覽"
 msgid "Personal order"
 msgstr "個人訂單總覽"
 
+#: tsiahpng/templates/tsiahpng/order/detail.pug:50
+msgid "Adminstration"
+msgstr "管理"
+
+#: tsiahpng/templates/tsiahpng/order/detail.pug:54
+#: tsiahpng/templates/tsiahpng/order/includes/modal_close_order.pug:4
+msgid "Close order"
+msgstr "關閉訂單"
+
 #: tsiahpng/templates/tsiahpng/order/includes/form_create_order.pug:14
 msgid "Select shop"
 msgstr "選擇店家"
@@ -326,6 +337,19 @@ msgstr "選擇店家"
 #: tsiahpng/templates/tsiahpng/order/includes/form_ordering.pug:7
 msgid "Order it!"
 msgstr "下單囉"
+
+#: tsiahpng/templates/tsiahpng/order/includes/modal_close_order.pug:8
+#, python-format
+msgid "Are you sure you want to close the order “%(order)s”?"
+msgstr "確定要關閉訂單「%(order)s」？"
+
+#: tsiahpng/templates/tsiahpng/order/includes/modal_close_order.pug:18
+msgid "No"
+msgstr "否"
+
+#: tsiahpng/templates/tsiahpng/order/includes/modal_close_order.pug:21
+msgid "Yes"
+msgstr "是"
 
 #: tsiahpng/templates/tsiahpng/order/includes/order_card.pug:25
 #, python-format
@@ -418,12 +442,12 @@ msgstr "%(qty)s個項目"
 msgid "Tickets"
 msgstr "訂單"
 
-#: tsiahpng/templates/tsiahpng/order/index.pug:21
-#: tsiahpng/templates/tsiahpng/order/index.pug:41 tsiahpng/views.py:202
+#: tsiahpng/templates/tsiahpng/order/index.pug:22
+#: tsiahpng/templates/tsiahpng/order/index.pug:43 tsiahpng/views.py:212
 msgid "Create order"
 msgstr "建立訂單"
 
-#: tsiahpng/templates/tsiahpng/order/index.pug:29
+#: tsiahpng/templates/tsiahpng/order/index.pug:30
 msgid "No any order yet."
 msgstr "目前沒有任何訂單。"
 
@@ -468,7 +492,7 @@ msgstr "無法對{shop}進行變更。"
 msgid "Successfully add {prod}."
 msgstr "成功新增了{prod}。"
 
-#: tsiahpng/views.py:110 tsiahpng/views.py:172 tsiahpng/views.py:193
+#: tsiahpng/views.py:110 tsiahpng/views.py:173 tsiahpng/views.py:203
 msgid "Invalid requests."
 msgstr "無效的資料。"
 
@@ -477,16 +501,24 @@ msgstr "無效的資料。"
 msgid "Add product to {shop}"
 msgstr "新增項目到{shop}"
 
-#: tsiahpng/views.py:153
+#: tsiahpng/views.py:154 tsiahpng/views.py:227
 #, python-brace-format
 msgid "Order #{id} id not exists."
 msgstr "訂單#{id}不存在"
 
-#: tsiahpng/views.py:163
+#: tsiahpng/views.py:164
 msgid "{user} ordered {items}; ${price:,} in total."
 msgstr "{user}訂購了{items}，共{price:,}元。"
 
-#: tsiahpng/views.py:188
+#: tsiahpng/views.py:189
+msgid "No enough permission for this operation."
+msgstr ""
+
+#: tsiahpng/views.py:198
 #, python-brace-format
 msgid "Successfully create order \"{order}\"."
 msgstr "成功建立了訂單「{order}」。"
+
+#: tsiahpng/views.py:234
+msgid "Order closed."
+msgstr "訂單已關閉。"

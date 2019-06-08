@@ -1,0 +1,21 @@
+-load i18n
+.ui.closing.order.tiny.modal
+  //- header
+  .header {% trans 'Close order' %}
+
+  .scrolling.content
+    //- message
+    p {% blocktrans %}Are you sure you want to close the order “{{ order }}”?{% endblocktrans %}
+
+    //- form
+    form.ui.closing.order.form(method='POST', action="{% url 'tsiahpng:order_close' order.id %}")
+      -csrf_token
+
+  //- actions
+  .actions
+    .ui.negative.labeled.icon.button
+      i.x.icon
+      | {% trans 'No' %}
+    .ui.positive.labeled.icon.button
+      i.checkmark.icon
+      | {% trans 'Yes' %}

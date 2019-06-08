@@ -14,11 +14,12 @@ block content
   include tsiahpng/includes/messages.pug
 
   //- actions
-  .ui.rimless.vertical.segment
-    //- create order
-    a.ui.labeled.basic.green.icon.button(href="{% url 'tsiahpng:order_create' %}")
-      i.plus.icon
-      | {% trans 'Create order' %}
+  if status_alterable
+    .ui.rimless.vertical.segment
+      //- create order
+      a.ui.labeled.basic.green.icon.button(href="{% url 'tsiahpng:order_create' %}")
+        i.plus.icon
+        | {% trans 'Create order' %}
 
   //- order list
   .ui.rimless.vertical.segment
@@ -36,12 +37,13 @@ block content
 block fab
   include tsiahpng/includes/gotop.pug
 
-  .wrap.computer.only
-    a.massive.green.circular.ui.icon.button(
-        data-tooltip="{% trans 'Create order' %}",
-        data-position="left center",
-        href="{% url 'tsiahpng:order_create' %}")
-      i.icon.edit
+  if status_alterable
+    .wrap.computer.only
+      a.massive.green.circular.ui.icon.button(
+          data-tooltip="{% trans 'Create order' %}",
+          data-position="left center",
+          href="{% url 'tsiahpng:order_create' %}")
+        i.icon.edit
 
 block extra_scripts
   script(type='text/javascript', src="{% static 'tsiahpng/js/gotop.js' %}")

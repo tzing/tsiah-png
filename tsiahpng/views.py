@@ -141,6 +141,7 @@ def order_list(request):
             "title": _("Order"),
             "orders": paginator.get_page(idx_page),
             "messages": messages.get_messages(request),
+            "status_alterable": settings.ALLOW_ANYONE_ALTER_ORDER_STATUS,
         },
     )
 
@@ -174,11 +175,20 @@ def order_detail(request, order_id):
     return render(
         request,
         "tsiahpng/order/detail.pug",
-        {"title": str(order), "order": order, **utils.get_stuff_ordering(request)},
+        {
+            "title": str(order),
+            "order": order,
+            "closable": order.is_available and settings.ALLOW_ANYONE_ALTER_ORDER_STATUS,
+            **utils.get_stuff_ordering(request),
+        },
     )
 
 
 def order_create(request):
+    if not settings.ALLOW_ANYONE_ALTER_ORDER_STATUS:
+        messages.error(_("No enough permission for this operation."))
+        return redirect("tsiahpng:shop_detail")
+
     # post request
     if request.method == "POST" and utils.is_new_post(request):
         form = forms.CreateOrderForm(request.POST)
@@ -208,7 +218,26 @@ def order_create(request):
     )
 
 
-# url confs
+def order_close(request, order_id):
+    if request.method == "POST" and utils.is_new_post(request):
+        # get order
+        try:
+            order = models.Order.objects.get(id=order_id, is_active=True)
+        except models.Order.DoesNotExist:
+            messages.error(request, _("Order #{id} id not exists.").format(id=order_id))
+            return redirect("tsiahpng:order_list")
+
+        # operate
+        order.is_available = False
+        order.save()
+
+        messages.success(request, _("Order closed."))
+        return redirect("tsiahpng:order_detail", order_id)
+
+    return redirect("tsiahpng:order_detail", order_id)
+
+
+# url configurations
 app_name = "tsiahpng"
 caches = cache_page(86400, key_prefix=f"jsi18n-{uuid.uuid4().hex}")
 
@@ -222,6 +251,7 @@ urlpatterns = [
     path("order/", order_list, name="order_list"),
     path("order/new/", order_create, name="order_create"),
     path("order/<int:order_id>/", order_detail, name="order_detail"),
+    path("order/<int:order_id>/close", order_close, name="order_close"),
     # js i18n
     path("jsi18n/", caches(JavaScriptCatalog.as_view()), name="javascript-catalog"),
     # admin panel
