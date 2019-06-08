@@ -65,8 +65,5 @@ block extra_scripts
   script(type='text/javascript', src="{% static 'tsiahpng/js/gotop.js' %}")
   if order.is_available
     script(type='text/javascript', src="{% static 'tsiahpng/js/order/ordering.js' %}")
-
-  script.
-    $('#close_btn').click(function(){
-      $('.ui.modal').modal('show');
-    });
+  if status_alterable
+    script(type='text/javascript', src="{% static 'tsiahpng/js/order/close_order.js' %}")
