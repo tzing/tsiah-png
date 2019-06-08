@@ -37,12 +37,12 @@ block content
   //- per product view
   .ui.rimless.vertical.segment
     h3.ui.header {% trans 'Order overview' %}
-    include ./includes/summary/order_overview.pug
+    include ./includes/summary_order.pug
 
   //- per user view
   .ui.rimless.vertical.segment
     h3.ui.header {% trans 'Personal order' %}
-    include ./includes/summary/personal_overview.pug
+    include ./includes/summary_personal.pug
 
 block fab
   include tsiahpng/includes/gotop.pug

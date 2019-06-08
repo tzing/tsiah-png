@@ -1,21 +1,26 @@
 -load i18n
 -load humanize
 -load tsiahpngtags
--regroup order.tickets|dictsort:'user.id' by user as grouped_tickets
+-regroup order.tickets|dictsort:'item.id' by item as grouped_tickets
 table.ui.summary.table
   thead
     tr
-      th.four.wide {% trans 'User' %}
-      th.nine.wide {% trans 'Tickets' %}
-      th.three.wide {% trans 'Cost' %}
+      th.four.wide {% trans 'Item' %}
+      th.nine.wide {% trans 'Quantity' %}
+      th.three.wide {% trans 'Subtotal' %}
   tbody
     {% for prod in grouped_tickets %}
     tr
-      td {{ prod.grouper | username }}
+      //- product name
+      td {{ prod.grouper }}
+      //- product quantity
       td
+        -trans 'Original taste' as str_orig_taste
         -for ticket in prod.list|organize_tickets
-          {{ ticket }}
+          -firstof ticket.note str_orig_taste as note
+          {% blocktrans with name=note qty=ticket.quantity %}{{ name }} ×{{ qty }}{% endblocktrans %}
           {% if not forloop.last %}{% trans ', ' %}{% endif %}
+      //- subtotal
       td.right.aligned ${{ prod.list|dictsum:'cost'|intcomma }}
     {% empty %}
     tr.hint

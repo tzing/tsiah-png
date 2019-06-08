@@ -94,7 +94,7 @@ def organize_tickets(tickets):
         special_tastes = tuple(filter(lambda t: t.note is not None, related_tickets))
         notes = set(t.note for t in special_tastes)
         for note in notes:
-            same_taste = filter(lambda t: t.note == note, special_tastes)
+            same_taste = tuple(filter(lambda t: t.note == note, special_tastes))
             organized_tickets.append(aggregate_tickets(same_taste))
 
     return organized_tickets
