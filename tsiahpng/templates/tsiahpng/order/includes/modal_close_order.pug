@@ -1,0 +1,12 @@
+-load i18n
+.ui.tiny.modal
+  .header {% trans 'Close order' %}
+  .scrolling.content
+    p {% blocktrans %}Are you sure you want to close the order “{{ order }}”?{% endblocktrans %}
+  .actions
+    .ui.negative.labeled.icon.button
+      i.x.icon
+      | {% trans 'No' %}
+    .ui.positive.labeled.icon.button
+      i.checkmark.icon
+      | {% trans 'Yes' %}

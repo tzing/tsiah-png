@@ -44,6 +44,20 @@ block content
     h3.ui.header {% trans 'Personal order' %}
     include ./includes/summary_personal.pug
 
+  //- adminstration
+  block admin_panel
+    .ui.rimless.vertical.segment
+      h3.ui.header {% trans 'Adminstration' %}
+
+      if status_alterable
+        button#close_btn.ui.labeled.red.icon.button
+          i.lock.icon
+          | {% trans 'Close order' %}
+
+  //- close order panel
+  if status_alterable
+    include ./includes/modal_close_order.pug
+
 block fab
   include tsiahpng/includes/gotop.pug
 
@@ -51,3 +65,8 @@ block extra_scripts
   script(type='text/javascript', src="{% static 'tsiahpng/js/gotop.js' %}")
   if order.is_available
     script(type='text/javascript', src="{% static 'tsiahpng/js/order/ordering.js' %}")
+
+  script.
+    $('#close_btn').click(function(){
+      $('.ui.modal').modal('show');
+    });

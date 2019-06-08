@@ -141,6 +141,7 @@ def order_list(request):
             "title": _("Order"),
             "orders": paginator.get_page(idx_page),
             "messages": messages.get_messages(request),
+            "status_alterable": settings.ALLOW_ANYONE_ALTER_ORDER_STATUS,
         },
     )
 
@@ -174,11 +175,20 @@ def order_detail(request, order_id):
     return render(
         request,
         "tsiahpng/order/detail.pug",
-        {"title": str(order), "order": order, **utils.get_stuff_ordering(request)},
+        {
+            "title": str(order),
+            "order": order,
+            "status_alterable": settings.ALLOW_ANYONE_ALTER_ORDER_STATUS,
+            **utils.get_stuff_ordering(request),
+        },
     )
 
 
 def order_create(request):
+    if not settings.ALLOW_ANYONE_ALTER_ORDER_STATUS:
+        messages.error(_("No enough permission for this operation."))
+        return redirect("tsiahpng:shop_detail")
+
     # post request
     if request.method == "POST" and utils.is_new_post(request):
         form = forms.CreateOrderForm(request.POST)
@@ -208,7 +218,7 @@ def order_create(request):
     )
 
 
-# url confs
+# url configurations
 app_name = "tsiahpng"
 caches = cache_page(86400, key_prefix=f"jsi18n-{uuid.uuid4().hex}")
 
