@@ -16,11 +16,11 @@
         // quantity
         var input_qty = $('<input>')
             .attr('type', 'number')
-            .attr('name', 'quantity-' + options.id)
+            .attr('name', 'quantity_' + options.id)
             .attr('value', 1)
             .attr('min', 0)
             .change(function () {
-                $('input[name="price-' + options.id + '"]').val($(this).val() * options.price);
+                $('input[name="price_' + options.id + '"]').val($(this).val() * options.price);
                 $(this).refreshSubtotal();
             })
         var cell_qty = $('<td></td>').append(input_qty);
@@ -29,7 +29,7 @@
         var input_price = $('<input>')
             .addClass('price')
             .attr('type', 'number')
-            .attr('name', 'price-' + options.id)
+            .attr('name', 'price_' + options.id)
             .attr('min', 0)
             .attr('step', 5)
             .attr('value', options.price)
@@ -40,7 +40,7 @@
         var cell_note = $('<td></td>');
         if (options.changeable) {
             var input_note = $('<input>')
-                .attr('name', 'note-' + options.id)
+                .attr('name', 'note_' + options.id)
                 .attr('type', 'text')
                 .attr('placeholder', gettext('Note for %s').replace('%s', options.name));
             cell_note.append(input_note);

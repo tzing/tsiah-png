@@ -153,6 +153,24 @@ def order_detail(request, order_id):
         messages.error(request, _("Order #{id} id not exists.").format(id=order_id))
         return redirect("tsiahpng:order_list")
 
+    # form
+    if request.method == "POST":
+        form = forms.OrderingForm(request.POST)
+        tickets = form.to_models()
+        if tickets:
+            user = tickets[-1].user
+
+            msg = _("{user} ordered {items}; ${price:,} in total.").format(
+                user=utils.get_username(user),
+                items=", ".join(str(t) for t in tickets),
+                price=sum(t.cost for t in tickets),
+            )
+            messages.success(request, msg)
+
+            request.session["ordering/last_user"] = user.id
+        else:
+            messages.error(request, _("Invalid requests."))
+
     return render(
         request,
         "tsiahpng/order/detail.pug",
