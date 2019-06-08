@@ -16,4 +16,11 @@
     }
 }
 
+.summary.table {
+    .hint {
+        color: rgba(0, 0, 0, .6);
+        font-style: oblique;
+    }
+}
+
 @import 'order_form'

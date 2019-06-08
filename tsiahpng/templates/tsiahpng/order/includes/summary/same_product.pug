@@ -1,0 +1,16 @@
+//- required: `tickets`
+//- dependents
+-load i18n
+-load humanize
+-load tsiahpngtags
+//- common used string
+-trans 'Original taste' as str_orig_taste
+//- regroup by note
+-regroup tickets by note as grouped_tickets
+for ticket in grouped_tickets
+  //- name
+  -firstof ticket.grouper str_orig_taste as group_note
+  //- quantity
+  -with total_qty=ticket.list|dictsum:'quantity'
+    //- string output
+    {% blocktrans with name=group_note qty=total_qty|intcomma %}{{ name }} ×{{ qty}}{% endblocktrans %}{% if not forloop.last %}{% trans ', ' %}{% endif %}

@@ -75,3 +75,11 @@ def percategory_quantity(order):
 @register.filter()
 def username(user):
     return utils.get_username(user)
+
+
+@register.filter()
+def dictsum(value, arg):
+    try:
+        return sum(getattr(v, arg) for v in value)
+    except AttributeError:
+        return 0

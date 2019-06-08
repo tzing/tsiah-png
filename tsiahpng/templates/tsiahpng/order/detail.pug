@@ -9,10 +9,10 @@ block extra_head
 
 block content
   //- breadcrumb
-  include tsiahpng/order/includes/breadcrumb.pug
+  include ./includes/breadcrumb.pug
 
   //- messages
-  include tsiahpng/includes/messages.pug
+  include ../includes/messages.pug
 
   //- order notes
   if order.note
@@ -21,20 +21,24 @@ block content
 
   //- order description
   .ui.rimless.vertical.description.segment
-    include tsiahpng/order/includes/order_description.pug
+    include ./includes/order_description.pug
 
   //- shop info
   .ui.rimless.vertical.segment
     h3.header {% trans 'Shop information' %}
     -with shop=order.shop
-      include tsiahpng/menu/includes/shop_info.pug
+      include ../menu/includes/shop_info.pug
 
   //- ordering form
   if order.is_available
     .ui.rimless.vertical.segment
-      include tsiahpng/order/includes/form_ordering.pug
+      include ./includes/form_ordering.pug
 
-  //- TODO per product view
+  //- per product view
+  .ui.rimless.vertical.segment
+    h3.ui.header {% trans 'Order overview' %}
+    include ./includes/summary/table_order_overview.pug
+
   //- TODO per user view
 
 block fab

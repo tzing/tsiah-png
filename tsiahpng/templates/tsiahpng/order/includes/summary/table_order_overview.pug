@@ -1,0 +1,28 @@
+-load i18n
+-load humanize
+-load tsiahpngtags
+-regroup order.tickets|dictsort:'item.id' by item as grouped_tickets
+table.ui.summary.table
+  thead
+    tr
+      th.four.wide {% trans 'Item' %}
+      th.nine.wide {% trans 'Quantity' %}
+      th.three.wide {% trans 'Cost' %}
+  tbody
+    {% for prod in grouped_tickets %}
+    tr
+      td {{ prod.grouper }}
+      td
+        -with tickets=prod.list
+          include ./same_product.pug
+      td.right.aligned ${{ prod.list|dictsum:'cost'|intcomma }}
+    {% empty %}
+    tr.hint
+      td.center.aligned(colspan='2') {% trans 'No tickets' %}
+    {% endfor %}
+  if order.tickets
+    tfoot
+      tr
+        th
+        th {% blocktrans with qty=order.sum_quantity|intcomma %}{{ qty }} items{% endblocktrans %}
+        th.right.aligned ${{ order.sum_cost|intcomma }}
