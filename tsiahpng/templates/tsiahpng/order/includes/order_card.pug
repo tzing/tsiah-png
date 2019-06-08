@@ -24,11 +24,8 @@
           i.shopping.bag.icon
           .content {% blocktrans with qty=order.sum_quantity|intcomma cost=order.sum_cost|intcomma %}Ordered {{ qty }} items, ${{ cost }} in total.{% endblocktrans %}
         .item
-          i.calendar.check.outline.icon
-          .content {% blocktrans with date=order.order_date %}Submit on {{ date }}.{% endblocktrans %}
-        .item
           i.calendar.outline.icon
-          .content {% blocktrans with date=order.date_created|naturaltime %}Created on {{ date }}.{% endblocktrans %}
+          .content {% blocktrans with date=order.date_created %}Created on {{ date }}.{% endblocktrans %}
 
     if order.is_available
       .green.extra.content.center.aligned

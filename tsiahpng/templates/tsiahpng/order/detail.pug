@@ -9,10 +9,10 @@ block extra_head
 
 block content
   //- breadcrumb
-  include tsiahpng/order/includes/breadcrumb.pug
+  include ./includes/breadcrumb.pug
 
   //- messages
-  include tsiahpng/includes/messages.pug
+  include ../includes/messages.pug
 
   //- order notes
   if order.note
@@ -21,40 +21,33 @@ block content
 
   //- order description
   .ui.rimless.vertical.description.segment
-    include tsiahpng/order/includes/order_description.pug
+    include ./includes/order_description.pug
 
   //- shop info
   .ui.rimless.vertical.segment
     h3.header {% trans 'Shop information' %}
     -with shop=order.shop
-      include tsiahpng/menu/includes/shop_info.pug
+      include ../menu/includes/shop_info.pug
 
   //- ordering form
   if order.is_available
     .ui.rimless.vertical.segment
-      include tsiahpng/order/includes/form_order_product.pug
+      include ./includes/form_ordering.pug
 
-  //- TODO per product view
-  //- TODO per user view
+  //- per product view
+  .ui.rimless.vertical.segment
+    h3.ui.header {% trans 'Order overview' %}
+    include ./includes/summary_order.pug
+
+  //- per user view
+  .ui.rimless.vertical.segment
+    h3.ui.header {% trans 'Personal order' %}
+    include ./includes/summary_personal.pug
 
 block fab
   include tsiahpng/includes/gotop.pug
 
 block extra_scripts
   script(type='text/javascript', src="{% static 'tsiahpng/js/gotop.js' %}")
-
-  include tsiahpng/includes/ajax.pug
-  script.
-    $('.user.selection').dropdown({
-        apiSettings: {
-          action:'get user',
-        },
-        filterRemoteData: true,
-        fullTextSearch: true,
-        match: 'text',
-    });
-
-    $('.product.selection').dropdown({
-        fullTextSearch: true,
-        match: 'text',
-    });
+  if order.is_available
+    script(type='text/javascript', src="{% static 'tsiahpng/js/order/ordering.js' %}")

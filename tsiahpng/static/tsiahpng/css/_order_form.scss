@@ -7,11 +7,53 @@
         .extra {
             float: right;
         }
+
+    }
+
+    .user.dropdown {
+
+        // list item
+        .menu {
+            .extra {
+                float: right;
+                color: rgba(0, 0, 0, .6);
+            }
+        }
+
+        // selected label
+        .text {
+            .extra {
+                display: none;
+            }
+        }
     }
 
     .product.dropdown {
+
+        // list item
         .price {
             padding-left: .6rem;
         }
+
+        // selected label
+        a.ui.label {
+
+            .price,
+            .ui.label {
+                display: none;
+            }
+        }
     }
+
+    table {
+        tr.hint {
+            color: rgba(0, 0, 0, .6);
+            font-style: oblique;
+        }
+
+        tfoot {
+            display: none;
+        }
+    }
+
 }

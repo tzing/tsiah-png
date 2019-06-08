@@ -1,0 +1,14 @@
+//- required: `order` object
+-load i18n
+form.ui.ordering.form(method='POST', action="{% url 'tsiahpng:order_detail' order.id %}")
+  .ui.fluid.raised.card
+    //- header
+    .content
+      h3.ui.sub.header {% trans 'Order it!' %}
+
+    //- body
+    .content
+      include ./ordering/content.pug
+
+    //- token
+    -csrf_token

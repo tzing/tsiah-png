@@ -6,6 +6,7 @@ from django.db.models import Sum
 from django.utils.translation import gettext as _
 
 from .. import models
+from .. import utils
 
 register = django.template.Library()
 
@@ -69,3 +70,21 @@ def percategory_quantity(order):
 
     # join string
     return _(", ").join(counts)
+
+
+@register.filter()
+def username(user):
+    return utils.get_username(user)
+
+
+@register.filter()
+def dictsum(value, arg):
+    try:
+        return sum(getattr(v, arg) for v in value)
+    except AttributeError:
+        return 0
+
+
+@register.filter()
+def organize_tickets(tickets):
+    return utils.organize_tickets(tickets)

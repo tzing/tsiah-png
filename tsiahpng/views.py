@@ -98,7 +98,7 @@ def shop_add_product(request, shop_id):
         return redirect("tsiahpng:shop_detail", shop_id=shop_id)
 
     # form
-    if request.method == "POST":
+    if request.method == "POST" and utils.is_new_post(request):
         form = forms.CreateProductForm(request.POST)
         prod = form.to_model()
         if prod:
@@ -153,14 +153,34 @@ def order_detail(request, order_id):
         messages.error(request, _("Order #{id} id not exists.").format(id=order_id))
         return redirect("tsiahpng:order_list")
 
+    # form
+    if request.method == "POST" and utils.is_new_post(request):
+        form = forms.OrderingForm(request.POST)
+        tickets = form.to_models()
+        if tickets:
+            user = tickets[-1].user
+
+            msg = _("{user} ordered {items}; ${price:,} in total.").format(
+                user=utils.get_username(user),
+                items=", ".join(str(t) for t in tickets),
+                price=sum(t.cost for t in tickets),
+            )
+            messages.success(request, msg)
+
+            request.session["ordering/last_user"] = user.id
+        else:
+            messages.error(request, _("Invalid requests."))
+
     return render(
-        request, "tsiahpng/order/detail.pug", {"title": str(order), "order": order}
+        request,
+        "tsiahpng/order/detail.pug",
+        {"title": str(order), "order": order, **utils.get_stuff_ordering(request)},
     )
 
 
 def order_create(request):
     # post request
-    if request.method == "POST":
+    if request.method == "POST" and utils.is_new_post(request):
         form = forms.CreateOrderForm(request.POST)
         order = form.to_model()
         if order:
@@ -168,7 +188,7 @@ def order_create(request):
                 request, _(f'Successfully create order "{order}".').format(order=order)
             )
             request.session["order_create/last_shop"] = order.shop.id
-            return redirect("tsiahpng:order_list")  # FIXME link
+            return redirect("tsiahpng:order_detail", order.id)
         else:
             messages.error(request, _("Invalid requests."))
 
@@ -202,8 +222,6 @@ urlpatterns = [
     path("order/", order_list, name="order_list"),
     path("order/new/", order_create, name="order_create"),
     path("order/<int:order_id>/", order_detail, name="order_detail"),
-    # API
-    path("api/", include("tsiahpng.apis", namespace="api")),
     # js i18n
     path("jsi18n/", caches(JavaScriptCatalog.as_view()), name="javascript-catalog"),
     # admin panel
