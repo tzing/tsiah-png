@@ -1,3 +1,5 @@
+import hashlib
+
 from django.contrib import auth
 
 __all__ = ("try_parse", "str2bool", "get_username")
@@ -34,3 +36,19 @@ def get_stuff_ordering(request):
         "users": auth.models.User.objects.filter(is_active=True),
         "last_user": request.session.get("ordering/last_user"),
     }
+
+
+def is_new_post(request):
+    """A utility to test if the post is duplicated sent, or really the new one.
+
+    Return
+    ------
+    is_valid : bool
+        True if this request is valid.
+    """
+    post_content = request.POST.urlencode().encode("utf-8")
+    hash_str = hashlib.sha1(post_content).hexdigest()
+    if request.session.get(f"{request.path}/last_post") == hash_str:
+        return False
+    request.session[f"{request.path}/last_post"] = hash_str
+    return True

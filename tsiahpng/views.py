@@ -98,7 +98,7 @@ def shop_add_product(request, shop_id):
         return redirect("tsiahpng:shop_detail", shop_id=shop_id)
 
     # form
-    if request.method == "POST":
+    if request.method == "POST" and utils.is_new_post(request):
         form = forms.CreateProductForm(request.POST)
         prod = form.to_model()
         if prod:
@@ -154,7 +154,7 @@ def order_detail(request, order_id):
         return redirect("tsiahpng:order_list")
 
     # form
-    if request.method == "POST":
+    if request.method == "POST" and utils.is_new_post(request):
         form = forms.OrderingForm(request.POST)
         tickets = form.to_models()
         if tickets:
@@ -180,7 +180,7 @@ def order_detail(request, order_id):
 
 def order_create(request):
     # post request
-    if request.method == "POST":
+    if request.method == "POST" and utils.is_new_post(request):
         form = forms.CreateOrderForm(request.POST)
         order = form.to_model()
         if order:
