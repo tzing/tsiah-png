@@ -168,7 +168,7 @@ def order_create(request):
                 request, _(f'Successfully create order "{order}".').format(order=order)
             )
             request.session["order_create/last_shop"] = order.shop.id
-            return redirect("tsiahpng:order_list")  # FIXME link
+            return redirect("tsiahpng:order_detail", order.id)
         else:
             messages.error(request, _("Invalid requests."))
 
