@@ -26,8 +26,15 @@
         }
     }
 
-    tr.hint {
-        color: rgba(0, 0, 0, .6);
-        font-style: oblique;
+    table {
+        tr.hint {
+            color: rgba(0, 0, 0, .6);
+            font-style: oblique;
+        }
+
+        tfoot {
+            display: none;
+        }
     }
+
 }

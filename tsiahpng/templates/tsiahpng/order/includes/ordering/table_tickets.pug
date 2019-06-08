@@ -1,0 +1,17 @@
+-load i18n
+table.ui.table
+  thead
+    tr
+      th.four.wide {% trans 'Item' %}
+      th.two.wide {% trans 'Quantity' %}
+      th.three.wide {% trans 'Price' %}
+      th.seven.wide {% trans 'Note' %}
+  tbody
+    tr.hint
+      td.center.aligned(colspan='4') {% trans 'No tickets' %}
+  tfoot
+    tr.subtotal
+      th
+      th
+      th.price
+      th

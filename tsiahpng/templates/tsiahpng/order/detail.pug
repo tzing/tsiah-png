@@ -44,17 +44,28 @@ block extra_scripts
   script(type='text/javascript', src="{% static 'tsiahpng/js/gotop.js' %}")
 
   include tsiahpng/includes/ajax.pug
+  script(type='text/javascript', src="{% static 'tsiahpng/js/order/ordering.js' %}")
   script.
-    $('.user.selection').dropdown({
-        apiSettings: {
-          action:'get user',
-        },
-        filterRemoteData: true,
-        fullTextSearch: true,
-        match: 'text',
-    });
-
-    $('.product.selection').dropdown({
-        fullTextSearch: true,
-        match: 'text',
+    $('.ui.form').form({
+      on: 'blur',
+      fields: {
+          user: {
+              identifier: 'user',
+              rules: [
+                  {
+                      type: 'empty',
+                      prompt: gettext('Please tell me who you are.')
+                  },
+              ]
+          },
+          product:{
+              identifier: 'items',
+              rules: [
+                  {
+                      type: 'empty',
+                      prompt: gettext('Cart is empty.')
+                  },
+              ]
+          },
+      }
     });
