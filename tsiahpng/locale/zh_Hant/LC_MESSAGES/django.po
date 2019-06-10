@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-08 15:32+0000\n"
+"POT-Creation-Date: 2019-06-09 13:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -199,7 +199,8 @@ msgstr "訂購項目"
 msgid "{item}({note}) ×{qty}"
 msgstr ""
 
-#: tsiahpng/models.py:267
+#: tsiahpng/models.py:267 tsiahpng/templatetags/tsiahpngtags.py:62
+#: tsiahpng/templatetags/tsiahpngtags.py:69
 #, python-brace-format
 msgid "{item} ×{qty}"
 msgstr ""
@@ -313,19 +314,19 @@ msgstr "目前沒有任何菜單。"
 msgid "Shop information"
 msgstr "店家資訊"
 
-#: tsiahpng/templates/tsiahpng/order/detail.pug:39
+#: tsiahpng/templates/tsiahpng/order/detail.pug:41
 msgid "Order overview"
 msgstr "訂單總覽"
 
-#: tsiahpng/templates/tsiahpng/order/detail.pug:44
+#: tsiahpng/templates/tsiahpng/order/detail.pug:46
 msgid "Personal order"
 msgstr "個人訂單總覽"
 
-#: tsiahpng/templates/tsiahpng/order/detail.pug:50
+#: tsiahpng/templates/tsiahpng/order/detail.pug:52
 msgid "Adminstration"
 msgstr "管理"
 
-#: tsiahpng/templates/tsiahpng/order/detail.pug:54
+#: tsiahpng/templates/tsiahpng/order/detail.pug:56
 #: tsiahpng/templates/tsiahpng/order/includes/modal_close_order.pug:4
 msgid "Close order"
 msgstr "關閉訂單"
@@ -466,12 +467,6 @@ msgstr "昨天"
 #: tsiahpng/templatetags/tsiahpngtags.py:46
 msgid "no items"
 msgstr "沒有項目"
-
-#: tsiahpng/templatetags/tsiahpngtags.py:62
-#: tsiahpng/templatetags/tsiahpngtags.py:69
-#, python-brace-format
-msgid "{cat} ×{qty}"
-msgstr ""
 
 #: tsiahpng/views.py:32
 msgid "Welcome"

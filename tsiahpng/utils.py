@@ -1,6 +1,7 @@
 import hashlib
 
 from django.db.models import QuerySet, Sum
+from django.utils.translation import gettext as _
 from django.contrib import auth
 
 from . import models
@@ -129,15 +130,38 @@ def organize_tickets_qs(tickets):
     return organized_tickets
 
 
+class DisplayTicket:
+    def __init__(self, item, quantity, cost, note):
+        self.item = item
+        self.quantity = quantity
+        self.cost = cost
+        self.note = note
+
+    def __str__(self):
+        if self.note:
+            return _("{item}({note}) ×{qty}").format(
+                item=self.item, qty=self.quantity, note=self.note
+            )
+        else:
+            return _("{item} ×{qty}").format(item=self.item, qty=self.quantity)
+
+
 def aggregate_tickets(tickets):
     assert tickets
     sample = next(iter(tickets))
-    return models.Ticket(
-        item=sample.item,
-        quantity=aggregate_fields(tickets, "quantity"),
-        cost=aggregate_fields(tickets, "cost"),
-        note=sample.note,
-    )
+
+    item = sample.item
+    note = sample.note
+    quantity = aggregate_fields(tickets, "quantity")
+    cost = aggregate_fields(tickets, "cost")
+
+    if not sample.item.mergable:
+        quantity = _("{total} ({separate})").format(
+            total=quantity,
+            separate=_("+").join(str(t.quantity) for t in tickets)
+        )
+
+    return DisplayTicket(item=item, quantity=quantity, cost=cost, note=note)
 
 
 def aggregate_fields(tickets, field):

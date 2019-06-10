@@ -5,6 +5,22 @@
     }
 }
 
+.shop.info.segment {
+    .ui.header {
+        .sub.header {
+            display: inline-block;
+            margin-left: .3rem;
+            font-size: 1rem;
+            font-weight: 400;
+            color: #4183c4;
+
+            &:hover {
+                color: #1e70bf;
+            }
+        }
+    }
+}
+
 .description.segment {
     i.icon {
         min-width: 1.6rem;

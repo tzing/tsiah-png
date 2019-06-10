@@ -24,8 +24,10 @@ block content
     include ./includes/order_description.pug
 
   //- shop info
-  .ui.rimless.vertical.segment
-    h3.header {% trans 'Shop information' %}
+  .ui.shop.info.rimless.vertical.segment
+    h3.ui.header {% trans 'Shop information' %}
+      a.sub.header(href='{% url "tsiahpng:shop_detail" order.shop.id %}') {{ order.shop }}
+
     -with shop=order.shop
       include ../menu/includes/shop_info.pug
 

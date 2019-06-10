@@ -59,14 +59,14 @@ def percategory_quantity(order):
             val=Sum("quantity")
         )["val"]
         if sum_qty:
-            counts.append(_("{cat} ×{qty}").format(cat=cat, qty=sum_qty))
+            counts.append(_("{item} ×{qty}").format(item=cat, qty=sum_qty))
 
     unsorted_products = products.filter(category=None)
     if unsorted_products:
         sum_qty = order.tickets(item__in=unsorted_products).aggregate(
             val=Sum("quantity")
         )["val"]
-        counts.append(_("{cat} ×{qty}").format(cat=_("Unsorted"), qty=sum_qty))
+        counts.append(_("{item} ×{qty}").format(item=_("Unsorted"), qty=sum_qty))
 
     # join string
     return _(", ").join(counts)
