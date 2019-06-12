@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-09 13:49+0000\n"
+"POT-Creation-Date: 2019-06-12 15:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,11 +28,12 @@ msgid "Shop name"
 msgstr "店家名稱"
 
 #: tsiahpng/models.py:14 tsiahpng/models.py:74 tsiahpng/models.py:123
+#: tsiahpng/models.py:318
 msgid "Ordering"
 msgstr "排序"
 
 #: tsiahpng/models.py:18 tsiahpng/models.py:107 tsiahpng/models.py:169
-#: tsiahpng/models.py:282
+#: tsiahpng/models.py:282 tsiahpng/models.py:321
 msgid "Active"
 msgstr "有效"
 
@@ -194,13 +195,13 @@ msgstr "訂購項目"
 msgid "Ordered Items"
 msgstr "訂購項目"
 
-#: tsiahpng/models.py:263
+#: tsiahpng/models.py:263 tsiahpng/utils.py:142
 #, python-brace-format
 msgid "{item}({note}) ×{qty}"
 msgstr ""
 
 #: tsiahpng/models.py:267 tsiahpng/templatetags/tsiahpngtags.py:62
-#: tsiahpng/templatetags/tsiahpngtags.py:69
+#: tsiahpng/templatetags/tsiahpngtags.py:69 tsiahpng/utils.py:146
 #, python-brace-format
 msgid "{item} ×{qty}"
 msgstr ""
@@ -224,6 +225,27 @@ msgstr "歡迎文字"
 #: tsiahpng/models.py:289
 msgid "Welcome Texts"
 msgstr "歡迎文字"
+
+#: tsiahpng/models.py:308
+#| msgid "Category name"
+msgid "Template name"
+msgstr "樣板名稱"
+
+#: tsiahpng/models.py:313
+msgid "Template"
+msgstr "樣板"
+
+#: tsiahpng/models.py:314
+msgid "To write template, see the introduction below."
+msgstr "檢視下方介紹以撰寫模板格式。"
+
+#: tsiahpng/models.py:324
+msgid "Template of summary text"
+msgstr "訂單摘要模板"
+
+#: tsiahpng/models.py:325
+msgid "Templates of summary text"
+msgstr "訂單摘要模板"
 
 #: tsiahpng/templates/tsiahpng/includes/breadcrumb.pug:4
 #: tsiahpng/templates/tsiahpng/menu/add_product.pug:10
@@ -326,10 +348,26 @@ msgstr "個人訂單總覽"
 msgid "Adminstration"
 msgstr "管理"
 
-#: tsiahpng/templates/tsiahpng/order/detail.pug:56
+#: tsiahpng/templates/tsiahpng/order/detail.pug:57
+msgid "Build summary text"
+msgstr "建立訂單摘要"
+
+#: tsiahpng/templates/tsiahpng/order/detail.pug:62
 #: tsiahpng/templates/tsiahpng/order/includes/modal_close_order.pug:4
 msgid "Close order"
 msgstr "關閉訂單"
+
+#: tsiahpng/templates/tsiahpng/order/detail.pug:67
+msgid "Summary text"
+msgstr "訂單摘要"
+
+#: tsiahpng/templates/tsiahpng/order/detail.pug:73
+msgid "Select Template"
+msgstr "選擇模板"
+
+#: tsiahpng/templates/tsiahpng/order/detail.pug:81
+msgid "Copy"
+msgstr "複製"
 
 #: tsiahpng/templates/tsiahpng/order/includes/form_create_order.pug:14
 msgid "Select shop"
@@ -444,13 +482,18 @@ msgid "Tickets"
 msgstr "訂單"
 
 #: tsiahpng/templates/tsiahpng/order/index.pug:22
-#: tsiahpng/templates/tsiahpng/order/index.pug:43 tsiahpng/views.py:214
+#: tsiahpng/templates/tsiahpng/order/index.pug:43 tsiahpng/views.py:215
 msgid "Create order"
 msgstr "建立訂單"
 
 #: tsiahpng/templates/tsiahpng/order/index.pug:30
 msgid "No any order yet."
 msgstr "目前沒有任何訂單。"
+
+#: tsiahpng/templatetags/summarytext.py:22
+#, python-brace-format
+msgid "{item}({note})"
+msgstr ""
 
 #: tsiahpng/templatetags/tsiahpngtags.py:27
 msgid "today"
@@ -467,6 +510,15 @@ msgstr "昨天"
 #: tsiahpng/templatetags/tsiahpngtags.py:46
 msgid "no items"
 msgstr "沒有項目"
+
+#: tsiahpng/utils.py:159
+#, python-brace-format
+msgid "{total} ({separate})"
+msgstr ""
+
+#: tsiahpng/utils.py:161
+msgid "+"
+msgstr ""
 
 #: tsiahpng/views.py:32
 msgid "Welcome"
@@ -487,7 +539,7 @@ msgstr "無法對{shop}進行變更。"
 msgid "Successfully add {prod}."
 msgstr "成功新增了{prod}。"
 
-#: tsiahpng/views.py:112 tsiahpng/views.py:175 tsiahpng/views.py:205
+#: tsiahpng/views.py:112 tsiahpng/views.py:175 tsiahpng/views.py:206
 msgid "Invalid requests."
 msgstr "無效的資料。"
 
@@ -496,7 +548,7 @@ msgstr "無效的資料。"
 msgid "Add product to {shop}"
 msgstr "新增項目到{shop}"
 
-#: tsiahpng/views.py:156 tsiahpng/views.py:229
+#: tsiahpng/views.py:156 tsiahpng/views.py:230
 #, python-brace-format
 msgid "Order #{id} id not exists."
 msgstr "訂單#{id}不存在"
@@ -505,15 +557,15 @@ msgstr "訂單#{id}不存在"
 msgid "{user} ordered {items}; ${price:,} in total."
 msgstr "{user}訂購了{items}，共{price:,}元。"
 
-#: tsiahpng/views.py:191
+#: tsiahpng/views.py:192
 msgid "No enough permission for this operation."
 msgstr ""
 
-#: tsiahpng/views.py:200
+#: tsiahpng/views.py:201
 #, python-brace-format
 msgid "Successfully create order \"{order}\"."
 msgstr "成功建立了訂單「{order}」。"
 
-#: tsiahpng/views.py:236
+#: tsiahpng/views.py:237
 msgid "Order closed."
 msgstr "訂單已關閉。"

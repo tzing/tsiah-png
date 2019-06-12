@@ -47,13 +47,39 @@ block content
     include ./includes/summary_personal.pug
 
   //- adminstration
-  if closable
+  if summary_template or closable
     .ui.rimless.vertical.segment
       h3.ui.header {% trans 'Adminstration' %}
 
-      button#close_btn.ui.labeled.red.icon.button
-        i.lock.icon
-        | {% trans 'Close order' %}
+      if summary_template
+        button#build_text.ui.labeled.teal.icon.button
+          i.clipboard.list.icon
+          | {% trans 'Build summary text' %}
+
+      if closable
+        button#close_btn.ui.labeled.red.icon.button
+          i.lock.icon
+          | {% trans 'Close order' %}
+
+  //- summary text section
+  if summary_template
+    .ui.summary.text.rimless.vertical.segment
+      h2.ui.header {% trans 'Summary text' %}
+
+      .ui.form(data-url="{% url 'tsiahpng:order_stringify' order.id %}")
+        .field
+          #template_select.ui.selection.dropdown
+            i.dropdown.icon
+            .default.text {% trans 'Select Template' %}
+            .menu
+              for template in summary_template
+                .item(data-value='{{ template.id }}') {{ template }}
+        .field
+          textarea(contenteditable='true')
+        .ui.loader
+        .field
+          button#cpy_summary.ui.primary.button {% trans 'Copy' %}
+
 
   //- close order panel
   if closable
@@ -68,3 +94,5 @@ block extra_scripts
     script(type='text/javascript', src="{% static 'tsiahpng/js/order/ordering.js' %}")
   if closable
     script(type='text/javascript', src="{% static 'tsiahpng/js/order/close_order.js' %}")
+  if summary_template
+    script(type='text/javascript', src="{% static 'tsiahpng/js/order/stringify_order.js' %}")

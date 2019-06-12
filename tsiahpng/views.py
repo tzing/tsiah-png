@@ -3,15 +3,15 @@ import random
 import uuid
 
 from django.core.paginator import Paginator
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
+from django.template import TemplateSyntaxError
 from django.urls import path, include
+from django.views.decorators.cache import cache_page
+from django.views.i18n import JavaScriptCatalog
 
 from django.contrib import messages
-
 from django.utils.translation import gettext as _
-
-from django.views.i18n import JavaScriptCatalog
-from django.views.decorators.cache import cache_page
 
 from . import admin
 from . import default
@@ -180,6 +180,7 @@ def order_detail(request, order_id):
         {
             "title": str(order),
             "order": order,
+            "summary_template": models.SummaryText.objects.filter(is_active=True),
             "closable": order.is_available and settings.ALLOW_ANYONE_ALTER_ORDER_STATUS,
             **utils.get_stuff_ordering(request),
         },
@@ -239,6 +240,57 @@ def order_close(request, order_id):
     return redirect("tsiahpng:order_detail", order_id)
 
 
+def order_stringify(request, order_id):
+    """Generate a summary text to the order.
+
+    Query Parameters
+    ----------------
+        template (default: first template in db)
+            id to the template
+    """
+    # get order
+    try:
+        order = models.Order.objects.get(id=order_id, is_active=True)
+    except models.Order.DoesNotExist:
+        return JsonResponse(
+            {
+                "success": False,
+                "message": "Order #{id} not exists.".format(id=order_id),
+            },
+            status=400,
+        )
+
+    # get template
+    template_id = utils.try_parse(request.GET.get("template"), -1)
+    if template_id == -1:
+        return JsonResponse(
+            {"success": False, "message": "Template id not specific or not valid."},
+            status=400,
+        )
+
+    try:
+        template = models.SummaryText.objects.get(id=template_id, is_active=True)
+    except models.SummaryText.DoesNotExist:
+        return JsonResponse(
+            {
+                "success": False,
+                "message": "Template #{id} not exists.".format(id=template_id),
+            },
+            status=400,
+        )
+
+    # render
+    try:
+        summary = template.render(order)
+    except TemplateSyntaxError as e:
+        args = ", ".join(e.args)
+        return JsonResponse(
+            {"success": False, "message": f"Template error: {args}"}, status=400
+        )
+    else:
+        return JsonResponse({"success": True, "text": summary})
+
+
 # url configurations
 app_name = "tsiahpng"
 caches = cache_page(86400, key_prefix=f"jsi18n-{uuid.uuid4().hex}")
@@ -254,6 +306,7 @@ urlpatterns = [
     path("order/new/", order_create, name="order_create"),
     path("order/<int:order_id>/", order_detail, name="order_detail"),
     path("order/<int:order_id>/close", order_close, name="order_close"),
+    path("order/<int:order_id>/stringify", order_stringify, name="order_stringify"),
     # js i18n
     path("jsi18n/", caches(JavaScriptCatalog.as_view()), name="javascript-catalog"),
     # admin panel

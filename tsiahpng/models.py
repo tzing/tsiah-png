@@ -295,3 +295,65 @@ class WelcomeText(models.Model):
         if not self.subtitle:
             self.subtitle = None
         super().save(*args, **kwargs)
+
+
+class SummaryText(models.Model):
+    """This class provide a template to render a pure-text summary for ordering
+    the meal via instant message app.
+    """
+
+    id = models.AutoField(primary_key=True)
+
+    alias = models.CharField(
+        verbose_name=_("Template name"), max_length=256, blank=True, null=True
+    )
+
+    # TODO need validation
+    template = models.TextField(
+        verbose_name=_("Template"),
+        help_text=_("To write template, see the introduction below."),
+    )
+
+    ordering = models.IntegerField(
+        verbose_name=_("Ordering"), default=-1, db_index=True
+    )
+
+    is_active = models.BooleanField(verbose_name=_("Active"), default=True)
+
+    class Meta:
+        verbose_name = _("Template of summary text")
+        verbose_name_plural = _("Templates of summary text")
+
+        ordering = ["-ordering"]
+
+    def __str__(self):
+        if self.alias:
+            return self.alias
+        elif len(self.template) > 20:
+            return self.template[:17] + "..."
+        else:
+            return self.template
+
+    def save(self, *args, **kwargs):
+        if not self.alias:
+            self.alias = None
+        super().save(*args, **kwargs)
+
+    def render(self, order):
+        """Render the string use this template.
+
+        Parameters
+        ----------
+            order : Order
+                the order to render
+
+        Returns
+        -------
+            summary_string : str
+                a summary to the order
+        """
+        assert isinstance(order, Order)
+        from django.template import Template, Context
+
+        template = Template(f"{{% load summarytext %}}{self.template}")
+        return template.render(Context({"order": order}))

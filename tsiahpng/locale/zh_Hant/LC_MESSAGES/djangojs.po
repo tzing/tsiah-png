@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-08 05:25+0000\n"
+"POT-Creation-Date: 2019-06-12 15:40+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,10 +42,18 @@ msgstr "請選擇有效的日期。"
 msgid "Note for %s"
 msgstr "加些/少些什麼到%s"
 
-#: tsiahpng/static/tsiahpng/js/order/ordering.js:141
+#: tsiahpng/static/tsiahpng/js/order/ordering.js:137
 msgid "Please tell me who you are."
 msgstr "請告訴我你是誰。"
 
-#: tsiahpng/static/tsiahpng/js/order/ordering.js:148
+#: tsiahpng/static/tsiahpng/js/order/ordering.js:144
 msgid "Cart is empty."
 msgstr "沒有選擇任何東西。"
+
+#: tsiahpng/static/tsiahpng/js/order/stringify_order.js:50
+msgid "Copied!"
+msgstr "已複製！"
+
+#: tsiahpng/static/tsiahpng/js/order/stringify_order.js:52
+msgid "Copy"
+msgstr "複製"

@@ -9,11 +9,13 @@ class TsiahPngAdminSite(admin.AdminSite):
 
     APP_ORDERING = {"auth": 10, "tsiahpng": 100}
     MODEL_ORDERING = {
+        "WelcomeText": 50,
         "Shop": 110,
         "Category": 111,
         "Product": 112,
         "Order": 120,
         "Ticket": 121,
+        "SummaryText": 180,
     }
 
     def get_app_list(self, request):
@@ -65,6 +67,15 @@ class WelcomeTextAdmin(admin.ModelAdmin):
     list_display = ["__str__", "is_active"]
 
 
+class SummaryTextAdmin(admin.ModelAdmin):
+    list_display = ["__str__", "is_active"]
+
+    change_form_template = "tsiahpng/admin/summary_text.pug"
+
+    class Media:
+        css = {"all": ("tsiahpng/admin/summary_text.css",)}
+
+
 # django admin
 admin.site.register(models.Shop, admin_class=ShopAdmin)
 admin.site.register(models.Category)
@@ -72,6 +83,7 @@ admin.site.register(models.Product, admin_class=ProductAdmin)
 admin.site.register(models.Order, admin_class=OrderAdmin)
 admin.site.register(models.Ticket, admin_class=TicketAdmin)
 admin.site.register(models.WelcomeText, admin_class=WelcomeTextAdmin)
+admin.site.register(models.SummaryText, admin_class=SummaryTextAdmin)
 
 # customized admin
 site = TsiahPngAdminSite(name="tsiahpng_admin")
@@ -84,3 +96,4 @@ site.register(models.Product, admin_class=ProductAdmin)
 site.register(models.Order, admin_class=OrderAdmin)
 site.register(models.Ticket, admin_class=TicketAdmin)
 site.register(models.WelcomeText, admin_class=WelcomeTextAdmin)
+site.register(models.SummaryText, admin_class=SummaryTextAdmin)
