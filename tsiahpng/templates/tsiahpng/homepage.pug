@@ -2,6 +2,9 @@
 -load i18n
 -load static
 -load sass_tags
+-load humanize
+-load md2
+-load tsiahpngtags
 
 block title
   title {% trans 'Tsia̍h-Pn̄g' %}
@@ -18,7 +21,92 @@ block main
 
   .ui.vertical.main.segment
     .ui.text.container
+      //- breadcrumb
+      .ui.rimless.vertical.segment
+        .ui.breadcrumb
+          .active.section {% trans 'Home' %}
+
       //- messages
       include tsiahpng/includes/messages.pug
 
-      p this is homepage
+      //- action: create order
+      if order_status_alterable
+        .ui.rimless.vertical.segment
+          h3.ui.header {% trans 'Actions' %}
+
+          a.ui.labeled.basic.green.icon.button(href="{% url 'tsiahpng:order_create' %}")
+            i.plus.icon
+            | {% trans 'Create order' %}
+
+          a.ui.labeled.basic.teal.icon.button(href="#recent_order")
+            i.search.icon
+            | {% trans 'View recent orders' %}
+
+      //- quick ordering
+      if available_orders
+        .ui.rimless.vertical.segment
+          h3.ui.header {% trans 'Quick ordering' %}
+
+          //- link
+          if available_orders|length > 1
+            .ui.quick.fluid.secondary.vertical.menu
+              for order in available_orders
+                <a class="item" href="#order-{{ order.id }}">
+                .ui.teal.left.label {{ order.shop }}
+                | {{ order }}
+                .ui.label {{ order.order_date | short_naturalday }}
+                .ui.green.label {% trans 'Available for ordering' %}
+                </a>
+
+          //- quick ordering form
+          {% for order in available_orders %}
+          <div class=" ui shop vertical segment" id="order-{{ order.id }}">
+          //- order title
+          .ui.items
+            .item
+              .icon-space
+                .ui.pink.massive.circular.label
+                  i.cart.icon
+              .content
+                a.header(href="{% url 'tsiahpng:order_detail' order.id %}") {{ order }}
+                .meta {% blocktrans with date=order.order_date|naturalday shop=order.shop %}Ordering {{ shop }} on {{ date }}{% endblocktrans %}
+
+          //- note
+          if order.note
+            .ui.rimless.vertical.segment
+              | {{ order.note | markdown }}
+
+          //- shop info
+          .ui.shop.info.rimless.vertical.segment
+            h4
+              a(href="{% url 'tsiahpng:shop_detail' order.shop.id %}") {{ order.shop }}
+            -with shop=order.shop
+              include ./menu/includes/shop_info.pug
+
+          //- ordering form
+          .ui.rimless.vertical.segment
+            include ./order/includes/form_ordering.pug
+          </div>
+          {% endfor %}
+
+      //- recent orders
+      .ui.rimless.vertical.segment
+        h3#recent_order.ui.header {% trans 'Recent orders' %}
+        include ./menu/includes/recent_orders.pug
+
+block fab
+  include tsiahpng/includes/gotop.pug
+
+  if order_status_alterable
+    .wrap.computer.only
+      a.massive.green.circular.ui.icon.button(
+          data-tooltip="{% trans 'Create order' %}",
+          data-position="left center",
+          href="{% url 'tsiahpng:order_create' %}")
+        i.icon.edit
+
+block extra_scripts
+  script(type='text/javascript', src="{% static 'tsiahpng/js/gotop.js' %}")
+  script(type='text/javascript', src="{% static 'tsiahpng/js/homepage.js' %}")
+  if available_orders
+    script(type='text/javascript', src="{% static 'tsiahpng/js/order/ordering.js' %}")

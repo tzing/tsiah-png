@@ -7,6 +7,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.template import TemplateSyntaxError
 from django.urls import path, include
+from django.utils import timezone
 from django.views.decorators.cache import cache_page
 from django.views.i18n import JavaScriptCatalog
 
@@ -22,7 +23,13 @@ from . import utils
 
 
 def homepage(request):
-    context = {"messages": messages.get_messages(request)}
+    context = {
+        "messages": messages.get_messages(request),
+        "order_status_alterable": settings.ALLOW_ANYONE_ALTER_ORDER_STATUS,
+        "recent_orders": models.Order.objects.filter(is_active=True)[
+            : settings.MAX_RECENT_ORDERS
+        ],
+    }
 
     # welcome string
     if models.WelcomeText.objects.exists():
@@ -30,6 +37,17 @@ def homepage(request):
         context.update(title=welcome.title, subtitle=welcome.subtitle)
     else:
         context.update(title=_("Welcome"), subtitle=None)
+
+    # available orders
+    today = timezone.localtime().date()
+    available_orders = models.Order.objects.filter(
+        is_active=True, is_available=True, order_date__gte=today
+    )
+
+    if available_orders:
+        context.update(
+            available_orders=available_orders, **utils.get_stuff_ordering(request)
+        )
 
     return render(request, "tsiahpng/homepage.pug", context)
 

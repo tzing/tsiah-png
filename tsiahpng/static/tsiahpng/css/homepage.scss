@@ -15,4 +15,22 @@
     }
 }
 
-@import 'order_form'
+.shop.segment {
+    .item {
+        .icon-space {
+            display: inline-block;
+            margin-right: .7rem;
+
+            &>.circular.label {
+                i {
+                    margin: 0;
+                    font-size: .8em;
+                }
+            }
+        }
+    }
+
+}
+
+@import 'order_form';
+@import 'recent_order';

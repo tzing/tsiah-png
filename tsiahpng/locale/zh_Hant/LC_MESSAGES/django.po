@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-12 15:36+0000\n"
+"POT-Creation-Date: 2019-06-13 15:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: tsiahpng/apps.py:7 tsiahpng/templates/tsiahpng/homepage.pug:7
+#: tsiahpng/apps.py:7 tsiahpng/templates/tsiahpng/homepage.pug:10
 #: tsiahpng/templates/tsiahpng/layouts/base.pug:7
 #: tsiahpng/templates/tsiahpng/layouts/includes/nav.pug:4
 msgid "Tsia̍h-Pn̄g"
@@ -130,7 +130,8 @@ msgstr "訂單別名"
 msgid "Order date"
 msgstr "訂購日期"
 
-#: tsiahpng/models.py:164 tsiahpng/templates/tsiahpng/menu/detail.pug:37
+#: tsiahpng/models.py:164 tsiahpng/templates/tsiahpng/homepage.pug:58
+#: tsiahpng/templates/tsiahpng/menu/includes/recent_orders.pug:11
 msgid "Available for ordering"
 msgstr "可以訂購"
 
@@ -146,7 +147,7 @@ msgstr "以取消選取代替刪除訂單。"
 msgid "Date created"
 msgstr "建立日期"
 
-#: tsiahpng/models.py:181 tsiahpng/models.py:227 tsiahpng/views.py:143
+#: tsiahpng/models.py:181 tsiahpng/models.py:227 tsiahpng/views.py:161
 msgid "Order"
 msgstr "訂單"
 
@@ -227,7 +228,6 @@ msgid "Welcome Texts"
 msgstr "歡迎文字"
 
 #: tsiahpng/models.py:308
-#| msgid "Category name"
 msgid "Template name"
 msgstr "樣板名稱"
 
@@ -247,12 +247,42 @@ msgstr "訂單摘要模板"
 msgid "Templates of summary text"
 msgstr "訂單摘要模板"
 
+#: tsiahpng/templates/tsiahpng/homepage.pug:27
 #: tsiahpng/templates/tsiahpng/includes/breadcrumb.pug:4
 #: tsiahpng/templates/tsiahpng/menu/add_product.pug:10
-#: tsiahpng/templates/tsiahpng/menu/detail.pug:14
+#: tsiahpng/templates/tsiahpng/menu/detail.pug:13
 #: tsiahpng/templates/tsiahpng/order/includes/breadcrumb.pug:4
 msgid "Home"
 msgstr "首頁"
+
+#: tsiahpng/templates/tsiahpng/homepage.pug:35
+msgid "Actions"
+msgstr "操作"
+
+#: tsiahpng/templates/tsiahpng/homepage.pug:39
+#: tsiahpng/templates/tsiahpng/homepage.pug:103
+#: tsiahpng/templates/tsiahpng/order/index.pug:22
+#: tsiahpng/templates/tsiahpng/order/index.pug:43 tsiahpng/views.py:233
+msgid "Create order"
+msgstr "建立訂單"
+
+#: tsiahpng/templates/tsiahpng/homepage.pug:43
+msgid "View recent orders"
+msgstr "檢視近期訂單"
+
+#: tsiahpng/templates/tsiahpng/homepage.pug:48
+msgid "Quick ordering"
+msgstr "快速點餐"
+
+#: tsiahpng/templates/tsiahpng/homepage.pug:72
+#,  python-format
+msgid "Ordering %(shop)s on %(date)s"
+msgstr "在%(date)s訂購%(shop)s"
+
+#: tsiahpng/templates/tsiahpng/homepage.pug:94
+#: tsiahpng/templates/tsiahpng/menu/detail.pug:29
+msgid "Recent orders"
+msgstr "近期訂單"
 
 #: tsiahpng/templates/tsiahpng/includes/gotop.pug:3
 msgid "Go to top"
@@ -265,8 +295,8 @@ msgstr "未命名頁面"
 
 #: tsiahpng/templates/tsiahpng/layouts/includes/nav.pug:8
 #: tsiahpng/templates/tsiahpng/menu/add_product.pug:12
-#: tsiahpng/templates/tsiahpng/menu/detail.pug:16
-#: tsiahpng/templates/tsiahpng/menu/detail.pug:52 tsiahpng/views.py:47
+#: tsiahpng/templates/tsiahpng/menu/detail.pug:15
+#: tsiahpng/templates/tsiahpng/menu/detail.pug:45 tsiahpng/views.py:65
 msgid "Menu"
 msgstr "菜單"
 
@@ -274,15 +304,11 @@ msgstr "菜單"
 msgid "Admin Panel"
 msgstr "控制台"
 
-#: tsiahpng/templates/tsiahpng/menu/detail.pug:30
-msgid "Recent orders"
-msgstr "近期訂單"
-
-#: tsiahpng/templates/tsiahpng/menu/detail.pug:43
+#: tsiahpng/templates/tsiahpng/menu/detail.pug:36
 msgid "Action"
 msgstr "操作"
 
-#: tsiahpng/templates/tsiahpng/menu/detail.pug:47
+#: tsiahpng/templates/tsiahpng/menu/detail.pug:40
 #: tsiahpng/templates/tsiahpng/menu/includes/shop_card.pug:42
 #: tsiahpng/templates/tsiahpng/order/includes/ordering/content.pug:21
 msgid "Add product"
@@ -481,11 +507,6 @@ msgstr "%(qty)s個項目"
 msgid "Tickets"
 msgstr "訂單"
 
-#: tsiahpng/templates/tsiahpng/order/index.pug:22
-#: tsiahpng/templates/tsiahpng/order/index.pug:43 tsiahpng/views.py:215
-msgid "Create order"
-msgstr "建立訂單"
-
 #: tsiahpng/templates/tsiahpng/order/index.pug:30
 msgid "No any order yet."
 msgstr "目前沒有任何訂單。"
@@ -520,52 +541,52 @@ msgstr ""
 msgid "+"
 msgstr ""
 
-#: tsiahpng/views.py:32
+#: tsiahpng/views.py:39
 msgid "Welcome"
 msgstr "歡迎"
 
-#: tsiahpng/views.py:59 tsiahpng/views.py:94
+#: tsiahpng/views.py:77 tsiahpng/views.py:112
 #, python-brace-format
 msgid "Shop #{id} not exists."
 msgstr "店家#{id}不存在。"
 
-#: tsiahpng/views.py:99
+#: tsiahpng/views.py:117
 #, python-brace-format
 msgid "{shop} is not changeable."
 msgstr "無法對{shop}進行變更。"
 
-#: tsiahpng/views.py:107
+#: tsiahpng/views.py:125
 #, python-brace-format
 msgid "Successfully add {prod}."
 msgstr "成功新增了{prod}。"
 
-#: tsiahpng/views.py:112 tsiahpng/views.py:175 tsiahpng/views.py:206
+#: tsiahpng/views.py:130 tsiahpng/views.py:193 tsiahpng/views.py:224
 msgid "Invalid requests."
 msgstr "無效的資料。"
 
-#: tsiahpng/views.py:119
+#: tsiahpng/views.py:137
 #, python-brace-format
 msgid "Add product to {shop}"
 msgstr "新增項目到{shop}"
 
-#: tsiahpng/views.py:156 tsiahpng/views.py:230
+#: tsiahpng/views.py:174 tsiahpng/views.py:248
 #, python-brace-format
 msgid "Order #{id} id not exists."
 msgstr "訂單#{id}不存在"
 
-#: tsiahpng/views.py:166
+#: tsiahpng/views.py:184
 msgid "{user} ordered {items}; ${price:,} in total."
 msgstr "{user}訂購了{items}，共{price:,}元。"
 
-#: tsiahpng/views.py:192
+#: tsiahpng/views.py:210
 msgid "No enough permission for this operation."
 msgstr ""
 
-#: tsiahpng/views.py:201
+#: tsiahpng/views.py:219
 #, python-brace-format
 msgid "Successfully create order \"{order}\"."
 msgstr "成功建立了訂單「{order}」。"
 
-#: tsiahpng/views.py:237
+#: tsiahpng/views.py:255
 msgid "Order closed."
 msgstr "訂單已關閉。"
