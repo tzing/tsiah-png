@@ -1,6 +1,7 @@
 @import '../../../../tsiahpng/static/tsiahpng/css/font';
+@import '../../../../tsiahpng/static/tsiahpng/css/user_dropdown';
 
-.ui.passbook.segment {
+.passbook.segment {
     .ui.items {
         .item {
             border-bottom: 1px solid rgba(34, 36, 38, 0.15);
@@ -32,22 +33,32 @@ table.ui.table {
         @extend %hint;
     }
 
-    .fixed.wide {
+    .ensure.wide {
         $std-width: 723px/16;
 
         &.one {
             min-width: $std-width;
-            max-width: $std-width;
         }
 
         &.two {
             min-width: $std-width*2;
-            max-width: $std-width*2;
+        }
+
+        &.three {
+            min-width: $std-width*3;
         }
 
         &.four {
             min-width: $std-width*4;
-            max-width: $std-width*4;
+        }
+
+    }
+}
+
+.account.form {
+    table {
+        tfoot {
+            display: none;
         }
     }
 }

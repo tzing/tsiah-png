@@ -17,6 +17,12 @@ TRANSACTION_PER_PAGE = getattr(settings, "TRANSACTION_PER_PAGE", 50)
 """[int] Number of transactions to be displayed in a single page.
 """
 
+ALLOW_ANYONE_ALTER_TRANSACTION = getattr(
+    settings, "ALLOW_ANYONE_ALTER_TRANSACTION", True
+)
+"""[bool] Let anyone create transaction.
+"""
+
 
 def _assert_type(name, type_):
     value = globals()[name]
@@ -28,3 +34,4 @@ def _assert_type(name, type_):
 _assert_type("ITEMS_PER_PAGE", int)
 _assert_type("PASSBOOK_PER_PAGE", int)
 _assert_type("TRANSACTION_PER_PAGE", int)
+_assert_type("ALLOW_ANYONE_ALTER_TRANSACTION", bool)

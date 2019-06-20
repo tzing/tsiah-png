@@ -118,7 +118,7 @@ def shop_add_product(request, shop_id):
         form = forms.CreateProductForm(request.POST)
         prod = form.to_model()
         if prod:
-            messages.success(request, _(f"Successfully add {prod}.").format(prod=prod))
+            messages.success(request, _("Successfully add {prod}.").format(prod=prod))
             request.session[f"shop_add_product/{shop.id}/price"] = prod.price
             request.session[f"shop_add_product/{shop.id}/category"] = prod.category.id
             return redirect("tsiahpng:shop_add_product", shop_id=shop_id)

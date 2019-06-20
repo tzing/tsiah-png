@@ -25,7 +25,7 @@ $('.form').form({
             identifier: 'price',
             rules: [
                 {
-                    type: 'integer[1..]',
+                    type: 'integer[0..]',
                     prompt: gettext('Please enter a positive integer price.')
                 }
             ]

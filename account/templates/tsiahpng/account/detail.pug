@@ -54,6 +54,13 @@ block content
 
 block fab
   include tsiahpng/includes/gotop.pug
+  if transaction_creatable
+    .wrap.computer.only
+      a.massive.green.circular.ui.icon.button(
+          data-tooltip="{% trans 'Add record' %}",
+          data-position="left center",
+          href="{% url 'tsiahpng-account:create_event' passbook.id %}")
+        i.icon.plus
 
 block extra_scripts
   script(type='text/javascript', src="{% static 'tsiahpng/js/gotop.js' %}")

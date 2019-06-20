@@ -1,0 +1,72 @@
+-extends 'tsiahpng/layouts/base.pug'
+-load i18n
+-load tsiahpngtags
+-load sass_tags
+-load static
+
+block extra_head
+  link(href="{% sass_src 'tsiahpng/css/account.scss' %}", rel='stylesheet', type='text/css')
+
+block content
+  //- breadcrumb
+  .ui.rimless.vertical.segment
+    .ui.breadcrumb
+      a.section(href="{% url 'tsiahpng:welcome' %}") {% trans 'Home' %}
+      .divider  /
+      a.section(href="{% url 'tsiahpng-account:list' %}") {% trans 'Account' %}
+      .divider  /
+      a.section(href="{% url 'tsiahpng-account:detail' passbook.id %}") {{ passbook }}
+      .divider  /
+      .active.section {% trans 'Add record' %}
+
+  //- messages
+  include tsiahpng/includes/messages.pug
+
+  //- form
+  .ui.rimless.vertical.segment
+    form.ui.account.form(method='POST')
+      -csrf_token
+
+      //- shop
+      input(type='hidden', name='passbook', value='{{ passbook.id }}')
+
+      //- title
+      .field
+        label(for='id_title') {% trans 'Title' %}
+        input#id_title(type='text', name='title')
+
+      //- user
+      .required.field
+        label {% trans 'Users' %}
+        .ui.user.multiple.search.selection.dropdown
+          input(type="hidden", name="users")
+          i.dropdown.icon
+          .default.text {% trans 'select users' %}
+          .menu
+            for user in users
+              .item(data-value='{{ user.id }}') {{ user | username }}
+                .extra {{ user }}
+
+      //- balance
+      table.ui.table
+        thead
+          tr
+            th.six.wide {% trans 'User' %}
+            th.ten.wide {% trans 'Change in balance' %}
+        tbody
+          tr.hint
+            td.center.aligned(colspan='2') {% trans 'No transaction' %}
+        tfoot
+          tr
+            th.right.aligned {% trans 'Subtotal' %}
+            th.subtotal.right.aligned
+
+      //- submit
+      .ui.primary.submit.button {% trans 'Submit' %}
+      .ui.reset.button {% trans 'Reset' %}
+
+      //- errors
+      .ui.error.message
+
+block extra_scripts
+  script(type='text/javascript', src="{% static 'tsiahpng/js/account/create_event.js' %}")

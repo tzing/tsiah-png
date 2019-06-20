@@ -12,23 +12,7 @@
 
     }
 
-    .user.dropdown {
-
-        // list item
-        .menu {
-            .extra {
-                float: right;
-                color: rgba(0, 0, 0, .6);
-            }
-        }
-
-        // selected label
-        .text {
-            .extra {
-                display: none;
-            }
-        }
-    }
+    @import 'user_dropdown';
 
     .product.dropdown {
 

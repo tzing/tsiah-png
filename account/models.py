@@ -111,7 +111,9 @@ class Event(models.Model):
     def __str__(self):
         if self.title:
             return self.title
-        return f"{self.creation} {self.book}"
+        return _("Record created on {create:%Y/%m/%d %H:%M}").format(
+            create=self.date_created
+        )
 
     def transactions(self, **kwargs):
         return Transaction.objects.filter(event=self, **kwargs)

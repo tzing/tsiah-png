@@ -20,7 +20,7 @@
         i.linkify.icon
         | {% trans 'View transactions' %}
 
-      if passbook.changeable
-        a.ui.green.label(href='#')
+      if passbook.changeable and transaction_creatable
+        a.ui.green.label(href="{% url 'tsiahpng-account:create_event' passbook.id %}")
           i.plus.icon
           | {% trans 'Add record' %}
