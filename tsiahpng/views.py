@@ -121,7 +121,7 @@ def shop_add_product(request, shop_id):
             messages.success(request, _(f"Successfully add {prod}.").format(prod=prod))
             request.session[f"shop_add_product/{shop.id}/price"] = prod.price
             request.session[f"shop_add_product/{shop.id}/category"] = prod.category.id
-            return redirect("tsiahpng:shop_detail", shop_id=shop_id)
+            return redirect("tsiahpng:shop_add_product", shop_id=shop_id)
         else:
             messages.error(request, _("Invalid requests."))
 
