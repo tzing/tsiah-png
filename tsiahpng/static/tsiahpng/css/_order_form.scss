@@ -1,3 +1,5 @@
+@import 'font';
+
 .ordering.form {
     .field {
         .inline {
@@ -47,8 +49,7 @@
 
     table {
         tr.hint {
-            color: rgba(0, 0, 0, .6);
-            font-style: oblique;
+            @extend %hint;
         }
 
         tfoot {

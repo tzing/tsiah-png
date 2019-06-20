@@ -1,0 +1,153 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-06-19 15:37+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: account/apps.py:7 account/templates/tsiahpng/account/detail.pug:17
+#: account/templates/tsiahpng/layouts/includes/nav.pug:6 account/views.py:23
+msgid "Account"
+msgstr "帳目"
+
+#: account/models.py:13
+msgid "Passbook name"
+msgstr "帳本名稱"
+
+#: account/models.py:17
+msgid "Ordering"
+msgstr ""
+
+#: account/models.py:21
+msgid "Active"
+msgstr ""
+
+#: account/models.py:23
+msgid "Unselect this instead of deleting passbook."
+msgstr "以取消選取代替刪除帳本。"
+
+#: account/models.py:27
+msgid "Changeable"
+msgstr ""
+
+#: account/models.py:29
+msgid "Unchecked if users are not allowed to make changes."
+msgstr "取消選取以禁止使用者變更內容。"
+
+#: account/models.py:33
+msgid "Note"
+msgstr ""
+
+#: account/models.py:37
+msgid ""
+"You can warp text by *stars* to <em>emphasize</em> it, **double stars** to "
+"make it <strong>bolder</strong> and ~~tilde~~ to <strike>delete</strike> it."
+msgstr ""
+
+#: account/models.py:42 account/models.py:78
+msgid "Passbook"
+msgstr "帳本"
+
+#: account/models.py:43
+msgid "Passbooks"
+msgstr "帳本"
+
+#: account/models.py:64 account/models.py:123
+#: account/templates/tsiahpng/account/includes/table_user_balance.pug:16
+msgid "Balance"
+msgstr "餘額"
+
+#: account/models.py:82
+msgid "Date created"
+msgstr ""
+
+#: account/models.py:86
+msgid "Title"
+msgstr ""
+
+#: account/models.py:90
+msgid "Related order"
+msgstr "關聯訂單"
+
+#: account/models.py:99 account/models.py:133
+msgid "Event"
+msgstr "事件"
+
+#: account/models.py:100
+msgid "Events"
+msgstr "事件"
+
+#: account/models.py:137
+#: account/templates/tsiahpng/account/includes/table_user_balance.pug:15
+msgid "User"
+msgstr ""
+
+#: account/models.py:144
+msgid "Change in balance"
+msgstr "餘額變動"
+
+#: account/models.py:147
+msgid "Transaction"
+msgstr "交易紀錄"
+
+#: account/models.py:148 account/templates/tsiahpng/account/detail.pug:38
+msgid "Transactions"
+msgstr "交易紀錄"
+
+#: account/models.py:153
+msgid "[{event}] {user} ${balance:+,}"
+msgstr ""
+
+#: account/templates/tsiahpng/account/detail.pug:15
+msgid "Home"
+msgstr ""
+
+#: account/templates/tsiahpng/account/detail.pug:31
+msgid "Personal balance"
+msgstr "個人餘額"
+
+#: account/templates/tsiahpng/account/includes/passbook_card.pug:10
+#, python-format
+msgid "%(num_user)s users, %(num_record)s records."
+msgstr "%(num_user)s個使用者、%(num_record)s筆紀錄"
+
+#: account/templates/tsiahpng/account/includes/passbook_card.pug:21
+msgid "View transactions"
+msgstr "檢視交易紀錄"
+
+#: account/templates/tsiahpng/account/includes/passbook_card.pug:26
+msgid "Add record"
+msgstr "新增紀錄"
+
+#: account/templates/tsiahpng/account/includes/table_user_balance.pug:29
+msgid "Inactive users"
+msgstr "無效的使用者"
+
+#: account/templates/tsiahpng/account/includes/table_user_balance.pug:38
+msgid "No transaction."
+msgstr "沒有交易紀錄"
+
+#: account/templates/tsiahpng/account/includes/table_user_balance.pug:43
+msgid "Subtotal"
+msgstr ""
+
+#: account/templates/tsiahpng/account/index.pug:22
+msgid "No passbook."
+msgstr "沒有帳本。"
+
+#: account/views.py:35
+#, python-brace-format
+msgid "Passbook #{id} not exists."
+msgstr "帳本#{id}不存在。"

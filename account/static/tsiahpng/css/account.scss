@@ -1,0 +1,53 @@
+@import '../../../../tsiahpng/static/tsiahpng/css/font';
+
+.ui.passbook.segment {
+    .ui.items {
+        .item {
+            border-bottom: 1px solid rgba(34, 36, 38, 0.15);
+            padding-bottom: 1rem;
+
+            &:last-child {
+                border-bottom: 0;
+            }
+
+            .padded.description {
+                padding-bottom: 1rem;
+            }
+        }
+    }
+}
+
+.transactions.segment {
+    .meta {
+        color: rgba(0, 0, 0, .6);
+    }
+}
+
+table.ui.table {
+    span.negative {
+        color: #db2828;
+    }
+
+    .hint {
+        @extend %hint;
+    }
+
+    .fixed.wide {
+        $std-width: 723px/16;
+
+        &.one {
+            min-width: $std-width;
+            max-width: $std-width;
+        }
+
+        &.two {
+            min-width: $std-width*2;
+            max-width: $std-width*2;
+        }
+
+        &.four {
+            min-width: $std-width*4;
+            max-width: $std-width*4;
+        }
+    }
+}

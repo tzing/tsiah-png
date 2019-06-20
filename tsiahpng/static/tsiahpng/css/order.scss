@@ -1,3 +1,6 @@
+@import 'font';
+@import 'order_form';
+
 .ui.card {
     .green.extra.content {
         background-color: #21ba45;
@@ -34,8 +37,7 @@
 
 .summary.table {
     .hint {
-        color: rgba(0, 0, 0, .6);
-        font-style: oblique;
+        @extend %hint;
     }
 }
 
@@ -43,4 +45,11 @@
     display: none;
 }
 
-@import 'order_form'
+.form {
+    .field {
+        .hint {
+            color: rgba(0, 0, 0, .6);
+            margin-top: .3rem;
+        }
+    }
+}

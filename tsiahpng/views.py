@@ -1,20 +1,15 @@
 import collections
 import random
-import uuid
 
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.template import TemplateSyntaxError
-from django.urls import path, include
 from django.utils import timezone
-from django.views.decorators.cache import cache_page
-from django.views.i18n import JavaScriptCatalog
 
 from django.contrib import messages
 from django.utils.translation import gettext as _
 
-from . import admin
 from . import default
 from . import forms
 from . import models
@@ -26,7 +21,7 @@ def homepage(request):
     context = {
         "messages": messages.get_messages(request),
         "order_status_alterable": settings.ALLOW_ANYONE_ALTER_ORDER_STATUS,
-        "recent_orders": models.Order.objects.filter(is_active=True)[
+        "recent_orders": models.Order.objects.filter(is_active=True).order_by()[
             : settings.MAX_RECENT_ORDERS
         ],
     }
@@ -46,14 +41,15 @@ def homepage(request):
 
     if available_orders:
         context.update(
-            available_orders=available_orders, **utils.get_stuff_ordering(request)
+            available_orders=available_orders.order_by(),
+            **utils.get_stuff_ordering(request),
         )
 
     return render(request, "tsiahpng/homepage.pug", context)
 
 
 def shop_list(request):
-    shops = models.Shop.objects.filter(is_active=True)
+    shops = models.Shop.objects.filter(is_active=True).order_by()
 
     idx_page = utils.try_parse(request.GET.get("p"), 1)
     paginator = Paginator(shops, settings.SHOP_PER_PAGE)
@@ -87,7 +83,7 @@ def shop_detail(request, shop_id):
         sorted_products[None] = unsorted_products
 
     # recent orders
-    orders = models.Order.objects.filter(shop=shop, is_active=True)[
+    orders = models.Order.objects.filter(shop=shop, is_active=True).order_by()[
         : settings.MAX_RECENT_ORDERS
     ]
 
@@ -149,7 +145,7 @@ def shop_add_product(request, shop_id):
 
 
 def order_list(request):
-    orders = models.Order.objects.filter(is_active=True)
+    orders = models.Order.objects.filter(is_active=True).order_by()
 
     idx_page = utils.try_parse(request.GET.get("p"), 1)
     paginator = Paginator(orders, settings.ORDER_PER_PAGE)
@@ -198,7 +194,9 @@ def order_detail(request, order_id):
         {
             "title": str(order),
             "order": order,
-            "summary_template": models.SummaryText.objects.filter(is_active=True),
+            "summary_template": models.SummaryText.objects.filter(
+                is_active=True
+            ).order_by(),
             "closable": order.is_available and settings.ALLOW_ANYONE_ALTER_ORDER_STATUS,
             **utils.get_stuff_ordering(request),
         },
@@ -224,7 +222,7 @@ def order_create(request):
             messages.error(request, _("Invalid requests."))
 
     # shops
-    shops = models.Shop.objects.filter(is_active=True)
+    shops = models.Shop.objects.filter(is_active=True).order_by()
 
     return render(
         request,
@@ -309,24 +307,22 @@ def order_stringify(request, order_id):
         return JsonResponse({"success": True, "text": summary})
 
 
-# url configurations
-app_name = "tsiahpng"
-caches = cache_page(86400, key_prefix=f"jsi18n-{uuid.uuid4().hex}")
+def error_404(request, exception=None, template_name="404.html"):
+    return render(
+        request,
+        "tsiahpng/error.pug",
+        {
+            "title": _("Page Not Found"),
+            "subtitle": _("Life is too short to be lost in such a small place."),
+        },
+        status=404,
+    )
 
-urlpatterns = [
-    path("", homepage, name="welcome"),
-    # menu
-    path("menu/", shop_list, name="shop_list"),
-    path("menu/<int:shop_id>/", shop_detail, name="shop_detail"),
-    path("menu/<int:shop_id>/add", shop_add_product, name="shop_add_product"),
-    # order
-    path("order/", order_list, name="order_list"),
-    path("order/new/", order_create, name="order_create"),
-    path("order/<int:order_id>/", order_detail, name="order_detail"),
-    path("order/<int:order_id>/close", order_close, name="order_close"),
-    path("order/<int:order_id>/stringify", order_stringify, name="order_stringify"),
-    # js i18n
-    path("jsi18n/", caches(JavaScriptCatalog.as_view()), name="javascript-catalog"),
-    # admin panel
-    path("administration/", admin.site.urls, name="admin"),
-]
+
+def error_500(request, *args, **argv):
+    return render(
+        request,
+        "tsiahpng/error.pug",
+        {"title": _("Internal Server Error"), "subtitle": _("Something goes wrong.")},
+        status=404,
+    )

@@ -1,0 +1,6 @@
+-extends 'tsiahpng/layouts/includes/nav.pug'
+-load i18n
+
+block nav
+  {{ block.super }}
+  a.item(href="{% url 'tsiahpng-account:list' %}") {% trans 'Account' %}

@@ -1,9 +1,11 @@
 -extends 'tsiahpng/layouts/base.pug'
 -load i18n
 -load static
+-load sass_tags
 
 block extra_head
   link(rel='stylesheet', type='text/css', href="{% static 'tsiahpng/css/calendar.min.css' %}")
+  link(href="{% sass_src 'tsiahpng/css/order.scss' %}", rel='stylesheet', type='text/css')
 
 block content
   //- breadcrumb

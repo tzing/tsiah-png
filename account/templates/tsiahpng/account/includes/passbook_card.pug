@@ -1,0 +1,26 @@
+-load i18n
+-load accounting
+-load md2
+.item
+  .content
+    .header
+      a(href="{% url 'tsiahpng-account:detail' passbook.id %}") {{ passbook }}
+
+    -with per_user_balances=passbook|per_user_balance
+      .meta {% blocktrans with num_user=per_user_balances|length num_record=passbook.events|length %}{{ num_user }} users, {{ num_record }} records.{% endblocktrans %}
+
+      if passbook.note
+        .description
+          {{ passbook.note | markdown }}
+
+      include ./table_user_balance.pug
+
+    .padded.description
+      a.ui.label(href="{% url 'tsiahpng-account:detail' passbook.id %}")
+        i.linkify.icon
+        | {% trans 'View transactions' %}
+
+      if passbook.changeable
+        a.ui.green.label(href='#')
+          i.plus.icon
+          | {% trans 'Add record' %}

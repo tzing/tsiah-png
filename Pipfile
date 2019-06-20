@@ -12,9 +12,9 @@ django-compressor = "*"
 [packages]
 django = ">=2.1.5"
 pillow = "*"
-django-markdown2 = "*"
 pypugjs = "*"
 django-sass-processor = "*"
+markdown2 = "*"
 
 [pipenv]
 allow_prereleases = true

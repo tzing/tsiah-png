@@ -7,7 +7,7 @@ from . import models
 
 class TsiahPngAdminSite(admin.AdminSite):
 
-    APP_ORDERING = {"auth": 10, "tsiahpng": 100}
+    APP_ORDERING = {"auth": 10, "tsiahpng": 100, "account": 200}
     MODEL_ORDERING = {
         "WelcomeText": 50,
         "Shop": 110,
@@ -16,6 +16,9 @@ class TsiahPngAdminSite(admin.AdminSite):
         "Order": 120,
         "Ticket": 121,
         "SummaryText": 180,
+        "Passbook": 210,
+        "Event": 220,
+        "Transaction": 230,
     }
 
     def get_app_list(self, request):

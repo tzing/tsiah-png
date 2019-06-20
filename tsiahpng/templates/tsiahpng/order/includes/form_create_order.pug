@@ -9,7 +9,7 @@
 .required.field
   label {% trans 'Shop' %}
   .ui.selection.dropdown
-    | <input type="hidden" name="shop"{% if last_shop %}value="{{ last_shop }}"{% endif %}>
+    | <input type="hidden" name="shop"{% if last_shop %} value="{{ last_shop }}"{% endif %}>
     i.dropdown.icon
     .default.text {% trans 'Select shop' %}
     .menu
@@ -28,6 +28,8 @@
 .field
   label {% trans 'Note' %}
   textarea(name='note')
+  .hint {% blocktrans %}You can warp text by *stars* to <em>emphasize</em> it, **double stars** to make it <strong>bolder</strong> and ~~tilde~~ to <strike>delete</strike> it.{% endblocktrans %}
+
 
 //- submit
 .ui.primary.submit.button {% trans 'Submit' %}

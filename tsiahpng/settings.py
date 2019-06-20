@@ -43,6 +43,11 @@ MAX_RECENT_ORDERS = getattr(settings, "MAX_RECENT_ORDERS", 5)
 """[int] max number of recent orders to be displayed.
 """
 
+MARKDOWN2_EXTRAS = getattr(settings, "MARKDOWN2_EXTRAS", "code-friendly, strike")
+"""[str] default `extra` settings for markdown2 package.
+see: https://github.com/trentm/python-markdown2/blob/master/lib/markdown2.py
+"""
+
 
 def _assert_type(name, type_):
     value = globals()[name]
@@ -58,3 +63,4 @@ _assert_type("SHOP_PER_PAGE", int)
 _assert_type("ORDER_PER_PAGE", int)
 _assert_type("ALLOW_ANYONE_ALTER_ORDER_STATUS", bool)
 _assert_type("MAX_RECENT_ORDERS", int)
+_assert_type("MARKDOWN2_EXTRAS", str)

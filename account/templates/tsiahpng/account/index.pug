@@ -1,0 +1,36 @@
+-extends 'tsiahpng/layouts/base.pug'
+-load i18n
+-load sass_tags
+-load static
+
+block extra_head
+  link(href="{% sass_src 'tsiahpng/css/account.scss' %}", rel='stylesheet', type='text/css')
+
+block content
+  //- breadcrumb
+  include tsiahpng/includes/breadcrumb.pug
+
+  //- messages
+  include tsiahpng/includes/messages.pug
+
+  //- passbooks
+  .ui.passbook.rimless.vertical.segment
+    .ui.items
+      {% for passbook in passbooks %}
+      include ./includes/passbook_card.pug
+      {% empty %}
+      {% trans 'No passbook.' %}
+      {% endfor %}
+
+  //- paginator
+  -with paginator=passbooks
+    include tsiahpng/includes/pagination.pug
+
+block fab
+  include tsiahpng/includes/gotop.pug
+
+block extra_scripts
+  script(type='text/javascript', src="{% static 'tsiahpng/js/gotop.js' %}")
+  script(type='text/javascript', src="{% static 'tsiahpng/js/lib/tablesort.js' %}")
+  script.
+    $('table.sortable').tablesort()

@@ -1,0 +1,53 @@
+//- required-1: `passbook`
+//- required-2: `per_user_balances`
+-load i18n
+-load tsiahpngtags
+-load humanize
+.padded.description.ui.grid
+  .one.wide.tablet.only.column
+  .two.wide.computer.only.column
+
+  .twelve.wide.computer.fourteen.wide.tablet.sixteen.wide.mobile.column
+    table.ui.small.sortable.basic.unstackable.table
+      thead
+        tr
+          th.one.wide #
+          th.six.wide {% trans 'User' %}
+          th.nine.wide {% trans 'Balance' %}
+      tbody
+        {% for user, balance in per_user_balances.items %}
+        //- highlight negative balance
+        {% if balance < 0 %}<tr class="negative">{% else %}<tr>{% endif %}
+
+        //- cell #1 - counter
+        td {{ forloop.counter }}
+
+        //- cell #2 - user
+        {% if user %}
+        td {{ user | username }}
+        {% else %}
+        td.hint {% trans 'Inactive users' %}
+        {% endif %}
+
+        //- cell #3 - balance
+        td.right.aligned(data-sort-value='{{ balance }}') {{ balance | intcomma }}
+
+        </td>
+        {% empty %}
+        tr
+          td.hint.center.aligned(colspan='3') {% trans 'No transaction.' %}
+        {% endfor %}
+      tfoot
+        tr
+          th
+          th.right.aligned {% trans 'Subtotal' %}
+          th.right.aligned
+            -with subtotal=passbook.balance
+              {% if subtotal < 0 %}
+              span.negative ${{ subtotal | intcomma }}
+              {% else %}
+              span ${{ subtotal | intcomma }}
+              {% endif %}
+
+  .two.wide.computer.only.column
+  .one.wide.tablet.only.column

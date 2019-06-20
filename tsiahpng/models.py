@@ -33,7 +33,14 @@ class Shop(models.Model):
         help_text=_("Menu or shop photo."),
     )
 
-    note = models.TextField(verbose_name=_("Note"), null=True, blank=True)
+    note = models.TextField(
+        verbose_name=_("Note"),
+        null=True,
+        blank=True,
+        help_text=_(
+            "You can warp text by *stars* to <em>emphasize</em> it, **double stars** to make it <strong>bolder</strong> and ~~tilde~~ to <strike>delete</strike> it."
+        ),
+    )
 
     class Meta:
         verbose_name = _("Shop")
@@ -171,7 +178,14 @@ class Order(models.Model):
         help_text=_("Unselect this instead of deleting order."),
     )
 
-    note = models.TextField(verbose_name=_("Note"), null=True, blank=True)
+    note = models.TextField(
+        verbose_name=_("Note"),
+        null=True,
+        blank=True,
+        help_text=_(
+            "You can warp text by *stars* to <em>emphasize</em> it, **double stars** to make it <strong>bolder</strong> and ~~tilde~~ to <strike>delete</strike> it."
+        ),
+    )
 
     date_created = models.DateTimeField(
         verbose_name=_("Date created"), auto_now_add=True
