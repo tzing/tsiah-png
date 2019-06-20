@@ -55,7 +55,7 @@ block content
             th.ten.wide {% trans 'Change in balance' %}
         tbody
           tr.hint
-            td.center.aligned(colspan='2') {% trans 'No transaction' %}
+            td.center.aligned(colspan='2') {% trans 'No transaction.' %}
         tfoot
           tr
             th.right.aligned {% trans 'Subtotal' %}
@@ -69,4 +69,5 @@ block content
       .ui.error.message
 
 block extra_scripts
+  script(type='text/javascript', src="{% url 'tsiahpng-account:javascript-catalog' %}")
   script(type='text/javascript', src="{% static 'tsiahpng/js/account/create_event.js' %}")

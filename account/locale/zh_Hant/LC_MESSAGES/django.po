@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-19 15:37+0000\n"
+"POT-Creation-Date: 2019-06-20 15:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,8 +17,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: account/apps.py:7 account/templates/tsiahpng/account/detail.pug:17
-#: account/templates/tsiahpng/layouts/includes/nav.pug:6 account/views.py:23
+#: account/apps.py:7 account/templates/tsiahpng/account/create_event.pug:16
+#: account/templates/tsiahpng/account/detail.pug:18
+#: account/templates/tsiahpng/layouts/includes/nav.pug:6 account/views.py:25
 msgid "Account"
 msgstr "帳目"
 
@@ -64,7 +65,7 @@ msgstr "帳本"
 msgid "Passbooks"
 msgstr "帳本"
 
-#: account/models.py:64 account/models.py:123
+#: account/models.py:64 account/models.py:125
 #: account/templates/tsiahpng/account/includes/table_user_balance.pug:16
 msgid "Balance"
 msgstr "餘額"
@@ -73,7 +74,7 @@ msgstr "餘額"
 msgid "Date created"
 msgstr ""
 
-#: account/models.py:86
+#: account/models.py:86 account/templates/tsiahpng/account/create_event.pug:35
 msgid "Title"
 msgstr ""
 
@@ -81,7 +82,8 @@ msgstr ""
 msgid "Related order"
 msgstr "關聯訂單"
 
-#: account/models.py:99 account/models.py:133
+#: account/models.py:99 account/models.py:135
+#: account/templates/tsiahpng/account/includes/table_transactions.pug:10
 msgid "Event"
 msgstr "事件"
 
@@ -89,34 +91,79 @@ msgstr "事件"
 msgid "Events"
 msgstr "事件"
 
-#: account/models.py:137
+#: account/models.py:114
+msgid "Record created on {create:%Y/%m/%d %H:%M}"
+msgstr "建立於{create:%Y/%m/%d %H:%M}的活動"
+
+#: account/models.py:139 account/templates/tsiahpng/account/create_event.pug:54
 #: account/templates/tsiahpng/account/includes/table_user_balance.pug:15
 msgid "User"
 msgstr ""
 
-#: account/models.py:144
+#: account/models.py:146 account/templates/tsiahpng/account/create_event.pug:55
 msgid "Change in balance"
 msgstr "餘額變動"
 
-#: account/models.py:147
+#: account/models.py:149
 msgid "Transaction"
 msgstr "交易紀錄"
 
-#: account/models.py:148 account/templates/tsiahpng/account/detail.pug:38
+#: account/models.py:150 account/templates/tsiahpng/account/detail.pug:39
 msgid "Transactions"
 msgstr "交易紀錄"
 
-#: account/models.py:153
+#: account/models.py:155
 msgid "[{event}] {user} ${balance:+,}"
 msgstr ""
 
-#: account/templates/tsiahpng/account/detail.pug:15
+#: account/templates/tsiahpng/account/create_event.pug:14
+#: account/templates/tsiahpng/account/detail.pug:16
 msgid "Home"
 msgstr ""
 
-#: account/templates/tsiahpng/account/detail.pug:31
+#: account/templates/tsiahpng/account/create_event.pug:20
+#: account/templates/tsiahpng/account/detail.pug:60
+#: account/templates/tsiahpng/account/includes/passbook_card.pug:26
+msgid "Add record"
+msgstr "新增紀錄"
+
+#: account/templates/tsiahpng/account/create_event.pug:40
+msgid "Users"
+msgstr "使用者"
+
+#: account/templates/tsiahpng/account/create_event.pug:44
+msgid "select users"
+msgstr "選擇使用者"
+
+#: account/templates/tsiahpng/account/create_event.pug:58
+#: account/templates/tsiahpng/account/includes/table_transactions.pug:43
+#: account/templates/tsiahpng/account/includes/table_user_balance.pug:38
+msgid "No transaction."
+msgstr "沒有交易紀錄"
+
+#: account/templates/tsiahpng/account/create_event.pug:61
+#: account/templates/tsiahpng/account/includes/table_transactions.pug:19
+#: account/templates/tsiahpng/account/includes/table_user_balance.pug:43
+msgid "Subtotal"
+msgstr ""
+
+#: account/templates/tsiahpng/account/create_event.pug:65
+msgid "Submit"
+msgstr ""
+
+#: account/templates/tsiahpng/account/create_event.pug:66
+msgid "Reset"
+msgstr ""
+
+#: account/templates/tsiahpng/account/detail.pug:33
 msgid "Personal balance"
 msgstr "個人餘額"
+
+#: account/templates/tsiahpng/account/detail.pug:41
+#, python-format
+msgid ""
+"Current: %(idx_start)s - %(idx_end)s records. A total of %(count)s records."
+msgstr "目前顯示%(idx_start)s至%(idx_end)s筆紀錄，共%(count)s筆紀錄。"
 
 #: account/templates/tsiahpng/account/includes/passbook_card.pug:10
 #, python-format
@@ -127,27 +174,43 @@ msgstr "%(num_user)s個使用者、%(num_record)s筆紀錄"
 msgid "View transactions"
 msgstr "檢視交易紀錄"
 
-#: account/templates/tsiahpng/account/includes/passbook_card.pug:26
-msgid "Add record"
-msgstr "新增紀錄"
+#: account/templates/tsiahpng/account/includes/table_transactions.pug:9
+msgid "Time"
+msgstr ""
 
+#: account/templates/tsiahpng/account/includes/table_transactions.pug:16
 #: account/templates/tsiahpng/account/includes/table_user_balance.pug:29
 msgid "Inactive users"
 msgstr "無效的使用者"
 
-#: account/templates/tsiahpng/account/includes/table_user_balance.pug:38
-msgid "No transaction."
-msgstr "沒有交易紀錄"
-
-#: account/templates/tsiahpng/account/includes/table_user_balance.pug:43
-msgid "Subtotal"
-msgstr ""
+#: account/templates/tsiahpng/account/includes/table_transactions.pug:35
+#, python-format
+msgid "Related to <a href=\"%(url)s\">%(order)s</a>."
+msgstr "關聯於<a href=\"%(url)s\">%(order)s</a>。"
 
 #: account/templates/tsiahpng/account/index.pug:22
 msgid "No passbook."
 msgstr "沒有帳本。"
 
-#: account/views.py:35
+#: account/views.py:38 account/views.py:79
 #, python-brace-format
 msgid "Passbook #{id} not exists."
 msgstr "帳本#{id}不存在。"
+
+#: account/views.py:84
+msgid "No enough permission for this operation."
+msgstr ""
+
+#: account/views.py:93
+#, python-brace-format
+msgid "Successfully add record \"{event}\"."
+msgstr "成功建立紀錄「{event}」。"
+
+#: account/views.py:97
+msgid "Invalid requests."
+msgstr ""
+
+#: account/views.py:103
+#, python-brace-format
+msgid "Add record on {passbook}"
+msgstr "建立紀錄到{passbook}"
