@@ -60,27 +60,6 @@
         $(this).refreshSubtotal();
     }
 
-    function numberWithCommas(x) {
-        // https://stackoverflow.com/a/2901298/6107902
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
-
-    $.fn.refreshSubtotal = function () {
-        var table = $(this).parents('form').find('table.table');
-        var prices = table.find('input.price').map(function () {
-            return parseFloat($(this).val());
-        });
-
-        if (prices.length === 0) {
-            return;
-        }
-
-        var subtotal = prices.toArray().reduce(function (a, b) {
-            return a + b;
-        });
-        table.find('.subtotal .price').html('$' + numberWithCommas(subtotal));
-    }
-
 }(jQuery));
 
 $('.user.selection').dropdown({

@@ -21,7 +21,7 @@ def homepage(request):
     context = {
         "messages": messages.get_messages(request),
         "order_status_alterable": settings.ALLOW_ANYONE_ALTER_ORDER_STATUS,
-        "recent_orders": models.Order.objects.filter(is_active=True).order_by()[
+        "recent_orders": models.Order.objects.filter(is_active=True)[
             : settings.MAX_RECENT_ORDERS
         ],
     }
@@ -41,15 +41,14 @@ def homepage(request):
 
     if available_orders:
         context.update(
-            available_orders=available_orders.order_by(),
-            **utils.get_stuff_ordering(request),
+            available_orders=available_orders, **utils.get_stuff_ordering(request)
         )
 
     return render(request, "tsiahpng/homepage.pug", context)
 
 
 def shop_list(request):
-    shops = models.Shop.objects.filter(is_active=True).order_by()
+    shops = models.Shop.objects.filter(is_active=True)
 
     idx_page = utils.try_parse(request.GET.get("p"), 1)
     paginator = Paginator(shops, settings.SHOP_PER_PAGE)
@@ -83,7 +82,7 @@ def shop_detail(request, shop_id):
         sorted_products[None] = unsorted_products
 
     # recent orders
-    orders = models.Order.objects.filter(shop=shop, is_active=True).order_by()[
+    orders = models.Order.objects.filter(shop=shop, is_active=True)[
         : settings.MAX_RECENT_ORDERS
     ]
 
@@ -145,7 +144,7 @@ def shop_add_product(request, shop_id):
 
 
 def order_list(request):
-    orders = models.Order.objects.filter(is_active=True).order_by()
+    orders = models.Order.objects.filter(is_active=True)
 
     idx_page = utils.try_parse(request.GET.get("p"), 1)
     paginator = Paginator(orders, settings.ORDER_PER_PAGE)
@@ -194,9 +193,7 @@ def order_detail(request, order_id):
         {
             "title": str(order),
             "order": order,
-            "summary_template": models.SummaryText.objects.filter(
-                is_active=True
-            ).order_by(),
+            "summary_template": models.SummaryText.objects.filter(is_active=True),
             "closable": order.is_available and settings.ALLOW_ANYONE_ALTER_ORDER_STATUS,
             **utils.get_stuff_ordering(request),
         },
@@ -214,22 +211,19 @@ def order_create(request):
         order = form.to_model()
         if order:
             messages.success(
-                request, _(f'Successfully create order "{order}".').format(order=order)
+                request, _('Successfully create order "{order}".').format(order=order)
             )
             request.session["order_create/last_shop"] = order.shop.id
             return redirect("tsiahpng:order_detail", order.id)
         else:
             messages.error(request, _("Invalid requests."))
 
-    # shops
-    shops = models.Shop.objects.filter(is_active=True).order_by()
-
     return render(
         request,
         "tsiahpng/order/create_order.pug",
         {
             "title": _("Create order"),
-            "shops": shops,
+            "shops": models.Shop.objects.filter(is_active=True),
             "default_date": default.default_order_date(),
             "last_shop": request.session.get("order_create/last_shop"),
             "messages": messages.get_messages(request),

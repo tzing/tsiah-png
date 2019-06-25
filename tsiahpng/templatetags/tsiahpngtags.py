@@ -53,7 +53,7 @@ def percategory_quantity(order):
 
     # counting
     counts = []
-    for cat in categories.order_by():
+    for cat in categories:
         related_products = products.filter(category=cat)
         sum_qty = order.tickets(item__in=related_products).aggregate(
             val=Sum("quantity")

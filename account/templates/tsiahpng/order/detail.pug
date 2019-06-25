@@ -1,0 +1,8 @@
+-extends 'tsiahpng/order/detail.pug'
+-load static
+
+block extra_scripts
+  {{ block.super }}
+  if closable
+    script(type='text/javascript', src="{% static 'tsiahpng/js/utils/subtotal.js' %}")
+    script(type='text/javascript', src="{% static 'tsiahpng/js/account/close_order.js' %}")

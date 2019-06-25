@@ -18,7 +18,7 @@ def per_user_balance(passbook, only_active=True):
     users = auth.models.User.objects.filter(id__in=user_ids, is_active=True)
 
     balances = collections.OrderedDict()
-    for user in users.order_by():
+    for user in users.order_by("username"):
         related_transactions = transactions.filter(user=user)
         balance = related_transactions.aggregate(val=Sum("balance"))["val"]
         balances[user] = balance or 0

@@ -15,7 +15,7 @@
 
         // balance
         var input_balance = $('<input>')
-            .addClass('balance')
+            .addClass('price')
             .attr('type', 'number')
             .attr('name', 'balance_' + options.id)
             .attr('value', options.balance)
@@ -32,27 +32,6 @@
 
         // refresh subtotal
         $(this).refreshSubtotal();
-    }
-
-    function numberWithCommas(x) {
-        // https://stackoverflow.com/a/2901298/6107902
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
-
-    $.fn.refreshSubtotal = function () {
-        var table = $(this).parents('form').find('table.table');
-        var prices = table.find('input.balance').map(function () {
-            return parseFloat($(this).val());
-        });
-
-        if (prices.length === 0) {
-            return;
-        }
-
-        var subtotal = prices.toArray().reduce(function (a, b) {
-            return a + b;
-        });
-        table.find('tfoot .subtotal').text('$' + numberWithCommas(subtotal));
     }
 
 }(jQuery));

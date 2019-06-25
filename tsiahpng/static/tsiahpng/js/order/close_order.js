@@ -1,6 +1,12 @@
 $('.ui.closing.order.modal').modal({
     onApprove: function () {
-        $('.closing.order.form').form('submit');
+        var form = $('.closing.order.form');
+        if (!form.form('is valid')) {
+            form.form('validate form');
+            return false;
+        } else {
+            form.form('submit');
+        }
     }
 });
 

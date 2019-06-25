@@ -8,8 +8,9 @@
     p {% blocktrans %}Are you sure you want to close the order “{{ order }}”?{% endblocktrans %}
 
     //- form
-    form.ui.closing.order.form(method='POST', action="{% url 'tsiahpng:order_close' order.id %}")
-      -csrf_token
+    block form
+      form.ui.closing.order.form(method='POST', action="{% url 'tsiahpng:order_close' order.id %}")
+        -csrf_token
 
   //- actions
   .actions

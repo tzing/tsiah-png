@@ -2,12 +2,15 @@ from django import forms
 from django.http import QueryDict
 from django.contrib import auth
 
+import tsiahpng.forms
+
 from . import models
 
 
 class AddEventForm(forms.Form):
     passbook = forms.IntegerField()
     title = forms.CharField(max_length=128, required=False)
+    order = forms.IntegerField(min_value=1, required=False)
     users = forms.CharField()
 
     def __init__(self, *args, **kwargs):
@@ -47,9 +50,19 @@ class AddEventForm(forms.Form):
         if not users:
             return None
 
+        # get order
+        order = None
+        if self.cleaned_data["order"] is not None:
+            try:
+                order = tsiahpng.models.Order.objects.get(
+                    id=self.cleaned_data["order"], is_active=True
+                )
+            except tsiahpng.models.Order.DoesNotExist:
+                ...
+
         # create event
         event = models.Event.objects.create(
-            title=self.cleaned_data["title"].strip(), book=passbook
+            title=self.cleaned_data["title"].strip(), book=passbook, related_order=order
         )
 
         # create transaction

@@ -80,7 +80,6 @@ block content
         .field
           button#cpy_summary.ui.primary.button {% trans 'Copy' %}
 
-
   //- close order panel
   if closable
     include ./includes/modal_close_order.pug
@@ -91,6 +90,7 @@ block fab
 block extra_scripts
   script(type='text/javascript', src="{% static 'tsiahpng/js/gotop.js' %}")
   if order.is_available
+    script(type='text/javascript', src="{% static 'tsiahpng/js/utils/subtotal.js' %}")
     script(type='text/javascript', src="{% static 'tsiahpng/js/order/ordering.js' %}")
   if closable
     script(type='text/javascript', src="{% static 'tsiahpng/js/order/close_order.js' %}")

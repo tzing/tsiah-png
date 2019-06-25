@@ -1,11 +1,12 @@
 from django.core.paginator import Paginator
-from django.shortcuts import render, redirect
-
 from django.contrib import auth
 from django.contrib import messages
+from django.http import JsonResponse
+from django.shortcuts import render, redirect
 from django.utils.translation import gettext as _
 
 from tsiahpng import utils
+import tsiahpng.models
 
 from . import forms
 from . import models
@@ -16,7 +17,7 @@ def account_list(request):
     passbooks = models.Passbook.objects.filter(is_active=True)
 
     idx_page = utils.try_parse(request.GET.get("p"), 1)
-    paginator = Paginator(passbooks.order_by(), settings.PASSBOOK_PER_PAGE)
+    paginator = Paginator(passbooks, settings.PASSBOOK_PER_PAGE)
 
     return render(
         request,
@@ -42,10 +43,10 @@ def account_detail(request, passbook_id):
     events = passbook.events()
     transactions = models.Transaction.objects.filter(event__in=events)
 
-    user_ids = transactions.values_list("user").order_by().distinct()
+    user_ids = transactions.values_list("user").distinct()
     related_users = auth.models.User.objects.filter(id__in=user_ids)
-    active_users = tuple(related_users.filter(is_active=True).order_by())
-    inactive_users = tuple(related_users.filter(is_active=False).order_by())
+    active_users = tuple(related_users.filter(is_active=True))
+    inactive_users = tuple(related_users.filter(is_active=False))
 
     if inactive_users:
         users = (*active_users, None)
@@ -54,7 +55,7 @@ def account_detail(request, passbook_id):
 
     # build table
     idx_page = utils.try_parse(request.GET.get("p"), 1)
-    paginator = Paginator(events.order_by().reverse(), settings.TRANSACTION_PER_PAGE)
+    paginator = Paginator(events, settings.TRANSACTION_PER_PAGE)
 
     return render(
         request,
@@ -106,3 +107,45 @@ def create_event(request, passbook_id):
             "users": auth.models.User.objects.filter(is_active=True),
         },
     )
+
+
+def account_list_api(request):
+    passbooks = models.Passbook.objects.filter(is_active=True)
+
+    return JsonResponse(
+        {
+            "success": True,
+            "results": [{"name": str(book), "value": book.id} for book in passbooks],
+        }
+    )
+
+
+def order_close(request, order_id):
+    if not request.method == "POST" or not utils.is_new_post(request):
+        return redirect("tsiahpng:order_detail", order_id)
+
+    # get order
+    try:
+        order = tsiahpng.models.Order.objects.get(id=order_id, is_active=True)
+    except tsiahpng.models.Order.DoesNotExist:
+        messages.error(request, _("Order #{id} id not exists.").format(id=order_id))
+        return redirect("tsiahpng:order_list")
+
+    # operate
+    order.is_available = False
+    order.save()
+
+    messages.success(request, _("Order closed."))
+
+    # billing
+    if request.POST.get("on_bill") == "on":
+        form = forms.AddEventForm(request.POST)
+        event = form.to_model()
+        if event:
+            messages.success(
+                request, _('Successfully add record "{event}".').format(event=event)
+            )
+        else:
+            messages.error(request, _("Failed to billing."))
+
+    return redirect("tsiahpng:order_detail", order_id)
