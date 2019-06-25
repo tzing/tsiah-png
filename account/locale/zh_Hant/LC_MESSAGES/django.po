@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-20 15:33+0000\n"
+"POT-Creation-Date: 2019-06-25 15:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: account/apps.py:7 account/templates/tsiahpng/account/create_event.pug:16
 #: account/templates/tsiahpng/account/detail.pug:18
-#: account/templates/tsiahpng/layouts/includes/nav.pug:6 account/views.py:25
+#: account/templates/tsiahpng/layouts/includes/nav.pug:6 account/views.py:26
 msgid "Account"
 msgstr "帳目"
 
@@ -58,6 +58,7 @@ msgid ""
 msgstr ""
 
 #: account/models.py:42 account/models.py:78
+#: account/templates/tsiahpng/order/includes/modal_close_order.pug:17
 msgid "Passbook"
 msgstr "帳本"
 
@@ -75,6 +76,7 @@ msgid "Date created"
 msgstr ""
 
 #: account/models.py:86 account/templates/tsiahpng/account/create_event.pug:35
+#: account/templates/tsiahpng/order/includes/modal_close_order.pug:26
 msgid "Title"
 msgstr ""
 
@@ -97,10 +99,12 @@ msgstr "建立於{create:%Y/%m/%d %H:%M}的活動"
 
 #: account/models.py:139 account/templates/tsiahpng/account/create_event.pug:54
 #: account/templates/tsiahpng/account/includes/table_user_balance.pug:15
+#: account/templates/tsiahpng/order/includes/modal_close_order.pug:41
 msgid "User"
 msgstr ""
 
 #: account/models.py:146 account/templates/tsiahpng/account/create_event.pug:55
+#: account/templates/tsiahpng/order/includes/modal_close_order.pug:42
 msgid "Change in balance"
 msgstr "餘額變動"
 
@@ -138,12 +142,14 @@ msgstr "選擇使用者"
 #: account/templates/tsiahpng/account/create_event.pug:58
 #: account/templates/tsiahpng/account/includes/table_transactions.pug:43
 #: account/templates/tsiahpng/account/includes/table_user_balance.pug:38
+#: account/templates/tsiahpng/order/includes/modal_close_order.pug:51
 msgid "No transaction."
 msgstr "沒有交易紀錄"
 
 #: account/templates/tsiahpng/account/create_event.pug:61
 #: account/templates/tsiahpng/account/includes/table_transactions.pug:19
 #: account/templates/tsiahpng/account/includes/table_user_balance.pug:43
+#: account/templates/tsiahpng/order/includes/modal_close_order.pug:55
 msgid "Subtotal"
 msgstr ""
 
@@ -192,25 +198,46 @@ msgstr "關聯於<a href=\"%(url)s\">%(order)s</a>。"
 msgid "No passbook."
 msgstr "沒有帳本。"
 
-#: account/views.py:38 account/views.py:79
+#: account/templates/tsiahpng/order/includes/modal_close_order.pug:12
+msgid "Also put this order on the bill"
+msgstr "記帳"
+
+#: account/templates/tsiahpng/order/includes/modal_close_order.pug:21
+msgid "select passbook"
+msgstr "選擇帳本"
+
+#: account/views.py:39 account/views.py:80
 #, python-brace-format
 msgid "Passbook #{id} not exists."
 msgstr "帳本#{id}不存在。"
 
-#: account/views.py:84
+#: account/views.py:85
 msgid "No enough permission for this operation."
 msgstr ""
 
-#: account/views.py:93
+#: account/views.py:94 account/views.py:146
 #, python-brace-format
 msgid "Successfully add record \"{event}\"."
 msgstr "成功建立紀錄「{event}」。"
 
-#: account/views.py:97
+#: account/views.py:98
 msgid "Invalid requests."
 msgstr ""
 
-#: account/views.py:103
+#: account/views.py:104
 #, python-brace-format
 msgid "Add record on {passbook}"
 msgstr "建立紀錄到{passbook}"
+
+#: account/views.py:131
+#, python-brace-format
+msgid "Order #{id} id not exists."
+msgstr "訂單#{id}不存在。"
+
+#: account/views.py:138
+msgid "Order closed."
+msgstr "訂單已關閉。"
+
+#: account/views.py:149
+msgid "Failed to billing."
+msgstr "無法記帳。"
