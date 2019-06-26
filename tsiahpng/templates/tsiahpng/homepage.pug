@@ -30,14 +30,15 @@ block main
       include tsiahpng/includes/messages.pug
 
       //- action: create order
-      if order_status_alterable
-        .ui.rimless.vertical.segment
-          h3.ui.header {% trans 'Actions' %}
+      .ui.rimless.vertical.segment
+        h3.ui.header {% trans 'Actions' %}
 
+        if order_status_alterable
           a.ui.labeled.basic.green.icon.button(href="{% url 'tsiahpng:order_create' %}")
             i.plus.icon
             | {% trans 'Create order' %}
 
+        if available_orders
           a.ui.labeled.basic.teal.icon.button(href="#recent_order")
             i.search.icon
             | {% trans 'View recent orders' %}
