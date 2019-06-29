@@ -16,20 +16,21 @@
 }
 
 .shop.segment {
-    .item {
-        .icon-space {
-            display: inline-block;
-            margin-right: .7rem;
+    .header {
+        .ui.label {
+            margin-right: .6rem;
+            margin-top: 0;
 
-            &>.circular.label {
-                i {
-                    margin: 0;
-                    font-size: .8em;
-                }
+            &>.icon {
+                margin-right: 0;
+                font-size: .8em;
             }
         }
-    }
 
+        .sub.header {
+            margin-top: .5em;
+        }
+    }
 }
 
 @import 'order_form';
