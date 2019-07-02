@@ -88,9 +88,10 @@ block main
           {% endfor %}
 
       //- recent orders
-      .ui.rimless.vertical.segment
-        h3#recent_order.ui.header {% trans 'Recent orders' %}
-        include ./menu/includes/recent_orders.pug
+      if recent_orders
+        .ui.rimless.vertical.segment
+          h3#recent_order.ui.header {% trans 'Recent orders' %}
+          include ./menu/includes/recent_orders.pug
 
 block fab
   include tsiahpng/includes/gotop.pug
