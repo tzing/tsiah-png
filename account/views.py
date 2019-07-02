@@ -135,7 +135,7 @@ def order_close(request, order_id):
     order.is_available = False
     order.save()
 
-    messages.success(request, _("Order closed."))
+    messages.info(request, _("Order closed."))
 
     # billing
     if request.POST.get("on_bill") == "on":

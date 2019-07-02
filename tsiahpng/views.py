@@ -246,7 +246,7 @@ def order_close(request, order_id):
         order.is_available = False
         order.save()
 
-        messages.success(request, _("Order closed."))
+        messages.info(request, _("Order closed."))
         return redirect("tsiahpng:order_detail", order_id)
 
     return redirect("tsiahpng:order_detail", order_id)
