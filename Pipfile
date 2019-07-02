@@ -10,7 +10,7 @@ libsass = "*"
 django-compressor = "*"
 
 [packages]
-django = ">=2.1.5"
+django = ">=2.1.9"
 pillow = "*"
 pypugjs = "*"
 django-sass-processor = "*"
