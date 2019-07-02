@@ -72,3 +72,8 @@ block extra_scripts
   script(type='text/javascript', src="{% url 'tsiahpng-account:javascript-catalog' %}")
   script(type='text/javascript', src="{% static 'tsiahpng/js/utils/subtotal.js' %}")
   script(type='text/javascript', src="{% static 'tsiahpng/js/account/create_event.js' %}")
+  if related_users
+    script.
+      $.each({{ related_users | safe }}, function(){
+          $('.user.dropdown').dropdown('set selected', this);
+      });

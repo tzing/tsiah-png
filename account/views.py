@@ -1,3 +1,5 @@
+import json
+
 from django.core.paginator import Paginator
 from django.contrib import auth
 from django.contrib import messages
@@ -97,6 +99,14 @@ def create_event(request, passbook_id):
         else:
             messages.error(request, _("Invalid requests."))
 
+    # get related users
+    events = passbook.events()
+    transactions = models.Transaction.objects.filter(event__in=events)
+
+    user_ids = transactions.values_list("user").distinct()
+    related_users = auth.models.User.objects.filter(id__in=user_ids, is_active=True)
+    related_user_ids = [user.id for user in related_users]
+
     return render(
         request,
         "tsiahpng/account/create_event.pug",
@@ -105,6 +115,7 @@ def create_event(request, passbook_id):
             "passbook": passbook,
             "messages": messages.get_messages(request),
             "users": auth.models.User.objects.filter(is_active=True),
+            "related_users": json.dumps(related_user_ids),
         },
     )
 
