@@ -46,10 +46,8 @@ See [docs/installation](docs/installation.md).
 
 ## Credits
 
-* favicon is made by [Freepik](https://www.freepik.com/)
-* truck icon is made by [Pixel perfect](https://www.flaticon.com/authors/pixel-perfect)
+Icons are made by [Freepik] from [flaticon] and are licensed by [CC 3.0 BY].
 
-All of the icons are retrieve from [flaticon] and are licensed by [CC 3.0 BY].
-
+[Freepik]: https://www.freepik.com/
 [flaticon]: https://www.flaticon.com/
 [CC 3.0 BY]: http://creativecommons.org/licenses/by/3.0/

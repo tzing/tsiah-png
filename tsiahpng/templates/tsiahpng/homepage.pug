@@ -64,7 +64,7 @@ block main
           <div class=" ui shop vertical segment" id="order-{{ order.id }}">
           //- order title
           .ui.header
-            img.ui.circular.image(src="{% static 'tsiahpng/icons/delivery-truck.svg' %}")
+            img.ui.image(src="{% static 'tsiahpng/icons/goods.svg' %}")
             .content
               a(href="{% url 'tsiahpng:order_detail' order.id %}") {{ order }}
               .sub.header {% blocktrans with date=order.order_date|naturalday shop=order.shop %}Ordering {{ shop }} on {{ date }}{% endblocktrans %}
