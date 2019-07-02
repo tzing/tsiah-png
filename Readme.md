@@ -1,123 +1,53 @@
 # 呷飯 Tsia̍h-Pn̄g
 
-A group buying tool for collecting orders (especially the meal/drink orders) from your friends.
+*呷飯*是一個用來跟朋友一起點餐/團購用的工具，用來簡單地點餐，而不是去面對複雜的購物車、登入及會員系統。
+（金流？<s>快跟開團的大大說謝謝請客</s>總有其他方法吧）
 
-*Tsia̍h-Pn̄g* is the word for *eat food* in [Taiwanese Hokkien].
-I first created this project because I always collect breakfast orders from colleagues.
+*Tsia̍h-Pn̄g* is a group buying tool which could collects orders from your friends (especially meal/drink orders).
+Unlike popular shopping cart system, it is designed to be simple and easy to use. There is no cart and login system, one can order a drink or Bento within three steps.
+Payment system? No, go to see your friend in real life.
 
-[Taiwanese Hokkien]: https://en.wikipedia.org/wiki/Taiwanese_Hokkien
-
-
-## Usage
-
-Basically, you can run and use it *if you are on local network*.
-
-- About user
-
-    It use django built-in `User` models for the *users* in the dropdown.
-    Use django admin to create users and make changes.
-
-- About menu
-
-    `Shop` and `Category` could only be created by admin.
-    `Product` could be created by anyone, because I am lazy and I don't want to copy the entire menu form shops.
-
-- About django admin
-
-    Directly go to *http://HOSTNAME/admin/* by url.
-    There is no place to link to the admin panel from the site
+![Quick ordering](docs/images/quick_ordering.png)
 
 
-## Prerequisites
+#### Features
 
-- python >= 3.6
-- [django](https://www.djangoproject.com/)
-- [Pillow](https://pillow.readthedocs.io/en/latest/)
++ Easy to order
+
+  No cart, no login system, there is just a simple form.
+
++ Easy to check
+
+  It provides tables to inspect the total number of items ordered, as well as the quantity and spending from each user.
+
++ Quick ordering, not only for users
+
+  It could generate text that summarize the orders since some stores receive orders from instant messaging apps.
+
++ Multiple stores supported
+
+  I don't want to eat the same food everyday.
+
++ Menu lazy evaluation *(huh?)*
+
+  The author is too lazy to add everything on the menu.
+  So there is a button for users to add product into menu when they want to order.
+
++ Accounting
+
+  <s>What happens in Tsia̍h-Pn̄g, stays in Tsia̍h-Pn̄g.</s>
+  It records the spending whenever you need.
 
 
-## Install
+## Installation
 
-0. Clone this repo & get submodules
-
-    ```bash
-    git clone git@github.com:tzing/tsiah-png.git --recursive
-    cd tsiah-png
-    ```
-
-1. Get dependency
-
-    ```bash
-    pipenv install
-    ```
-
-    *- or -*
-
-    ```bash
-    pip install django Pillow
-    ```
-
-2. Set secret key
-
-    ```bash
-    export SECRET_KEY="SOMETHING_RANDOM_ENOUGH"
-    ```
-
-    *WARNING* Keep this value secret. See [django docs](https://docs.djangoproject.com/en/2.1/ref/settings/#std:setting-SECRET_KEY) for more info.
-
-3. Built database
-
-    ```bash
-    python manage.py makemigrations tsiahpng account
-    python manage.py migrate
-    ```
-
-4. (Optional) Build i18n (for Traditional Chinese)
-
-    ```bash
-    django-admin compilemessages --use-fuzzy
-    ```
-
-5. Create users
-
-    ```bash
-    python manage.py createsuperuser
-    ```
-
-6. Run!
-
-    ```bash
-    python manage.py runserver 0.0.0.0:8000
-    ```
-
-7. If you want to use this site on the Internet, follow the instruction from django document:
-
-    https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
+See [docs/installation](docs/installation.md).
 
 
 ## Credits
 
-Icons made by [Freepik](https://www.freepik.com/) from [www.flaticon.com](https://www.flaticon.com/) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/).
+Icons are made by [Freepik] from [flaticon] and are licensed by [CC 3.0 BY].
 
-
-## TODO
-
-- [ ] Deploy guide
-
-
-## Minor Feature
-
-### Summary String
-
-You can copy the summary string from the order review page, for quickly send
-the order to the shop via instant message app.
-
-It requires the prebuilt `SummaryTemplate` to provides the template on built
-the summary string.
-Rather than starts from nothing, you can use the command to create the minimal
-one and modify it.
-
-```bash
-python manage.py createtemplate <NAME_TO_TEMPLATE>
-```
-
-Use `-h` option to see more info.
+[Freepik]: https://www.freepik.com/
+[flaticon]: https://www.flaticon.com/
+[CC 3.0 BY]: http://creativecommons.org/licenses/by/3.0/

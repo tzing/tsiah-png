@@ -1,0 +1,26 @@
+body>.ui.vertical.segment {
+    &.head {
+        margin-top: 39px;
+        padding: 5em 0;
+    }
+
+    &.main {
+        padding-bottom: 3em;
+
+        .ui.rimless.vertical.segment {
+            border-bottom: 0;
+        }
+    }
+
+    &.footer {
+        padding: 3em 0 5em 0;
+        border-bottom: 0;
+        color: rgba(0, 0, 0, .6);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .computer.only {
+        display: none;
+    }
+}

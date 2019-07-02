@@ -1,0 +1,86 @@
+-extends 'admin/change_form.html'
+
+block after_field_sets
+  .form-row
+    h2 What is summary text template
+
+    p The model provides a template for rendering plain text summary for ordering meals through instant messaging applications (eg Line, Messenger, etc.). When any template is provided, a button will appear at the bottom of the order page. You can quickly get the text by clicking the button and selecting the template to be applied, then paste it into an application and wait for the meal ;)
+
+    h3 Example
+
+    p The following template:
+    pre.
+      {% templatetag openvariable %} order.order_date |date:'m/d' {% templatetag closevariable %} - John Doe
+      {% templatetag openblock %} for ticket in order.tickets {% templatetag closeblock %}{% templatetag openvariable %} ticket {% templatetag closevariable %}{% templatetag openblock %} if not forloop.last {% templatetag closeblock %}, {% templatetag openblock %} endif {% templatetag closeblock %}{% templatetag openblock %} endfor {% templatetag closeblock %}
+      Thanks :)
+
+    p may generates the text like:
+    pre.
+      06/04 - John Doe
+      Sandwich ×3, Coke ×1, Black Tea ×2
+      Thanks :)
+
+  .form-row
+    h2 Writing custom summary text template
+
+    p This string using <a href="https://docs.djangoproject.com/en/2.2/ref/templates/language/">Django template</a> for rendering. It could support all <a href="https://docs.djangoproject.com/en/2.2/ref/templates/builtins/">built-in template tags and filters</a> from official django.
+
+    h3 Rendering context
+
+    p The only provided object in the context is <code>order</code>, which is a <code>Order</code> object that contains all the information about that order you are browsing.
+
+    h3 Object API
+
+    h4 Order
+
+    ul
+      li <i>directly used</i>, it shows the name of the order.
+      li <code>shop</code> shop name to the ordered store.
+      li <code>order_date</code> The registered submit date.
+      li <code>note</code> The note which is shown on top of the order page.
+      li <code>date_created</code> The datetime of creation.
+      li <code>sum_quantity</code> Total <i>item</i> count.
+      li <code>sum_cost</code> Total cost.
+      li <code>tickets</code> All the tickets, unsorted.
+
+    h4 Ticket
+
+    ul
+      li <code>user</code> User who ordered it.
+      li <code>item</code> Product name.
+      li <code>quantity</code> Ordered quantity.
+      li <code>cost</code> Cost.
+      li <code>note</code> Note of the ticket, might be null.
+
+    h3 Frequency used built-ing tags and filters
+
+    ul
+      li <a href="https://docs.djangoproject.com/en/2.1/ref/templates/builtins/#for">for-loop</a> to loop through tickets.
+
+        pre
+          | {% templatetag openblock %} for ticket in order.tickets {% templatetag closeblock %}
+          | {% templatetag openvariable %} ticket {% templatetag closevariable %}
+          | {% templatetag openblock %} endfor {% templatetag closeblock %}
+
+        p Please note that line break would be applied in the generated plain text.
+
+    h3 Extra filters
+
+    p There are some filters provided for convenience.
+
+    ul
+      li <code>no_qty</code> Hide quantity from ticket if there is one item picked.
+
+        pre
+          | {% templatetag openvariable %} ticket | no_qty {% templatetag closevariable %}
+
+        p may generates text "Coke" if it only pick one, but still shows "Black Tea ×2".
+
+      li <code>organize_tickets</code> Aggregate tickets, merge those ticket with picked the same item and has same note. The output object would have no <code>user</code> info, and their quantity and cost would be merged.
+
+        pre.
+          {% templatetag openblock %} for ticket in order.tickets|organize_tickets {% templatetag closeblock %}
+          {% templatetag openvariable %} ticket {% templatetag closevariable %}
+          {% templatetag openblock %} endfor {% templatetag closeblock %}
+
+        p could merge "Sandwich ×1, Sandwich ×2" into "Sandwich ×3"

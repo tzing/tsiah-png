@@ -1,0 +1,59 @@
+-extends 'tsiahpng/order/includes/modal_close_order.pug'
+-load i18n
+-load tsiahpngtags
+
+block form
+  form.ui.closing.order.form(method='POST', action="{% url 'tsiahpng-account:order_close' order.id %}")
+    -csrf_token
+
+    .field
+      .ui.toggle.checkbox
+        input.hidden(type='checkbox', name='on_bill')
+        label {% trans 'Also put this order on the bill' %}
+
+    .account(style='display: none;')
+      //- passbook
+      .required.field
+        label {% trans 'Passbook' %}
+        .ui.search.selection.dropdown(data-api="{% url 'tsiahpng-account:api-list' %}")
+          input(type='hidden', name='passbook')
+          i.dropdown.icon
+          .default.text {% trans 'select passbook' %}
+          .menu
+
+      //- title
+      .field
+        label(for='id_title') {% trans 'Title' %}
+        input#id_title(type='text', name='title')
+
+      //- related order
+      input(type='hidden', name='order', value='{{ order.id }}')
+
+      //- users
+      -regroup order.tickets|dictsort:'user.id' by user as grouped_tickets
+      input(type='hidden', name='users', value='{% for prod in grouped_tickets %}{{ prod.grouper.id }}{% if not forloop.last %},{% endif %}{% endfor %}')
+
+      //- change in balance
+      .balance.field
+        table.ui.basic.unstackable.table
+          thead
+            tr
+              th.six.wide {% trans 'User' %}
+              th.ten.wide {% trans 'Change in balance' %}
+          tbody
+            {% for prod in grouped_tickets %}
+            tr
+              td {{ prod.grouper | username }}
+              td.right.aligned
+                input.price(type='number', name='balance_{{ prod.grouper.id }}', value="-{{ prod.list|dictsum:'cost' }}")
+            {% empty %}
+            tr.hint
+              td.center.aligned(colspan='2') {% trans 'No transaction.' %}
+            {% endfor %}
+          tfoot
+            tr
+              th.right.aligned {% trans 'Subtotal' %}
+              th.subtotal.right.aligned --
+
+      //- errors
+      .ui.error.message

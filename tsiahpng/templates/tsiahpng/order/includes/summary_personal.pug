@@ -1,0 +1,29 @@
+-load i18n
+-load humanize
+-load tsiahpngtags
+-regroup order.tickets|dictsort:'user.id' by user as grouped_tickets
+table.ui.summary.table
+  thead
+    tr
+      th.four.wide {% trans 'User' %}
+      th.nine.wide {% trans 'Tickets' %}
+      th.three.wide {% trans 'Subtotal' %}
+  tbody
+    {% for prod in grouped_tickets %}
+    tr
+      td {{ prod.grouper | username }}
+      td
+        -for ticket in prod.list|organize_tickets
+          {{ ticket }}
+          {% if not forloop.last %}{% trans ', ' %}{% endif %}
+      td.right.aligned ${{ prod.list|dictsum:'cost'|intcomma }}
+    {% empty %}
+    tr.hint
+      td.center.aligned(colspan='2') {% trans 'No tickets' %}
+    {% endfor %}
+  if order.tickets
+    tfoot
+      tr
+        th
+        th {% blocktrans with qty=order.sum_quantity|intcomma %}{{ qty }} items{% endblocktrans %}
+        th.right.aligned ${{ order.sum_cost|intcomma }}

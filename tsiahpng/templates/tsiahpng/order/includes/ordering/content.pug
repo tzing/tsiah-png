@@ -1,0 +1,43 @@
+-load i18n
+-load tsiahpngtags
+//- who am i
+.required.field
+  label {% trans 'Who am I' %}
+  .ui.user.search.selection.dropdown
+    | <input type="hidden" name="user"{% if last_user %} value="{{ last_user }}"{% endif %}>
+    i.dropdown.icon
+    .default.text {% trans 'who' %}
+    .menu
+      for user in users
+        .item(data-value='{{ user.id }}') {{ user | username }}
+          .extra {{ user }}
+
+//- item selection
+.required.field
+  label(class='inline') {% trans 'Wanna...' %}
+
+  if order.shop.changeable
+    .extra
+      a(href="{% url 'tsiahpng:shop_add_product' order.shop.id %}") {% trans 'Add product' %}
+
+  .ui.product.multiple.search.selection.dropdown
+    input(type='hidden', name='items')
+    i.dropdown.icon
+    .default.text {% trans 'select item' %}
+    .menu
+      for product in order.shop.products
+        include ./item_product.pug
+
+//- placeholder for tickets
+.field
+  include ./table_tickets.pug
+
+//- error message (local)
+.ui.error.message
+
+//- submit
+.ui.primary.submit.button {% trans 'Submit' %}
+.ui.reset.button {% trans 'Reset' %}
+
+//- hidden
+input(type='hidden', name='order', value='{{ order.id }}')

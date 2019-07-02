@@ -1,0 +1,35 @@
+-extends 'tsiahpng/layouts/base.pug'
+-load i18n
+-load sass_tags
+-load static
+
+block extra_head
+  link(href="{% sass_src 'tsiahpng/css/menu.scss' %}", rel='stylesheet', type='text/css')
+
+block content
+  //- breadcrumb
+  include tsiahpng/includes/breadcrumb.pug
+
+  //- messages
+  include tsiahpng/includes/messages.pug
+
+  //- shop list
+  .ui.rimless.vertical.segment
+    .ui.items
+      {% for shop in shops %}
+      include tsiahpng/menu/includes/shop_card.pug
+      {% empty %}
+      .item
+        .content
+          .header {% trans 'No any menu yet.' %}
+      {% endfor %}
+
+  //- paginator
+  -with paginator=shops
+    include tsiahpng/includes/pagination.pug
+
+block fab
+  include tsiahpng/includes/gotop.pug
+
+block extra_scripts
+  script(type='text/javascript', src="{% static 'tsiahpng/js/gotop.js' %}")

@@ -1,0 +1,29 @@
+-extends 'tsiahpng/layouts/base.pug'
+-load i18n
+-load static
+
+
+block content
+  //- breadcrumb
+  .ui.rimless.vertical.segment
+    .ui.breadcrumb
+      a.section(href="{% url 'tsiahpng:welcome' %}") {% trans 'Home' %}
+      .divider  /
+      a.section(href="{% url 'tsiahpng:shop_list' %}") {% trans 'Menu' %}
+      .divider  /
+      a.section(href="{% url 'tsiahpng:shop_detail' shop.id %}") {{ shop }}
+      .divider  /
+      .active.section {{ title }}
+
+  //- messages
+  include tsiahpng/includes/messages.pug
+
+  //- form
+  .ui.rimless.vertical.segment
+    form.ui.form(method='POST')
+      -csrf_token
+      include tsiahpng/menu/includes/form_add_product.pug
+
+
+block extra_scripts
+  script(type='text/javascript' src='{% static "tsiahpng/js/menu/add_product.js" %}')

@@ -1,138 +1,162 @@
-from django.shortcuts import render, redirect
-from django.utils.translation import gettext as _
+import json
 
-from django.conf import settings
 from django.core.paginator import Paginator
 from django.contrib import auth
 from django.contrib import messages
+from django.http import JsonResponse
+from django.shortcuts import render, redirect
+from django.utils.translation import gettext as _
 
+from tsiahpng import utils
 import tsiahpng.models
-import tsiahpng.utils
 
+from . import forms
 from . import models
+from . import settings
 
 
-def overview(request):
-    passbooks = models.Passbook.objects.all()
+def account_list(request):
+    passbooks = models.Passbook.objects.filter(is_active=True)
 
-    account_per_page = 25
-    if hasattr(settings, 'ACCOUNT_PER_PAGE'):
-        account_per_page = getattr(settings, 'ACCOUNT_PER_PAGE')
-    paginator = Paginator(passbooks, account_per_page)
-
-    page = tsiahpng.utils.try_parse(request.GET.get('p'), 1)
-    passbooks = paginator.get_page(page)
-
-    return render(request, 'account/list.html', {
-        'title': _('Accounting'),
-        'passbooks': passbooks,
-    })
-
-
-def detail(request, passbook_id):
-    passbook = models.Passbook.objects.get(id=passbook_id)
-    user_balances = passbook.peruser_balance()
-
-    if user_balances:
-        users, balances = zip(*user_balances)
-    else:
-        users = []
-        balances = []
-
-    # infos for each event
-    transaction_table = []
-    for event in passbook.events():
-        balance = []
-        transactions = event.transactions()
-        for user in users:
-            transaction = transactions.filter(user=user)
-            if len(transaction) == 0:
-                balance.append(None)
-            else:
-                balance.append(transaction.get().balance)
-
-        transaction_table.append((event, balance))
+    idx_page = utils.try_parse(request.GET.get("p"), 1)
+    paginator = Paginator(passbooks, settings.PASSBOOK_PER_PAGE)
 
     return render(
-        request, 'account/detail.html', {
-            'title': passbook,
-            'passbook': passbook,
-            'user_balances': user_balances,
-            'active_users': users,
-            'balances': balances,
-            'transaction_table': transaction_table,
-            **tsiahpng.utils.get_messages(request),
-        })
+        request,
+        "tsiahpng/account/index.pug",
+        {
+            "title": _("Account"),
+            "passbooks": paginator.get_page(idx_page),
+            "messages": messages.get_messages(request),
+            "transaction_creatable": settings.ALLOW_ANYONE_ALTER_TRANSACTION,
+        },
+    )
 
 
-def add(request, passbook_id):
-    """Create a new event and add transactions into the passbook
-    """
-    passbook = models.Passbook.objects.get(id=passbook_id)
+def account_detail(request, passbook_id):
+    # get passbook
+    try:
+        passbook = models.Passbook.objects.get(id=passbook_id, is_active=True)
+    except models.Passbook.DoesNotExist:
+        messages.error(request, _("Passbook #{id} not exists.").format(id=passbook_id))
+        return redirect("tsiahpng-account:list")
 
-    if request.method == 'POST' and add_post(request, passbook_id):
-        return redirect('account:detail', passbook_id=passbook_id)
+    # get related users
+    events = passbook.events()
+    transactions = models.Transaction.objects.filter(event__in=events)
+
+    user_ids = transactions.values_list("user").distinct()
+    related_users = auth.models.User.objects.filter(id__in=user_ids)
+    active_users = tuple(related_users.filter(is_active=True))
+    inactive_users = tuple(related_users.filter(is_active=False))
+
+    if inactive_users:
+        users = (*active_users, None)
+    else:
+        users = active_users
+
+    # build table
+    idx_page = utils.try_parse(request.GET.get("p"), 1)
+    paginator = Paginator(events, settings.TRANSACTION_PER_PAGE)
 
     return render(
-        request, 'account/add.html', {
-            'title': _('Add transaction'),
-            'passbook': passbook,
-            **tsiahpng.utils.get_messages(request),
-        })
+        request,
+        "tsiahpng/account/detail.pug",
+        {
+            "title": str(passbook),
+            "passbook": passbook,
+            "messages": messages.get_messages(request),
+            "users": users,
+            "events": paginator.get_page(idx_page),
+            "transaction_creatable": passbook.changeable
+            and settings.ALLOW_ANYONE_ALTER_TRANSACTION,
+        },
+    )
 
 
-def add_post(request, passbook_id):
-    """Proceed post action for creating event and transactions
+def create_event(request, passbook_id):
+    # get passbook
+    try:
+        passbook = models.Passbook.objects.get(id=passbook_id, is_active=True)
+    except models.Passbook.DoesNotExist:
+        messages.error(request, _("Passbook #{id} not exists.").format(id=passbook_id))
+        return redirect("tsiahpng-account:list")
 
-    Return
-    ------
-        is_created : bool
-            if the event is created
-    """
-    assert request.method == 'POST'
+    # permission check #2
+    if not passbook.changeable or not settings.ALLOW_ANYONE_ALTER_TRANSACTION:
+        messages.error(request, _("No enough permission for this operation."))
+        return redirect("tsiahpng-account:detail", passbook_id)
 
-    if not tsiahpng.utils.is_new_post(request):
-        return
+    # handle post
+    if request.method == "POST" and utils.is_new_post(request):
+        form = forms.AddEventForm(request.POST)
+        event = form.to_model()
+        if event:
+            messages.success(
+                request, _('Successfully add record "{event}".').format(event=event)
+            )
+            return redirect("tsiahpng-account:detail", passbook_id=passbook_id)
+        else:
+            messages.error(request, _("Invalid requests."))
 
-    # read fields
-    passbook = models.Passbook.objects.get(id=passbook_id)
+    # get related users
+    events = passbook.events()
+    transactions = models.Transaction.objects.filter(event__in=events)
 
-    title = request.POST.get('title')
+    user_ids = transactions.values_list("user").distinct()
+    related_users = auth.models.User.objects.filter(id__in=user_ids, is_active=True)
+    related_user_ids = [user.id for user in related_users]
 
-    order = request.POST.get('order')
-    if order:
-        order = tsiahpng.models.Order.objects.get(id=int(order))
+    return render(
+        request,
+        "tsiahpng/account/create_event.pug",
+        {
+            "title": _("Add record on {passbook}").format(passbook=passbook),
+            "passbook": passbook,
+            "messages": messages.get_messages(request),
+            "users": auth.models.User.objects.filter(is_active=True),
+            "related_users": json.dumps(related_user_ids),
+        },
+    )
 
-    event = models.Event.objects.create(
-        book=passbook, title=title, related_order=order)
 
-    users = request.POST.get('user', '')
+def account_list_api(request):
+    passbooks = models.Passbook.objects.filter(is_active=True)
 
-    # create transactions
-    transaction_created = False
-    for user_id in users.split(','):
-        user_id = tsiahpng.utils.try_parse(user_id, -1)
-        if user_id == -1:
-            continue
+    return JsonResponse(
+        {
+            "success": True,
+            "results": [{"name": str(book), "value": book.id} for book in passbooks],
+        }
+    )
 
-        user = auth.models.User.objects.get(id=user_id)
-        balance = tsiahpng.utils.try_parse(
-            request.POST.get(f'balance-{user_id}'))
-        if balance == 0:
-            continue
 
-        models.Transaction.objects.create(
-            event=event, user=user, balance=balance)
-        transaction_created = True
+def order_close(request, order_id):
+    if not request.method == "POST" or not utils.is_new_post(request):
+        return redirect("tsiahpng:order_detail", order_id)
 
-    if transaction_created:
-        msg = _('Successfully added transaction: {event}').format(event=event)
-        messages.add_message(request, messages.SUCCESS, msg)
-        return True
+    # get order
+    try:
+        order = tsiahpng.models.Order.objects.get(id=order_id, is_active=True)
+    except tsiahpng.models.Order.DoesNotExist:
+        messages.error(request, _("Order #{id} id not exists.").format(id=order_id))
+        return redirect("tsiahpng:order_list")
 
-    else:
-        event.delete()
-        msg = _('At least one change should be specified for creating '
-                'a transaction')
-        messages.add_message(request, messages.ERROR, msg)
-        return False
+    # operate
+    order.is_available = False
+    order.save()
+
+    messages.info(request, _("Order closed."))
+
+    # billing
+    if request.POST.get("on_bill") == "on":
+        form = forms.AddEventForm(request.POST)
+        event = form.to_model()
+        if event:
+            messages.success(
+                request, _('Successfully add record "{event}".').format(event=event)
+            )
+        else:
+            messages.error(request, _("Failed to billing."))
+
+    return redirect("tsiahpng:order_detail", order_id)

@@ -1,0 +1,55 @@
+@import 'font';
+@import 'order_form';
+
+.ui.card {
+    .green.extra.content {
+        background-color: #21ba45;
+        color: #ffffff;
+    }
+}
+
+.shop.info.segment {
+    .ui.header {
+        .sub.header {
+            display: inline-block;
+            margin-left: .3rem;
+            font-size: 1rem;
+            font-weight: 400;
+            color: #4183c4;
+
+            &:hover {
+                color: #1e70bf;
+            }
+        }
+    }
+}
+
+.description.segment {
+    i.icon {
+        min-width: 1.6rem;
+    }
+
+    span {
+        border-bottom: 1px dashed #000;
+        text-decoration: none;
+    }
+}
+
+.summary.table {
+    .hint {
+        @extend %hint;
+    }
+}
+
+.summary.text.segment {
+    display: none;
+}
+
+.form {
+    .field {
+        .hint {
+            color: rgba(0, 0, 0, .6);
+            margin-top: .3rem;
+        }
+    }
+}

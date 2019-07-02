@@ -1,0 +1,68 @@
+-extends 'tsiahpng/layouts/base.pug'
+-load i18n
+-load md2
+-load static
+-load accounting
+-load sass_tags
+-load humanize
+
+block extra_head
+  link(href="{% sass_src 'tsiahpng/css/account.scss' %}", rel='stylesheet', type='text/css')
+
+block content
+  //- breadcrumb
+  .ui.rimless.vertical.segment
+    .ui.breadcrumb
+      a.section(href="{% url 'tsiahpng:welcome' %}") {% trans 'Home' %}
+      .divider  /
+      a.section(href="{% url 'tsiahpng-account:list' %}") {% trans 'Account' %}
+      .divider  /
+      .active.section {{ title }}
+
+  //- messages
+  include tsiahpng/includes/messages.pug
+
+  //- order notes
+  if passbook.note
+    .ui.rimless.vertical.segment
+      | {{ passbook.note | markdown }}
+
+  -with per_user_balances=passbook|per_user_balance_include_inactive
+    //- personal summary
+    .ui.rimless.vertical.segment
+      h3.ui.header {% trans 'Personal balance' %}
+
+      include ./includes/table_user_balance.pug
+
+    //- transactions
+    .ui.transactions.rimless.vertical.segment
+      h3.ui.header {% trans 'Transactions' %}
+
+      p.meta {% blocktrans with idx_start=events.start_index|ordinal idx_end=events.end_index|ordinal count=events.paginator.count|intcomma %}Current: {{ idx_start }} - {{ idx_end }} records. A total of {{ count }} records.{% endblocktrans %}
+
+      //- paginator
+      -with paginator=events
+        include tsiahpng/includes/pagination.pug
+
+      //- table
+      .slide(style='overflow-x:auto;')
+        include ./includes/table_transactions.pug
+
+      //- paginator
+      -with paginator=events
+        include tsiahpng/includes/pagination.pug
+
+block fab
+  include tsiahpng/includes/gotop.pug
+  if transaction_creatable
+    .wrap.computer.only
+      a.massive.green.circular.ui.icon.button(
+          data-tooltip="{% trans 'Add record' %}",
+          data-position="left center",
+          href="{% url 'tsiahpng-account:create_event' passbook.id %}")
+        i.icon.plus
+
+block extra_scripts
+  script(type='text/javascript', src="{% static 'tsiahpng/js/gotop.js' %}")
+  script(type='text/javascript', src="{% static 'tsiahpng/js/lib/tablesort.js' %}")
+  script(type='text/javascript', src="{% static 'tsiahpng/js/account/detail.js' %}")

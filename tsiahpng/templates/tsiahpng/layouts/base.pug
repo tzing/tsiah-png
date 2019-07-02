@@ -1,0 +1,30 @@
+-load i18n
+!!! 5
+html
+  head
+    include tsiahpng/layouts/includes/head.pug
+    block title
+      title {% if title %}{{ title }}{% else %}{% trans 'Untitled Page' %}{% endif %} | {% trans 'Tsia̍h-Pn̄g' %}
+    block extra_head
+
+  body
+    include tsiahpng/layouts/includes/nav.pug
+
+    block main
+      .ui.vertical.head.segment
+        .ui.container
+          h1.ui.header {% if title %}{{ title }}{% else %}{% trans 'Untitled Page' %}{% endif %}
+
+      .ui.vertical.main.segment
+        .ui.text.container
+          block content
+            p hello content!
+
+    .ui.vertical.footer.segment
+      include tsiahpng/layouts/includes/footer.pug
+
+    .floating.region
+      block fab
+
+    include tsiahpng/layouts/includes/js.pug
+    block extra_scripts

@@ -1,0 +1,98 @@
+-extends 'tsiahpng/layouts/base.pug'
+-load i18n
+-load static
+-load md2
+-load sass_tags
+
+block extra_head
+  link(href="{% sass_src 'tsiahpng/css/order.scss' %}", rel='stylesheet', type='text/css')
+
+block content
+  //- breadcrumb
+  include ./includes/breadcrumb.pug
+
+  //- messages
+  include ../includes/messages.pug
+
+  //- order notes
+  if order.note
+    .ui.rimless.vertical.segment
+      | {{ order.note | markdown }}
+
+  //- order description
+  .ui.rimless.vertical.description.segment
+    include ./includes/order_description.pug
+
+  //- shop info
+  .ui.shop.info.rimless.vertical.segment
+    h3.ui.header {% trans 'Shop information' %}
+      a.sub.header(href='{% url "tsiahpng:shop_detail" order.shop.id %}') {{ order.shop }}
+
+    -with shop=order.shop
+      include ../menu/includes/shop_info.pug
+
+  //- ordering form
+  if order.is_available
+    .ui.rimless.vertical.segment
+      include ./includes/form_ordering.pug
+
+  //- per product view
+  .ui.rimless.vertical.segment
+    h3.ui.header {% trans 'Order overview' %}
+    include ./includes/summary_order.pug
+
+  //- per user view
+  .ui.rimless.vertical.segment
+    h3.ui.header {% trans 'Personal order' %}
+    include ./includes/summary_personal.pug
+
+  //- adminstration
+  if summary_template or closable
+    .ui.rimless.vertical.segment
+      h3.ui.header {% trans 'Adminstration' %}
+
+      if summary_template
+        button#build_text.ui.labeled.teal.icon.button
+          i.clipboard.list.icon
+          | {% trans 'Build summary text' %}
+
+      if closable
+        button#close_btn.ui.labeled.red.icon.button
+          i.lock.icon
+          | {% trans 'Close order' %}
+
+  //- summary text section
+  if summary_template
+    .ui.summary.text.rimless.vertical.segment
+      h2.ui.header {% trans 'Summary text' %}
+
+      .ui.form(data-url="{% url 'tsiahpng:order_stringify' order.id %}")
+        .field
+          #template_select.ui.selection.dropdown
+            i.dropdown.icon
+            .default.text {% trans 'Select Template' %}
+            .menu
+              for template in summary_template
+                .item(data-value='{{ template.id }}') {{ template }}
+        .field
+          textarea(contenteditable='true')
+        .ui.loader
+        .field
+          button#cpy_summary.ui.primary.button {% trans 'Copy' %}
+
+  //- close order panel
+  if closable
+    include ./includes/modal_close_order.pug
+
+block fab
+  include tsiahpng/includes/gotop.pug
+
+block extra_scripts
+  script(type='text/javascript', src="{% static 'tsiahpng/js/gotop.js' %}")
+  if order.is_available
+    script(type='text/javascript', src="{% static 'tsiahpng/js/utils/subtotal.js' %}")
+    script(type='text/javascript', src="{% static 'tsiahpng/js/order/ordering.js' %}")
+  if closable
+    script(type='text/javascript', src="{% static 'tsiahpng/js/order/close_order.js' %}")
+  if summary_template
+    script(type='text/javascript', src="{% static 'tsiahpng/js/order/stringify_order.js' %}")

@@ -1,0 +1,26 @@
+-extends 'tsiahpng/layouts/base.pug'
+-load i18n
+-load sass_tags
+
+block title
+  title {{ title }} | {% trans 'Tsia̍h-Pn̄g' %}
+
+block extra_head
+  link(href="{% sass_src 'tsiahpng/css/error_page.scss' %}", rel='stylesheet', type='text/css')
+
+block main
+  .ui.vertical.head.segment
+    .ui.text.container.center.aligned
+      //- title
+      .ui.basic.vertical.segment
+        h1.ui.icon.header
+          i.orange.exclamation.triangle.icon
+          .content {{ title }}
+            if subtitle
+              .sub.header {{ subtitle }}
+
+      //- navigate
+      .ui.basic.vertical.segment
+        a.ui.label(href='javascript:history.back()')
+          i.arrow.left.icon
+          | {% trans 'Back to previous page' %}

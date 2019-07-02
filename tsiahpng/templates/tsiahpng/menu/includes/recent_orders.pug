@@ -1,0 +1,11 @@
+-load i18n
+-load tsiahpngtags
+
+.ui.fluid.secondary.vertical.menu
+  for order in recent_orders
+    a.item(href="{% url 'tsiahpng:order_detail' order.id %}")
+      .ui.teal.left.label {{ order.shop }}
+      | {{ order }}
+      .ui.label {{ order.order_date | short_naturalday }}
+      if order.is_available
+        .ui.green.label {% trans 'Available for ordering' %}

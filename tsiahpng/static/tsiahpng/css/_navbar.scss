@@ -1,0 +1,29 @@
+.ui.fixed.menu {
+    .container {
+        flex-flow: wrap;
+    }
+
+    .dropdown.item {
+        display: none;
+    }
+}
+
+
+@media screen and (max-width: 768px) {
+    .ui.fixed.menu {
+        .dropdown.item {
+            display: block;
+        }
+
+        .right.menu {
+            width: 100%;
+            flex-flow: wrap;
+            display: none;
+
+            .item {
+                width: 100% !important;
+                margin-left: 0 !important;
+            }
+        }
+    }
+}

@@ -1,38 +1,30 @@
 from django.contrib import admin
 
+import tsiahpng.admin
+
 from . import models
 
 
-@admin.register(models.Passbook)
-class BasicAdmin(admin.ModelAdmin):
-    ...
+class PassbookAdmin(admin.ModelAdmin):
+    list_display = ["__str__", "is_active", "changeable"]
 
 
-@admin.register(models.Event)
 class EventAdmin(admin.ModelAdmin):
-    list_filter = [
-        'book',
-        'related_order',
-    ]
-
-    list_display = [
-        'id',
-        'book',
-        'title',
-        'related_order',
-    ]
+    list_display = ["__str__", "book", "related_order", "balance"]
+    list_filter = ["book"]
 
 
-@admin.register(models.Transaction)
 class TransactionAdmin(admin.ModelAdmin):
-    list_filter = [
-        'event',
-        'user',
-    ]
+    list_display = ["__str__", "event", "user", "balance"]
+    list_filter = ["event", "user"]
 
-    list_display = [
-        'id',
-        'event',
-        'user',
-        'balance',
-    ]
+
+# django admin
+admin.site.register(models.Passbook, admin_class=PassbookAdmin)
+admin.site.register(models.Event, admin_class=EventAdmin)
+admin.site.register(models.Transaction, admin_class=TransactionAdmin)
+
+# customized admin
+tsiahpng.admin.site.register(models.Passbook, admin_class=PassbookAdmin)
+tsiahpng.admin.site.register(models.Event, admin_class=EventAdmin)
+tsiahpng.admin.site.register(models.Transaction, admin_class=TransactionAdmin)

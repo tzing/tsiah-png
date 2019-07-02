@@ -1,0 +1,59 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-06-12 15:40+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: tsiahpng/static/tsiahpng/js/menu/add_product.js:11
+msgid "Please select a category."
+msgstr "請選擇一個分類。"
+
+#: tsiahpng/static/tsiahpng/js/menu/add_product.js:20
+msgid "Please enter product name."
+msgstr "請輸入商品名稱。"
+
+#: tsiahpng/static/tsiahpng/js/menu/add_product.js:29
+msgid "Please enter a positive integer price."
+msgstr "請輸入正整數價格。"
+
+#: tsiahpng/static/tsiahpng/js/order/create_order.js:27
+msgid "Please select ordered shop."
+msgstr "請選擇訂購店家。"
+
+#: tsiahpng/static/tsiahpng/js/order/create_order.js:37
+msgid "Please pick a valid date."
+msgstr "請選擇有效的日期。"
+
+#: tsiahpng/static/tsiahpng/js/order/ordering.js:45
+#, javascript-format
+msgid "Note for %s"
+msgstr "加些/少些什麼到%s"
+
+#: tsiahpng/static/tsiahpng/js/order/ordering.js:137
+msgid "Please tell me who you are."
+msgstr "請告訴我你是誰。"
+
+#: tsiahpng/static/tsiahpng/js/order/ordering.js:144
+msgid "Cart is empty."
+msgstr "沒有選擇任何東西。"
+
+#: tsiahpng/static/tsiahpng/js/order/stringify_order.js:50
+msgid "Copied!"
+msgstr "已複製！"
+
+#: tsiahpng/static/tsiahpng/js/order/stringify_order.js:52
+msgid "Copy"
+msgstr "複製"

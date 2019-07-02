@@ -1,33 +1,12 @@
-import datetime
 import hashlib
 
-from django.conf import settings
-from django.utils import timezone
+from django.db.models import QuerySet, Sum
+from django.utils.translation import gettext as _
+from django.contrib import auth
 
-from django.contrib import messages
+from . import models
 
-
-def order_date_default():
-    """Get the default date for `order_date`.
-
-    It returns today as default, but would change to tomorrow if current
-    time exceeds the time `TSIAHPNG_DAYEND` in settings.
-    """
-    now = timezone.localtime()
-
-    # get day end setting
-    if not hasattr(settings, 'TSIAHPNG_DAYEND'):
-        return now.date()
-
-    day_end = getattr(settings, 'TSIAHPNG_DAYEND')
-    if not isinstance(day_end, datetime.time):
-        return now.date()
-
-    # compare current time to day end
-    if now.time() >= day_end:
-        return now.date() + datetime.timedelta(days=1)
-    else:
-        return now.date()
+__all__ = ("try_parse", "str2bool", "get_username", "is_new_post", "organize_tickets")
 
 
 def try_parse(value, default=0, type=int):
@@ -44,14 +23,23 @@ def str2bool(txt):
     """
     if not bool(txt):
         return False
-    return str(txt).lower() in ('1', 'y', 'yes', 't', 'true')
+    return str(txt).lower() in ("1", "y", "yes", "t", "true")
 
 
-def get_messages(request):
-    storage = messages.get_messages(request)
-    success = list(filter(lambda m: m.level == messages.SUCCESS, storage))
-    error = list(filter(lambda m: m.level == messages.ERROR, storage))
-    return {'success_messages': success, 'error_messages': error}
+def get_username(user):
+    name = user.get_full_name().strip()
+    if not name:
+        name = user.get_username().strip()
+    return name
+
+
+def get_stuff_ordering(request):
+    """Query stuffs for ordering form.
+    """
+    return {
+        "users": auth.models.User.objects.filter(is_active=True),
+        "last_user": request.session.get("ordering/last_user"),
+    }
 
 
 def is_new_post(request):
@@ -62,9 +50,122 @@ def is_new_post(request):
     is_valid : bool
         True if this request is valid.
     """
-    post_content = request.POST.urlencode().encode('utf-8')
+    post_content = request.POST.urlencode().encode("utf-8")
     hash_str = hashlib.sha1(post_content).hexdigest()
-    if request.session.get(f'{request.path}/last_post') == hash_str:
+    if request.session.get(f"{request.path}/last_post") == hash_str:
         return False
-    request.session[f'{request.path}/last_post'] = hash_str
+    request.session[f"{request.path}/last_post"] = hash_str
     return True
+
+
+def organize_tickets(tickets):
+    """Organize scattered tickets into distinct items.
+
+    Parameters
+    ----------
+        tickets : query set
+            query set of models.Ticket object
+
+    Returns
+    -------
+        tickets : list of models.Ticket
+            a set of distinct tickets; NOTE these tickets are created as
+            memory objects and should not save to database, or there might
+            exists duplicated projects.
+    """
+    if isinstance(tickets, QuerySet):
+        return organize_tickets_qs(tickets)
+
+    product_ids = set(t.item.id for t in tickets)
+    products = models.Product.objects.filter(id__in=product_ids)
+
+    organized_tickets = []
+    for product in products:
+        related_tickets = tuple(filter(lambda t: t.item == product, tickets))
+
+        # original taste
+        original_taste = tuple(filter(lambda t: t.note is None, related_tickets))
+        if original_taste:
+            organized_tickets.append(aggregate_tickets(original_taste))
+
+        if len(original_taste) == len(related_tickets):
+            continue
+
+        # those with notes
+        special_tastes = tuple(filter(lambda t: t.note is not None, related_tickets))
+        notes = set(t.note for t in special_tastes)
+        for note in notes:
+            same_taste = tuple(filter(lambda t: t.note == note, special_tastes))
+            organized_tickets.append(aggregate_tickets(same_taste))
+
+    return organized_tickets
+
+
+def organize_tickets_qs(tickets):
+    assert isinstance(tickets, QuerySet)
+    assert tickets.model is models.Ticket
+
+    product_ids = tickets.values_list("item").order_by().distinct()
+    products = models.Product.objects.filter(id__in=product_ids)
+
+    organized_tickets = []
+    for product in products:
+        related_tickets = tickets.filter(item=product)
+
+        # original taste
+        original_taste = related_tickets.filter(note__isnull=True)
+        if original_taste:
+            organized_tickets.append(aggregate_tickets(original_taste))
+
+        if len(original_taste) == len(related_tickets):
+            continue
+
+        # those with notes
+        special_tastes = related.filter(note__isnull=False)
+        notes = special_tastes.values_list("note", flat=True).order_by().distinct()
+        for note in notes:
+            same_taste = special_tastes.filter(note=note)
+            organized_tickets.append(aggregate_tickets(same_taste))
+
+    return organized_tickets
+
+
+class DisplayTicket:
+    def __init__(self, item, quantity, cost, note):
+        self.item = item
+        self.quantity = quantity
+        self.cost = cost
+        self.note = note
+
+    def __str__(self):
+        if self.note:
+            return _("{item}({note}) ×{qty}").format(
+                item=self.item, qty=self.quantity, note=self.note
+            )
+        else:
+            return _("{item} ×{qty}").format(item=self.item, qty=self.quantity)
+
+
+def aggregate_tickets(tickets):
+    assert tickets
+    sample = next(iter(tickets))
+
+    item = sample.item
+    note = sample.note
+    quantity = aggregate_fields(tickets, "quantity")
+    cost = aggregate_fields(tickets, "cost")
+
+    if not sample.item.mergable:
+        quantity = _("{total} ({separate})").format(
+            total=quantity,
+            separate=_("+").join(str(t.quantity) for t in tickets)
+        )
+
+    return DisplayTicket(item=item, quantity=quantity, cost=cost, note=note)
+
+
+def aggregate_fields(tickets, field):
+    if isinstance(tickets, QuerySet):
+        return tickets.aggregate(val=Sum(field))["val"]
+    else:
+        return sum(getattr(t, field) for t in tickets)

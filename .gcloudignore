@@ -18,14 +18,12 @@
 __pycache__/
 
 # Ignored by the build system
-/setup.cfg
+docs/
 Pipfile
 Pipfile.lock
-
-# Develop
-.venv
-.vscode
-
-# Docs
 License
 Readme.md
+
+# Develop
+.venv/
+.vscode/

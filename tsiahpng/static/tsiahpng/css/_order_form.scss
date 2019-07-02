@@ -1,0 +1,44 @@
+@import 'font';
+
+.ordering.form {
+    .field {
+        .inline {
+            display: inline-block;
+        }
+
+        .extra {
+            float: right;
+        }
+
+    }
+
+    @import 'user_dropdown';
+
+    .product.dropdown {
+
+        // list item
+        .price {
+            padding-left: .6rem;
+        }
+
+        // selected label
+        a.ui.label {
+
+            .price,
+            .ui.label {
+                display: none;
+            }
+        }
+    }
+
+    table {
+        tr.hint {
+            @extend %hint;
+        }
+
+        tfoot {
+            display: none;
+        }
+    }
+
+}

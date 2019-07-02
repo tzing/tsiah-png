@@ -1,0 +1,43 @@
+-load i18n
+-load tsiahpngtags
+-load humanize
+-load accounting
+table.ui.transaction.selectable.small.sortable.table
+  thead
+    tr
+      th.ensure.one.wide #
+      th.ensure.three.wide {% trans 'Time' %}
+      th.ensure.four.wide {% trans 'Event' %}
+      //- users
+      for user in users
+        {% if user %}
+        th.one.wide {{ user | username }}
+        {% else %}
+        th.one.wide {% trans 'Inactive users' %}
+        {% endif %}
+      //- end users
+      th.ensure.two.wide {% trans 'Subtotal' %}
+
+  tbody
+    //- events, transactions and balances
+    for event in events
+      tr
+        //- counter
+        td {{ forloop.counter0|add:events.start_index }}
+        //- time
+        td.computer.small(data-sort-value="{{ event.date_created|date:'U' }}") {{ event.date_created|date:'SHORT_DATETIME_FORMAT' }}
+        //- event
+        td {{ event }}
+          if event.related_order
+            -url 'tsiahpng:order_detail' event.related_order.id as related_order_url
+            p.meta
+              small
+                | {% blocktrans with order=event.related_order url=related_order_url %}Related to <a href="{{ url }}">{{ order }}</a>.{% endblocktrans %}
+        //- per user balance
+        for balance in event.transactions|get_user_balance:users
+          td.right.aligned(data-sort-value='{{ balance|default_if_none:0 }}') {{ balance|default_if_none:''|intcomma }}
+        //- balance
+        td.right.aligned(data-sort-value='{{ event.balance }}') {{ event.balance|intcomma }}
+      -empty
+        tr
+          td.hint.center.aligned(colspan='3') {% trans 'No transaction.' %}

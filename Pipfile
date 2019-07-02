@@ -4,10 +4,17 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-yapf = "*"
+black = "*"
 ipython = "*"
+libsass = "*"
+django-compressor = "*"
 
 [packages]
-django = ">=2.1.5"
+django = ">=2.1.9"
 pillow = "*"
-django-markdown2 = "*"
+pypugjs = "*"
+django-sass-processor = "*"
+markdown2 = "*"
+
+[pipenv]
+allow_prereleases = true

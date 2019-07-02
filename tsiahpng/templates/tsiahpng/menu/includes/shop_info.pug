@@ -1,0 +1,16 @@
+-load md2
+{% if shop.note and shop.image %}
+.ui.stackable.grid
+  .ten.wide.column
+    | {{ shop.note | markdown }}
+  .six.wide.column
+    a.ui.fluid.card(href='{{ shop.image.url }}', target='_blank')
+      .image
+        img(src='{{ shop.image.url }}')
+{% elif shop.note %}
+| {{ shop.note | markdown }}
+{% elif shop.image %}
+a.ui.centered.card(href='{{ shop.image.url }}', target='_blank')
+  .image
+    img(src='{{ shop.image.url }}')
+{% endif %}

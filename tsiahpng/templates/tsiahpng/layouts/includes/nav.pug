@@ -1,0 +1,11 @@
+-load i18n
+#navbar.ui.fixed.secondary.inverted.teal.menu
+  .ui.container
+    a.header.item(href="{% url 'tsiahpng:welcome' %}") {% trans 'Tsia̍h-Pn̄g' %}
+    a.right.dropdown.item
+      i.bars.icon
+    .right.menu
+      block nav
+        a.item(href="{% url 'tsiahpng:shop_list' %}") {% trans 'Menu' %}
+        a.item(href="{% url 'tsiahpng:order_list' %}") {% trans 'Orders' %}
+      a.item(href="{% url 'tsiahpng:admin:index' %}") {% trans 'Admin Panel' %}

@@ -1,0 +1,56 @@
+-extends 'tsiahpng/layouts/base.pug'
+-load i18n
+-load static
+-load sass_tags
+
+block extra_head
+  link(href="{% sass_src 'tsiahpng/css/menu.scss' %}", rel='stylesheet', type='text/css')
+
+block content
+  //- breadcrumb
+  .ui.rimless.vertical.segment
+    .ui.breadcrumb
+      a.section(href="{% url 'tsiahpng:welcome' %}") {% trans 'Home' %}
+      .divider  /
+      a.section(href="{% url 'tsiahpng:shop_list' %}") {% trans 'Menu' %}
+      .divider  /
+      .active.section {{ title }}
+
+  //- messages
+  include tsiahpng/includes/messages.pug
+
+  //- shop info
+  .ui.rimless.vertical.segment
+    include ./includes/shop_info.pug
+
+  //- recent orders
+  if recent_orders
+    .ui.rimless.vertical.segment
+      h3.header {% trans 'Recent orders' %}
+        include ./includes/recent_orders.pug
+
+  //- action
+  //- TODO move `if` when there is any other action added
+  if shop.changeable
+    .ui.rimless.vertical.segment
+      h3.header {% trans 'Action' %}
+
+      a.ui.labeled.basic.green.icon.button(href="{% url 'tsiahpng:shop_add_product' shop.id %}")
+        i.plus.icon
+        | {% trans 'Add product' %}
+
+  //- categories
+  -if related_products
+    .ui.rimless.vertical.segment
+      h3.header {% trans 'Menu' %}
+
+      #full-list.ui.basic.segment
+        include ./includes/detail_menu.pug
+
+block fab
+  include tsiahpng/includes/gotop.pug
+
+block extra_scripts
+  script(type='text/javascript', src="{% static 'tsiahpng/js/scrollspy.js' %}")
+  script(type='text/javascript', src="{% static 'tsiahpng/js/menu/detail.js' %}")
+  script(type='text/javascript', src="{% static 'tsiahpng/js/gotop.js' %}")

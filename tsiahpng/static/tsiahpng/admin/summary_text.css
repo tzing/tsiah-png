@@ -1,0 +1,10 @@
+code {
+    white-space: pre-wrap;
+    padding: 1px 5px;
+    font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, sans-serif;
+    background-color: #eff0f1;
+}
+
+pre {
+    margin-bottom: -.5rem;
+}

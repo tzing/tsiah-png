@@ -1,0 +1,27 @@
+-load i18n
+-load humanize
+
+//- right sticky menu for categories
+-if related_products
+  .ui.right.rail
+    .ui.secondary.vertical.menu
+      -for category in related_products
+        {% if category %}
+        a.item(href='#category-{{ category.id }}') {{ category }}
+        {% else %}
+        a.item(href='#unsorted') {% trans 'Unsorted' %}
+        {% endif %}
+
+//- segments for each category
+-for category, products in related_products.items
+  .ui.basic.spy.segment
+    {% if category %}
+    h4.header(id='category-{{ category.id }}') {{ category }}
+    {% else %}
+    h4.header#unsorted {% trans 'Unsorted' %}
+    {% endif %}
+
+    .ui.grid
+      -for prod in products
+        .four.wide.computer.five.wide.tablet.eight.wide.mobile.column {{ prod }}
+          small.price ${{ prod.price | intcomma }}

@@ -1,0 +1,14 @@
+//- ONLY used by `form_order_product.pug`
+-load i18n
+-load humanize
+.item(data-value='{{ product.id }}', data-price='{{ product.price }}', data-name='{{ product.name }}', data-changeable='{{ product.changeable | lower }}')
+  //- category label
+  {% if product.category %}
+  .ui.label {{ product.category }}
+  {% else %}
+  .ui.label {% trans 'Unsorted' %}
+  {% endif %}
+  //- product name
+  | {{ product }}
+  //- price
+  small.price ${{ product.price | intcomma }}
