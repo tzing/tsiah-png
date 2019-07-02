@@ -17,14 +17,8 @@
 
 .shop.segment {
     .header {
-        .ui.label {
-            margin-right: .6rem;
-            margin-top: 0;
-
-            &>.icon {
-                margin-right: 0;
-                font-size: .8em;
-            }
+        img {
+            background-color: #42ADFF;
         }
 
         .sub.header {
