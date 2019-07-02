@@ -19,6 +19,8 @@ Accounting plugin is disabled by default and would not affect other features.
   - [ Configure URL](#configure-url)
   - [ Setup Pug](#setup-pug)
   - [ Setup SASS processor](#setup-sass-processor)
+  - [ Migrate database](#migrate-database)
+  - [ Run](#run)
 - [ Optional settings](#optional-settings)
   - [ Media file path & url](#media-file-path-url)
   - [ Internationlization](#internationlization)
@@ -55,8 +57,14 @@ git submodule update --init
 All requirements are listed in [Pipfile](../Pipfile).
 
 ```bash
+# install dependencies [*]
 pipenv install --dev
+
+# active venv
+pipenv shell
 ```
+
+Note that `libsass` and `django-compressor` are required during setup, but not required on deploy. Therefore, they are listed in `dev` block in Pipifle.
 
 
 ## Create Django project
@@ -157,6 +165,27 @@ STATICFILES_FINDERS = [
 
 STATIC_ROOT = os.path.join(BASE_DIR, "collected_statics")
 ```
+
+
+### Migrate database
+
+```bash
+python manage.py migrate
+```
+
+and you can create speruser now:
+```bash
+python manage.py createsuperuser
+```
+
+
+### Run
+
+```bash
+python manage.py runserver
+```
+
+✨🍰✨
 
 
 ## Optional settings
