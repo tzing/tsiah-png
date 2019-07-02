@@ -41,7 +41,7 @@ Payment system? No, go to see your friend in real life.
 
 ## Installation
 
-See [docs/installation](docs/installation.md).
+See [docs/installation](docs/Installation.md).
 
 
 ## Credits
