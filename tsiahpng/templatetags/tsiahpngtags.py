@@ -34,7 +34,7 @@ def short_naturalday(value):
     if today.year == value.year:
         return django.template.defaultfilters.date(value, "n/j")
 
-    return django.template.defaultfilters.date(value, "%Y/%n/%j")
+    return django.template.defaultfilters.date(value, "Y/n/j")
 
 
 @register.filter()
