@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-19 07:42+0000\n"
+"POT-Creation-Date: 2019-07-03 03:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -140,7 +140,7 @@ msgstr "訂單別名"
 msgid "Order date"
 msgstr "訂購日期"
 
-#: tsiahpng/models.py:171 tsiahpng/templates/tsiahpng/homepage.pug:58
+#: tsiahpng/models.py:171 tsiahpng/templates/tsiahpng/homepage.pug:59
 #: tsiahpng/templates/tsiahpng/menu/includes/recent_orders.pug:11
 msgid "Available for ordering"
 msgstr "可以訂購"
@@ -157,7 +157,7 @@ msgstr "以取消選取代替刪除訂單。"
 msgid "Date created"
 msgstr "建立日期"
 
-#: tsiahpng/models.py:195 tsiahpng/models.py:241 tsiahpng/views.py:156
+#: tsiahpng/models.py:195 tsiahpng/models.py:241 tsiahpng/views.py:158
 msgid "Order"
 msgstr "訂單"
 
@@ -269,31 +269,31 @@ msgstr "返回上一頁"
 msgid "Home"
 msgstr "首頁"
 
-#: tsiahpng/templates/tsiahpng/homepage.pug:35
+#: tsiahpng/templates/tsiahpng/homepage.pug:34
 msgid "Actions"
 msgstr "操作"
 
 #: tsiahpng/templates/tsiahpng/homepage.pug:39
-#: tsiahpng/templates/tsiahpng/homepage.pug:103
+#: tsiahpng/templates/tsiahpng/homepage.pug:102
 #: tsiahpng/templates/tsiahpng/order/index.pug:22
-#: tsiahpng/templates/tsiahpng/order/index.pug:43 tsiahpng/views.py:228
+#: tsiahpng/templates/tsiahpng/order/index.pug:43 tsiahpng/views.py:227
 msgid "Create order"
 msgstr "建立訂單"
 
-#: tsiahpng/templates/tsiahpng/homepage.pug:43
+#: tsiahpng/templates/tsiahpng/homepage.pug:44
 msgid "View recent orders"
 msgstr "檢視近期訂單"
 
-#: tsiahpng/templates/tsiahpng/homepage.pug:48
+#: tsiahpng/templates/tsiahpng/homepage.pug:49
 msgid "Quick ordering"
 msgstr "快速點餐"
 
-#: tsiahpng/templates/tsiahpng/homepage.pug:72
+#: tsiahpng/templates/tsiahpng/homepage.pug:70
 #, python-format
 msgid "Ordering %(shop)s on %(date)s"
 msgstr "在%(date)s訂購%(shop)s"
 
-#: tsiahpng/templates/tsiahpng/homepage.pug:94
+#: tsiahpng/templates/tsiahpng/homepage.pug:93
 #: tsiahpng/templates/tsiahpng/menu/detail.pug:29
 msgid "Recent orders"
 msgstr "近期訂單"
@@ -422,11 +422,11 @@ msgstr "下單囉"
 msgid "Are you sure you want to close the order “%(order)s”?"
 msgstr "確定要關閉訂單「%(order)s」？"
 
-#: tsiahpng/templates/tsiahpng/order/includes/modal_close_order.pug:18
+#: tsiahpng/templates/tsiahpng/order/includes/modal_close_order.pug:19
 msgid "No"
 msgstr "否"
 
-#: tsiahpng/templates/tsiahpng/order/includes/modal_close_order.pug:21
+#: tsiahpng/templates/tsiahpng/order/includes/modal_close_order.pug:22
 msgid "Yes"
 msgstr "是"
 
@@ -499,6 +499,10 @@ msgstr "還沒下單"
 #: tsiahpng/templates/tsiahpng/order/includes/summary_personal.pug:10
 msgid "Subtotal"
 msgstr "小計"
+
+#: tsiahpng/templates/tsiahpng/order/includes/summary_order.pug:18
+msgid "Original taste"
+msgstr "原味"
 
 #: tsiahpng/templates/tsiahpng/order/includes/summary_order.pug:21
 #, python-format
@@ -574,49 +578,49 @@ msgstr "無法對{shop}進行變更。"
 msgid "Successfully add {prod}."
 msgstr "成功新增了{prod}。"
 
-#: tsiahpng/views.py:125 tsiahpng/views.py:188 tsiahpng/views.py:219
+#: tsiahpng/views.py:127 tsiahpng/views.py:190 tsiahpng/views.py:221
 msgid "Invalid requests."
 msgstr "無效的資料。"
 
-#: tsiahpng/views.py:132
+#: tsiahpng/views.py:134
 #, python-brace-format
 msgid "Add product to {shop}"
 msgstr "新增項目到{shop}"
 
-#: tsiahpng/views.py:169 tsiahpng/views.py:243
+#: tsiahpng/views.py:171 tsiahpng/views.py:242
 #, python-brace-format
 msgid "Order #{id} id not exists."
 msgstr "訂單#{id}不存在"
 
-#: tsiahpng/views.py:179
+#: tsiahpng/views.py:181
 msgid "{user} ordered {items}; ${price:,} in total."
 msgstr "{user}訂購了{items}，共{price:,}元。"
 
-#: tsiahpng/views.py:205
+#: tsiahpng/views.py:207
 msgid "No enough permission for this operation."
 msgstr "沒有足夠的權限進行此操作。"
 
-#: tsiahpng/views.py:214
+#: tsiahpng/views.py:216
 #, python-brace-format
 msgid "Successfully create order \"{order}\"."
 msgstr "成功建立了訂單「{order}」。"
 
-#: tsiahpng/views.py:250
+#: tsiahpng/views.py:249
 msgid "Order closed."
 msgstr "訂單已關閉。"
 
-#: tsiahpng/views.py:312
+#: tsiahpng/views.py:311
 msgid "Page Not Found"
 msgstr "找不到頁面"
 
-#: tsiahpng/views.py:313
+#: tsiahpng/views.py:312
 msgid "Life is too short to be lost in such a small place."
 msgstr "人生苦短，來點蜂蜜檸檬吧。"
 
-#: tsiahpng/views.py:323
+#: tsiahpng/views.py:322
 msgid "Internal Server Error"
 msgstr "伺服器錯誤"
 
-#: tsiahpng/views.py:323
+#: tsiahpng/views.py:322
 msgid "Something goes wrong."
 msgstr "哪裡出錯了，讓我逃避現實個兩秒鐘。"

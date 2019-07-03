@@ -15,7 +15,7 @@ table.ui.summary.table
       td {{ prod.grouper }}
       //- product quantity
       td
-        -trans 'Original taste' as str_orig_taste
+        {% trans 'Original taste' as str_orig_taste %}
         -for ticket in prod.list|organize_tickets
           -firstof ticket.note str_orig_taste as note
           {% blocktrans with name=note qty=ticket.quantity %}{{ name }} ×{{ qty }}{% endblocktrans %}

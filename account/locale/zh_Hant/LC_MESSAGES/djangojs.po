@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-20 15:31+0000\n"
+"POT-Creation-Date: 2019-07-03 03:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: account/static/tsiahpng/js/account/create_event.js:109
+#: account/static/tsiahpng/js/account/close_order.js:10
+msgid "Please select a passbook."
+msgstr "請選擇一個帳本。"
+
+#: account/static/tsiahpng/js/account/create_event.js:88
 msgid "No user selected."
 msgstr "未選擇使用者。"
