@@ -4,7 +4,7 @@ from django.conf import settings
 __all__ = ("ACCOUNT_PER_PAGE",)
 
 
-ITEMS_PER_PAGE = getattr(settings, "ITEMS_PER_PAGE", 25)
+ITEMS_PER_PAGE = getattr(settings, "ITEMS_PER_PAGE", 24)
 """Number of items to be displayed in a single page.
 """
 

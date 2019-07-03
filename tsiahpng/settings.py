@@ -19,7 +19,7 @@ DEFAULT_PROD_PRICE = getattr(settings, "DEFAULT_PROD_PRICE", 30)
 """[int] Default price of products.
 """
 
-ITEMS_PER_PAGE = getattr(settings, "ITEMS_PER_PAGE", 25)
+ITEMS_PER_PAGE = getattr(settings, "ITEMS_PER_PAGE", 24)
 """Number of items to be displayed in a single page.
 """
 
