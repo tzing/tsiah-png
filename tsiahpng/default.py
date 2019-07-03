@@ -1,5 +1,6 @@
-from django.utils import timezone
+from datetime import timedelta
 
+from django.utils import timezone
 
 from . import settings
 
@@ -15,6 +16,6 @@ def default_order_date():
     current_time = now.time()
 
     if current_time >= settings.ORDER_DAYEND:
-        return today + datetime.timedelta(days=1)
+        return today + timedelta(days=1)
     else:
         return today
