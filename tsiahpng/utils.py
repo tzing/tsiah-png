@@ -121,7 +121,7 @@ def organize_tickets_qs(tickets):
             continue
 
         # those with notes
-        special_tastes = related.filter(note__isnull=False)
+        special_tastes = related_tickets.filter(note__isnull=False)
         notes = special_tastes.values_list("note", flat=True).order_by().distinct()
         for note in notes:
             same_taste = special_tastes.filter(note=note)
@@ -157,8 +157,7 @@ def aggregate_tickets(tickets):
 
     if not sample.item.mergable:
         quantity = _("{total} ({separate})").format(
-            total=quantity,
-            separate=_("+").join(str(t.quantity) for t in tickets)
+            total=quantity, separate=_("+").join(str(t.quantity) for t in tickets)
         )
 
     return DisplayTicket(item=item, quantity=quantity, cost=cost, note=note)
