@@ -1,0 +1,25 @@
+img.emoji {
+    display: inline-block !important;
+    height: 1em !important;
+    width: 1em !important;
+}
+
+
+.dropdown {
+
+    .text,
+    .menu>.item {
+        &>img.emoji {
+            margin-top: 0;
+            margin-right: 2px;
+        }
+    }
+}
+
+.dropdown,
+.menu>.item {
+    &>.ui.label>img.emoji {
+        height: 1em !important;
+        vertical-align: top;
+    }
+}

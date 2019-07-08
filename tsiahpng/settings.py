@@ -48,6 +48,10 @@ MARKDOWN2_EXTRAS = getattr(settings, "MARKDOWN2_EXTRAS", "code-friendly, strike"
 see: https://github.com/trentm/python-markdown2/blob/master/lib/markdown2.py
 """
 
+USE_TWEMOJI = getattr(settings, "USE_TWEMOJI", False)
+"""[bool] use twitter twemoji in this site.
+"""
+
 
 def _assert_type(name, type_):
     value = globals()[name]
@@ -64,3 +68,4 @@ _assert_type("ORDER_PER_PAGE", int)
 _assert_type("ALLOW_ANYONE_ALTER_ORDER_STATUS", bool)
 _assert_type("MAX_RECENT_ORDERS", int)
 _assert_type("MARKDOWN2_EXTRAS", str)
+_assert_type("USE_TWEMOJI", bool)

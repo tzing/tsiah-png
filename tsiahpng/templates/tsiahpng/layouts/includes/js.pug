@@ -1,5 +1,11 @@
 -load static
+-load tsiahpngtags
 script(type='text/javascript', src="{% static 'tsiahpng/js/lib/jquery-3.3.1.min.js' %}")
 script(type='text/javascript', src="{% static 'semantic/semantic.min.js' %}")
 script(type='text/javascript', src="{% url 'tsiahpng:javascript-catalog' %}")
 script(type='text/javascript', src="{% static 'tsiahpng/js/navbar.js' %}")
+-site_settings "USE_TWEMOJI" as use_twemoji
+-if use_twemoji
+  script(src='https://twemoji.maxcdn.com/v/latest/twemoji.min.js', crossorigin='anonymous')
+  script.
+    twemoji.parse(document.body);

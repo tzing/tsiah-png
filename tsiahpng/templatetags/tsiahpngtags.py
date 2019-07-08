@@ -6,6 +6,7 @@ from django.db.models import Sum
 from django.utils.translation import gettext as _
 
 from .. import models
+from .. import settings
 from .. import utils
 
 register = django.template.Library()
@@ -88,3 +89,10 @@ def dictsum(value, arg):
 @register.filter()
 def organize_tickets(tickets):
     return utils.organize_tickets(tickets)
+
+
+@register.simple_tag()
+def site_settings(name):
+    assert isinstance(name, str)
+    assert name.upper() in ("USE_TWEMOJI",)
+    return getattr(settings, name.upper())
