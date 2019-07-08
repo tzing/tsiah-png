@@ -23,7 +23,7 @@ class Shop(models.Model):
     changeable = models.BooleanField(
         verbose_name=_("Changeable"),
         default=True,
-        help_text=_("Uncheckeded if users are not allowed to change menu."),
+        help_text=_("Unchecked if users are not allowed to change menu."),
     )
 
     image = models.ImageField(

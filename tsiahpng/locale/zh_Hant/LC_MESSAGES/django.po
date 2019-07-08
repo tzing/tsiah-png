@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-03 03:52+0000\n"
+"POT-Creation-Date: 2019-07-08 07:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,7 +47,7 @@ msgid "Changeable"
 msgstr "可變動"
 
 #: tsiahpng/models.py:26
-msgid "Uncheckeded if users are not allowed to change menu."
+msgid "Unchecked if users are not allowed to change menu."
 msgstr "取消選取以禁止使用者變更菜單。"
 
 #: tsiahpng/models.py:30
@@ -555,7 +555,7 @@ msgstr "沒有項目"
 msgid "{total} ({separate})"
 msgstr ""
 
-#: tsiahpng/utils.py:161
+#: tsiahpng/utils.py:160
 msgid "+"
 msgstr ""
 

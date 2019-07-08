@@ -211,7 +211,7 @@ urlpatterns = [
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 ```
 
-### Internationlization
+### Internationalization
 
 Only Traditional Chinese translation is provided. Or you can [make one] for your language.
 
