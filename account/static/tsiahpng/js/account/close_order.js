@@ -22,7 +22,23 @@ $('.ui.toggle.checkbox').checkbox({
 
 $('.account .dropdown').dropdown({
     apiSettings: {
-        url: $('.account .dropdown').data('api')
+        url: $('.account .dropdown').data('api'),
+
+        onResponse: function (response) {
+            if (typeof twemoji === 'undefined') {
+                return response;
+            }
+
+            var revised_response = { success: response.success, results: [] }
+            response.results.forEach(function (element) {
+                revised_response.results.push({
+                    name: twemoji.parse(element.name),
+                    value: element.value
+                })
+            });
+
+            return revised_response;
+        }
     },
 });
 
