@@ -1,7 +1,6 @@
 -load i18n
 -load humanize
 -load tsiahpngtags
--regroup order.tickets|dictsort:'user.id' by user as grouped_tickets
 table.ui.summary.table
   thead
     tr
@@ -9,18 +8,29 @@ table.ui.summary.table
       th.nine.wide {% trans 'Tickets' %}
       th.three.wide {% trans 'Subtotal' %}
   tbody
-    {% for prod in grouped_tickets %}
+    {% with grouped_tickets=order.tickets|group_by_users %}
+    {% for user, prod in grouped_tickets.items %}
     tr
-      td {{ prod.grouper | username }}
+      //- user name
+      {% if user %}
+      td {{ user | username }}
+      {% else %}
+      td.hint {% trans 'Inactive users' %}
+      {% endif %}
+
+      //- ordered products
       td
-        -for ticket in prod.list|organize_tickets
+        -for ticket in prod|organize_tickets
           {{ ticket }}
           {% if not forloop.last %}{% trans ', ' %}{% endif %}
-      td.right.aligned ${{ prod.list|dictsum:'cost'|intcomma }}
+      td.right.aligned ${{ prod|dictsum:'cost'|intcomma }}
+
     {% empty %}
     tr.hint
       td.center.aligned(colspan='2') {% trans 'No tickets' %}
     {% endfor %}
+    {% endwith %}
+
   if order.tickets
     tfoot
       tr

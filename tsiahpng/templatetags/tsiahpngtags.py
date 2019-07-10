@@ -1,6 +1,8 @@
+from collections import OrderedDict
 from datetime import date, datetime
 
 import django.template
+import django.contrib.auth.models as auth
 
 from django.db.models import Sum
 from django.utils.translation import gettext as _
@@ -96,3 +98,25 @@ def site_settings(name):
     assert isinstance(name, str)
     assert name.upper() in ("USE_TWEMOJI",)
     return getattr(settings, name.upper())
+
+
+@register.filter()
+def group_by_users(items):
+    assert isinstance(items, models.models.QuerySet)
+
+    user_ids = items.values_list("user").order_by().distinct()
+    related_users = auth.User.objects.filter(id__in=user_ids)
+
+    # items from active users
+    grouped_items = OrderedDict()
+    for user in related_users.filter(is_active=True):
+        related_items = items.filter(user=user)
+        grouped_items[user] = related_items
+
+    # items from inactive users
+    inactive_users = related_users.filter(is_active=False)
+    if inactive_users:
+        related_items = items.filter(user__in=inactive_users)
+        grouped_items[None] = related_items
+
+    return grouped_items
