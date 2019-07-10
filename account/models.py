@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.utils.timezone import localtime
 from django.utils.translation import gettext_lazy as _
 
 
@@ -112,7 +112,7 @@ class Event(models.Model):
         if self.title:
             return self.title
         return _("Record created on {create:%Y/%m/%d %H:%M}").format(
-            create=self.date_created
+            create=localtime(self.date_created)
         )
 
     def transactions(self, **kwargs):
