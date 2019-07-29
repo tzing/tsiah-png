@@ -297,7 +297,7 @@ def order_stringify(request, order_id):
     except TemplateSyntaxError as e:
         args = ", ".join(e.args)
         return JsonResponse(
-            {"success": False, "message": f"Template error: {args}"}, status=400
+            {"success": False, "message": f"Template error: {args}"}, status=500
         )
     else:
         return JsonResponse({"success": True, "text": summary})

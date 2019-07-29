@@ -15,7 +15,7 @@ register = django.template.Library()
 def no_qty(ticket):
     """Render ticket without quantity if the quantity is one.
     """
-    assert isinstance(ticket, models.Ticket)
+    assert isinstance(ticket, (models.Ticket, utils.DisplayTicket))
     if ticket.quantity > 1:
         return str(ticket)
     elif ticket.note:

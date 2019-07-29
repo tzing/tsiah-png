@@ -6,7 +6,14 @@ from django.contrib import auth
 
 from . import models
 
-__all__ = ("try_parse", "str2bool", "get_username", "is_new_post", "organize_tickets")
+__all__ = (
+    "try_parse",
+    "str2bool",
+    "get_username",
+    "is_new_post",
+    "organize_tickets",
+    "DisplayTicket",
+)
 
 
 def try_parse(value, default=0, type=int):
