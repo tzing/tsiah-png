@@ -16,7 +16,7 @@ class CreateProductForm(forms.Form):
     shop = forms.IntegerField()
     category = forms.IntegerField()
     name = forms.CharField(max_length=128)
-    price = forms.IntegerField()
+    price = forms.FloatField(min_value=0)
 
     def to_model(self) -> models.Product:
         """Convert form data to model, or return None if any error happens.
@@ -87,7 +87,7 @@ class OrderingForm(forms.Form):
         item_ids = param.get("items").split(",")
         for id_ in item_ids:
             self.fields[f"quantity_{id_}"] = forms.IntegerField(min_value=0)
-            self.fields[f"price_{id_}"] = forms.IntegerField(min_value=0)
+            self.fields[f"price_{id_}"] = forms.FloatField(min_value=0)
             self.fields[f"note_{id_}"] = forms.CharField(max_length=768, required=False)
 
     def to_models(self) -> typing.List[models.Ticket]:

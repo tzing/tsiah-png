@@ -61,7 +61,7 @@ def _assert_type(name, type_):
 
 
 _assert_type("ORDER_DAYEND", datetime.time)
-_assert_type("DEFAULT_PROD_PRICE", int)
+_assert_type("DEFAULT_PROD_PRICE", (int, float))
 _assert_type("ITEMS_PER_PAGE", int)
 _assert_type("SHOP_PER_PAGE", int)
 _assert_type("ORDER_PER_PAGE", int)

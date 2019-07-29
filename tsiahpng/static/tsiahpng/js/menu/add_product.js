@@ -1,5 +1,10 @@
 $('#id_category').dropdown();
 
+// https://github.com/Semantic-Org/Semantic-UI/issues/4300
+$.fn.form.settings.rules.greaterThan = function (inputValue, validationValue) {
+    return inputValue >= validationValue;
+}
+
 $('.form').form({
     on: 'blur',
     fields: {
@@ -21,12 +26,16 @@ $('.form').form({
                 }
             ]
         },
-        integer: {
+        decimal: {
             identifier: 'price',
             rules: [
                 {
-                    type: 'integer[0..]',
-                    prompt: gettext('Please enter a positive integer price.')
+                    type: 'decimal',
+                    prompt: gettext('Please enter a number.')
+                },
+                {
+                    type: 'greaterThan[0]',
+                    prompt: gettext('Please enter a positive price.')
                 }
             ]
         },

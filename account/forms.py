@@ -24,7 +24,7 @@ class AddEventForm(forms.Form):
         # dynamic add fields
         user_ids = param.get("users").split(",")
         for id_ in user_ids:
-            self.fields[f"balance_{id_}"] = forms.IntegerField()
+            self.fields[f"balance_{id_}"] = forms.FloatField()
 
     def to_model(self) -> models.Event:
         if not self.is_valid():

@@ -143,7 +143,7 @@ class Transaction(models.Model):
         db_index=True,
     )
 
-    balance = models.IntegerField(verbose_name=_("Change in balance"))
+    balance = models.FloatField(verbose_name=_("Change in balance"))
 
     class Meta:
         verbose_name = _("Transaction")

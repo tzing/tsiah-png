@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-03 03:52+0000\n"
+"POT-Creation-Date: 2019-07-29 11:20+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,17 +17,21 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: tsiahpng/static/tsiahpng/js/menu/add_product.js:11
+#: tsiahpng/static/tsiahpng/js/menu/add_product.js:16
 msgid "Please select a category."
 msgstr "請選擇一個分類。"
 
-#: tsiahpng/static/tsiahpng/js/menu/add_product.js:20
+#: tsiahpng/static/tsiahpng/js/menu/add_product.js:25
 msgid "Please enter product name."
 msgstr "請輸入商品名稱。"
 
-#: tsiahpng/static/tsiahpng/js/menu/add_product.js:29
-msgid "Please enter a positive integer price."
-msgstr "請輸入正整數價格。"
+#: tsiahpng/static/tsiahpng/js/menu/add_product.js:34
+msgid "Please enter a number."
+msgstr "請輸入數字。"
+
+#: tsiahpng/static/tsiahpng/js/menu/add_product.js:38
+msgid "Please enter a positive price."
+msgstr "請輸入正整價格。"
 
 #: tsiahpng/static/tsiahpng/js/order/create_order.js:27
 msgid "Please select ordered shop."

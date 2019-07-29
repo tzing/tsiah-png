@@ -1,3 +1,4 @@
+from django.core import validators
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -130,8 +131,10 @@ class Product(models.Model):
         verbose_name=_("Ordering"), default=-1, db_index=True
     )
 
-    price = models.PositiveIntegerField(
-        verbose_name=_("Price"), default=settings.DEFAULT_PROD_PRICE
+    price = models.FloatField(
+        verbose_name=_("Price"),
+        default=settings.DEFAULT_PROD_PRICE,
+        validators=[validators.MinValueValidator(0)],
     )
 
     class Meta:
@@ -256,8 +259,10 @@ class Ticket(models.Model):
         null=True,
     )
 
-    quantity = models.IntegerField(verbose_name=_("Quantity"), default=0)
-    cost = models.IntegerField(verbose_name=_("Cost"), default=0)
+    quantity = models.PositiveIntegerField(verbose_name=_("Quantity"), default=0)
+    cost = models.FloatField(
+        verbose_name=_("Cost"), default=0, validators=[validators.MinValueValidator(0)]
+    )
 
     note = models.CharField(
         verbose_name=_("Note"), max_length=1024, null=True, blank=True
