@@ -16,7 +16,7 @@
     if order.note
       .content
         .description
-          | {{ order.note | markdown }}
+          | {{ order.note | markdown | remove_link }}
 
     .extra.content
       .ui.list

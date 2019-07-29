@@ -10,15 +10,12 @@ class TsiahPngAdminSite(admin.AdminSite):
     APP_ORDERING = {"auth": 10, "tsiahpng": 100, "account": 200}
     MODEL_ORDERING = {
         "WelcomeText": 50,
+        "Category": 100,
         "Shop": 110,
-        "Category": 111,
-        "Product": 112,
         "Order": 120,
-        "Ticket": 121,
         "SummaryText": 180,
         "Passbook": 210,
         "Event": 220,
-        "Transaction": 230,
     }
 
     def get_app_list(self, request):
@@ -40,13 +37,23 @@ class TsiahPngAdminSite(admin.AdminSite):
         return app_list
 
 
+class ProductInline(admin.TabularInline):
+    model = models.Product
+
+
 class ShopAdmin(admin.ModelAdmin):
     list_display = ["__str__", "is_active", "changeable"]
+    inlines = [ProductInline]
 
 
-class ProductAdmin(admin.ModelAdmin):
-    list_filter = ["shop", "category"]
-    list_display = ["name", "shop", "category", "price", "is_active"]
+class TicketInline(admin.TabularInline):
+    model = models.Ticket
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        field = super().formfield_for_foreignkey(db_field, request, **kwargs)
+        if db_field.name == "item" and request.object:
+            field.queryset = field.queryset.filter(shop=request.object.shop)
+        return field
 
 
 class OrderAdmin(admin.ModelAdmin):
@@ -60,10 +67,23 @@ class OrderAdmin(admin.ModelAdmin):
         "sum_cost",
     ]
 
+    inlines = [TicketInline]
 
-class TicketAdmin(admin.ModelAdmin):
-    list_filter = ["user", "order"]
-    list_display = ["__str__", "order", "user", "cost"]
+    def get_form(self, request, obj=None, **kwargs):
+        # save obj reference for future processing in Inline
+        request.object = obj
+        return super().get_form(request, obj, **kwargs)
+
+    def get_readonly_fields(self, request, obj=None):
+        if obj:
+            return ["shop"]
+        else:
+            return []
+
+    def get_inline_instances(self, request, obj=None):
+        if obj:
+            return super().get_inline_instances(request, obj)
+        return []
 
 
 class WelcomeTextAdmin(admin.ModelAdmin):
@@ -82,21 +102,17 @@ class SummaryTextAdmin(admin.ModelAdmin):
 # django admin
 admin.site.register(models.Shop, admin_class=ShopAdmin)
 admin.site.register(models.Category)
-admin.site.register(models.Product, admin_class=ProductAdmin)
 admin.site.register(models.Order, admin_class=OrderAdmin)
-admin.site.register(models.Ticket, admin_class=TicketAdmin)
 admin.site.register(models.WelcomeText, admin_class=WelcomeTextAdmin)
 admin.site.register(models.SummaryText, admin_class=SummaryTextAdmin)
 
 # customized admin
 site = TsiahPngAdminSite(name="tsiahpng_admin")
 
-site.register(auth.models.User)
+site.register(auth.models.User, admin_class=auth.admin.UserAdmin)
 
 site.register(models.Shop, admin_class=ShopAdmin)
 site.register(models.Category)
-site.register(models.Product, admin_class=ProductAdmin)
 site.register(models.Order, admin_class=OrderAdmin)
-site.register(models.Ticket, admin_class=TicketAdmin)
 site.register(models.WelcomeText, admin_class=WelcomeTextAdmin)
 site.register(models.SummaryText, admin_class=SummaryTextAdmin)

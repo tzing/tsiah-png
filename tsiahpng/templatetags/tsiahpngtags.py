@@ -1,10 +1,12 @@
 from collections import OrderedDict
 from datetime import date, datetime
+import re
 
 import django.template
 import django.contrib.auth.models as auth
 
 from django.db.models import Sum
+from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
 from .. import models
@@ -120,3 +122,9 @@ def group_by_users(items):
         grouped_items[None] = related_items
 
     return grouped_items
+
+
+@register.filter()
+def remove_link(text):
+    pattern = re.compile(r"<\s*\/?\s*a\b[^>]*?>")
+    return mark_safe(pattern.sub("", text))

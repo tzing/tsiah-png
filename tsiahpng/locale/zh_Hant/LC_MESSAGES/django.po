@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-08 07:22+0000\n"
+"POT-Creation-Date: 2019-07-29 10:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -180,7 +180,7 @@ msgid "Total cost"
 msgstr "總金額"
 
 #: tsiahpng/models.py:245
-#: tsiahpng/templates/tsiahpng/order/includes/summary_personal.pug:8
+#: tsiahpng/templates/tsiahpng/order/includes/summary_personal.pug:7
 msgid "User"
 msgstr "使用者"
 
@@ -206,13 +206,13 @@ msgstr "訂購項目"
 msgid "Ordered Items"
 msgstr "訂購項目"
 
-#: tsiahpng/models.py:277 tsiahpng/utils.py:142
+#: tsiahpng/models.py:277 tsiahpng/utils.py:149
 #, python-brace-format
 msgid "{item}({note}) ×{qty}"
 msgstr ""
 
-#: tsiahpng/models.py:281 tsiahpng/templatetags/tsiahpngtags.py:62
-#: tsiahpng/templatetags/tsiahpngtags.py:69 tsiahpng/utils.py:146
+#: tsiahpng/models.py:281 tsiahpng/templatetags/tsiahpngtags.py:67
+#: tsiahpng/templatetags/tsiahpngtags.py:74 tsiahpng/utils.py:153
 #, python-brace-format
 msgid "{item} ×{qty}"
 msgstr ""
@@ -331,7 +331,7 @@ msgstr "新增品項"
 #: tsiahpng/templates/tsiahpng/menu/includes/detail_menu.pug:12
 #: tsiahpng/templates/tsiahpng/menu/includes/detail_menu.pug:21
 #: tsiahpng/templates/tsiahpng/order/includes/ordering/item_product.pug:9
-#: tsiahpng/templatetags/tsiahpngtags.py:69
+#: tsiahpng/templatetags/tsiahpngtags.py:74
 msgid "Unsorted"
 msgstr "未分類"
 
@@ -491,12 +491,12 @@ msgstr "項目"
 
 #: tsiahpng/templates/tsiahpng/order/includes/ordering/table_tickets.pug:11
 #: tsiahpng/templates/tsiahpng/order/includes/summary_order.pug:27
-#: tsiahpng/templates/tsiahpng/order/includes/summary_personal.pug:22
+#: tsiahpng/templates/tsiahpng/order/includes/summary_personal.pug:30
 msgid "No tickets"
 msgstr "還沒下單"
 
 #: tsiahpng/templates/tsiahpng/order/includes/summary_order.pug:10
-#: tsiahpng/templates/tsiahpng/order/includes/summary_personal.pug:10
+#: tsiahpng/templates/tsiahpng/order/includes/summary_personal.pug:9
 msgid "Subtotal"
 msgstr "小計"
 
@@ -510,20 +510,24 @@ msgid "%(name)s ×%(qty)s"
 msgstr ""
 
 #: tsiahpng/templates/tsiahpng/order/includes/summary_order.pug:22
-#: tsiahpng/templates/tsiahpng/order/includes/summary_personal.pug:18
-#: tsiahpng/templatetags/tsiahpngtags.py:72
+#: tsiahpng/templates/tsiahpng/order/includes/summary_personal.pug:25
+#: tsiahpng/templatetags/tsiahpngtags.py:77
 msgid ", "
 msgstr "、"
 
 #: tsiahpng/templates/tsiahpng/order/includes/summary_order.pug:33
-#: tsiahpng/templates/tsiahpng/order/includes/summary_personal.pug:28
+#: tsiahpng/templates/tsiahpng/order/includes/summary_personal.pug:38
 #, python-format
 msgid "%(qty)s items"
 msgstr "%(qty)s個項目"
 
-#: tsiahpng/templates/tsiahpng/order/includes/summary_personal.pug:9
+#: tsiahpng/templates/tsiahpng/order/includes/summary_personal.pug:8
 msgid "Tickets"
 msgstr "訂單"
+
+#: tsiahpng/templates/tsiahpng/order/includes/summary_personal.pug:18
+msgid "Inactive users"
+msgstr ""
 
 #: tsiahpng/templates/tsiahpng/order/index.pug:30
 msgid "No any order yet."
@@ -534,28 +538,28 @@ msgstr "目前沒有任何訂單。"
 msgid "{item}({note})"
 msgstr ""
 
-#: tsiahpng/templatetags/tsiahpngtags.py:27
+#: tsiahpng/templatetags/tsiahpngtags.py:32
 msgid "today"
 msgstr "今天"
 
-#: tsiahpng/templatetags/tsiahpngtags.py:29
+#: tsiahpng/templatetags/tsiahpngtags.py:34
 msgid "tomorrow"
 msgstr "明天"
 
-#: tsiahpng/templatetags/tsiahpngtags.py:31
+#: tsiahpng/templatetags/tsiahpngtags.py:36
 msgid "yesterday"
 msgstr "昨天"
 
-#: tsiahpng/templatetags/tsiahpngtags.py:46
+#: tsiahpng/templatetags/tsiahpngtags.py:51
 msgid "no items"
 msgstr "沒有項目"
 
-#: tsiahpng/utils.py:159
+#: tsiahpng/utils.py:166
 #, python-brace-format
 msgid "{total} ({separate})"
 msgstr ""
 
-#: tsiahpng/utils.py:160
+#: tsiahpng/utils.py:167
 msgid "+"
 msgstr ""
 

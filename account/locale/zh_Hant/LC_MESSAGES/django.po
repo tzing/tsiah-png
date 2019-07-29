@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-25 15:51+0000\n"
+"POT-Creation-Date: 2019-07-29 10:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: account/apps.py:7 account/templates/tsiahpng/account/create_event.pug:16
 #: account/templates/tsiahpng/account/detail.pug:18
-#: account/templates/tsiahpng/layouts/includes/nav.pug:6 account/views.py:26
+#: account/templates/tsiahpng/layouts/includes/nav.pug:6 account/views.py:28
 msgid "Account"
 msgstr "帳目"
 
@@ -206,38 +206,38 @@ msgstr "記帳"
 msgid "select passbook"
 msgstr "選擇帳本"
 
-#: account/views.py:39 account/views.py:80
+#: account/views.py:41 account/views.py:82
 #, python-brace-format
 msgid "Passbook #{id} not exists."
 msgstr "帳本#{id}不存在。"
 
-#: account/views.py:85
+#: account/views.py:87
 msgid "No enough permission for this operation."
 msgstr ""
 
-#: account/views.py:94 account/views.py:146
+#: account/views.py:96 account/views.py:157
 #, python-brace-format
 msgid "Successfully add record \"{event}\"."
 msgstr "成功建立紀錄「{event}」。"
 
-#: account/views.py:98
+#: account/views.py:100
 msgid "Invalid requests."
 msgstr ""
 
-#: account/views.py:104
+#: account/views.py:114
 #, python-brace-format
 msgid "Add record on {passbook}"
 msgstr "建立紀錄到{passbook}"
 
-#: account/views.py:131
+#: account/views.py:142
 #, python-brace-format
 msgid "Order #{id} id not exists."
 msgstr "訂單#{id}不存在。"
 
-#: account/views.py:138
+#: account/views.py:149
 msgid "Order closed."
 msgstr "訂單已關閉。"
 
-#: account/views.py:149
+#: account/views.py:160
 msgid "Failed to billing."
 msgstr "無法記帳。"
