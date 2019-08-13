@@ -95,6 +95,8 @@ class Event(models.Model):
         db_index=True,
     )
 
+    subtotal = models.FloatField(verbose_name=_("Subtotal"))
+
     class Meta:
         verbose_name = _("Event")
         verbose_name_plural = _("Events")
@@ -117,12 +119,6 @@ class Event(models.Model):
 
     def transactions(self, **kwargs):
         return Transaction.objects.filter(event=self, **kwargs)
-
-    def balance(self):
-        balance = self.transactions().aggregate(val=models.Sum("balance"))["val"]
-        return balance or 0
-
-    balance.short_description = _("Balance")
 
 
 class Transaction(models.Model):
@@ -155,3 +151,11 @@ class Transaction(models.Model):
         return _("[{event}] {user} ${balance:+,}").format(
             event=self.event, user=self.user, balance=self.balance
         )
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        parent = self.event
+        parent.subtotal = parent.transactions().aggregate(val=models.Sum("balance"))[
+            "val"
+        ]
+        parent.save()

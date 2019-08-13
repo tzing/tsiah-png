@@ -14,9 +14,10 @@ class TransactionInine(admin.TabularInline):
 
 
 class EventAdmin(admin.ModelAdmin):
-    list_display = ["__str__", "book", "related_order", "balance"]
+    list_display = ["__str__", "book", "related_order", "subtotal"]
     list_filter = ["book"]
     inlines = [TransactionInine]
+    readonly_fields = ["subtotal"]
 
 
 # django admin

@@ -37,7 +37,7 @@ table.ui.transaction.selectable.small.sortable.table
         for balance in event.transactions|get_user_balance:users
           td.right.aligned(data-sort-value='{{ balance|default_if_none:0 }}') {{ balance|default_if_none:''|intcomma }}
         //- balance
-        td.right.aligned(data-sort-value='{{ event.balance }}') {{ event.balance|intcomma }}
+        td.right.aligned(data-sort-value='{{ event.subtotal }}') {{ event.subtotal|intcomma }}
       -empty
         tr
           td.hint.center.aligned(colspan='3') {% trans 'No transaction.' %}
