@@ -9,30 +9,31 @@
 block extra_head
   link(href="{% sass_src 'tsiahpng/css/account.scss' %}", rel='stylesheet', type='text/css')
 
-block content
+block wide_content
   //- breadcrumb
-  .ui.rimless.vertical.segment
-    .ui.breadcrumb
-      a.section(href="{% url 'tsiahpng:welcome' %}") {% trans 'Home' %}
-      .divider  /
-      a.section(href="{% url 'tsiahpng-account:list' %}") {% trans 'Account' %}
-      .divider  /
-      .active.section {{ title }}
-
-  //- messages
-  include tsiahpng/includes/messages.pug
-
-  //- order notes
-  if passbook.note
+  .ui.text.container
     .ui.rimless.vertical.segment
-      | {{ passbook.note | markdown }}
+      .ui.breadcrumb
+        a.section(href="{% url 'tsiahpng:welcome' %}") {% trans 'Home' %}
+        .divider  /
+        a.section(href="{% url 'tsiahpng-account:list' %}") {% trans 'Account' %}
+        .divider  /
+        .active.section {{ title }}
 
-  -with per_user_balances=passbook|per_user_balance_include_inactive
-    //- personal summary
-    .ui.rimless.vertical.segment
-      h3.ui.header {% trans 'Personal balance' %}
+    //- messages
+    include tsiahpng/includes/messages.pug
 
-      include ./includes/table_user_balance.pug
+    //- order notes
+    if passbook.note
+      .ui.rimless.vertical.segment
+        | {{ passbook.note | markdown }}
+
+    -with per_user_balances=passbook|per_user_balance_include_inactive
+      //- personal summary
+      .ui.rimless.vertical.segment
+        h3.ui.header {% trans 'Personal balance' %}
+
+        include ./includes/table_user_balance.pug
 
     //- transactions
     .ui.transactions.rimless.vertical.segment
@@ -44,13 +45,14 @@ block content
       -with paginator=events
         include tsiahpng/includes/pagination.pug
 
-      //- table
-      .slide(style='overflow-x:auto;')
-        include ./includes/table_transactions.pug
+  //- table
+  .ui.container
+    .slide(style='overflow-x:auto;')
+      include ./includes/table_transactions.pug
 
-      //- paginator
-      -with paginator=events
-        include tsiahpng/includes/pagination.pug
+    //- paginator
+    -with paginator=events
+      include tsiahpng/includes/pagination.pug
 
 block fab
   include tsiahpng/includes/gotop.pug

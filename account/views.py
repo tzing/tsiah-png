@@ -3,6 +3,7 @@ import json
 from django.core.paginator import Paginator
 from django.contrib import auth
 from django.contrib import messages
+from django.db.models import Window, Sum, F
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.utils.translation import gettext as _
@@ -42,10 +43,11 @@ def account_detail(request, passbook_id):
         return redirect("tsiahpng-account:list")
 
     # get related users
-    events = passbook.events()
-    transactions = models.Transaction.objects.filter(event__in=events)
-
-    user_ids = transactions.values_list("user").distinct()
+    user_ids = (
+        models.Transaction.objects.filter(event__in=passbook.events())
+        .values_list("user")
+        .distinct()
+    )
     related_users = auth.models.User.objects.filter(id__in=user_ids)
     active_users = tuple(related_users.filter(is_active=True))
     inactive_users = tuple(related_users.filter(is_active=False))
@@ -54,6 +56,12 @@ def account_detail(request, passbook_id):
         users = (*active_users, None)
     else:
         users = active_users
+
+    # get balances
+    # https://stackoverflow.com/a/49569644/6107902
+    events = passbook.events().annotate(
+        balance=Window(Sum("subtotal"), order_by=F("id").asc())
+    )
 
     # build table
     idx_page = utils.try_parse(request.GET.get("p"), 1)
